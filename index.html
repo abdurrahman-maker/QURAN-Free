@@ -417,6 +417,98 @@
             </div>
           </div>
 
+          <!-- ================= CURATED INTENT & MOOD COLLECTIONS (ALA QURANIFY) ================= -->
+          <div class="bg-brand-surface rounded-3xl p-5 md:p-6 border border-brand-border shadow-xl">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-brand-cyan/15 text-brand-cyan border border-brand-cyan/20 mb-1.5">
+                  <i data-lucide="sparkles" class="w-3 h-3"></i>
+                  <span>Quranify Curated Vibes</span>
+                </div>
+                <h3 class="text-base font-bold text-white tracking-wide">Koleksi Tilawah & Suasana Hati</h3>
+                <p class="text-xs text-brand-textMuted">Pilihan lantunan murattal sesuai momen ibadah, fokus kerja, atau istirahat Anda</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <!-- Card 1: Deep Focus & Study -->
+              <div onclick="playMoodCollection('focus')" class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#091F2C] to-[#040C14] border border-cyan-500/20 hover:border-brand-cyan/60 p-4 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(0,210,238,0.2)]">
+                <div class="flex items-start justify-between mb-3">
+                  <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-brand-cyan flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <i data-lucide="headphones" class="w-5 h-5"></i>
+                  </div>
+                  <span class="px-2 py-0.5 rounded-md text-[9px] font-extrabold uppercase bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/30">Focus</span>
+                </div>
+                <h4 class="text-sm font-bold text-white group-hover:text-brand-cyan transition-colors">Deep Focus & Study</h4>
+                <p class="text-[11px] text-brand-textMuted mt-1 leading-snug">Lantunan ritmis teratur surah Ar-Rahman & Al-Mulk penenang pikiran saat bekerja.</p>
+                <div class="mt-4 flex items-center justify-between pt-2 border-t border-white/[0.06] text-[11px]">
+                  <span class="text-brand-textMuted font-mono">Ar-Rahman (55)</span>
+                  <span class="inline-flex items-center gap-1 text-brand-cyan font-bold group-hover:underline">
+                    <span>Putar</span>
+                    <i data-lucide="play-circle" class="w-3.5 h-3.5 fill-current"></i>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Card 2: Sleep & Night Calm -->
+              <div onclick="playMoodCollection('sleep')" class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#121128] to-[#070611] border border-indigo-500/20 hover:border-indigo-400/60 p-4 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(99,102,241,0.2)]">
+                <div class="flex items-start justify-between mb-3">
+                  <div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <i data-lucide="moon" class="w-5 h-5"></i>
+                  </div>
+                  <span class="px-2 py-0.5 rounded-md text-[9px] font-extrabold uppercase bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Sleep</span>
+                </div>
+                <h4 class="text-sm font-bold text-white group-hover:text-indigo-400 transition-colors">Tidur & Relaksasi Malam</h4>
+                <p class="text-[11px] text-brand-textMuted mt-1 leading-snug">Murattal tempo lambat surah Yasin & Al-Insan yang menyejukkan kalbu menjelang lelap.</p>
+                <div class="mt-4 flex items-center justify-between pt-2 border-t border-white/[0.06] text-[11px]">
+                  <span class="text-brand-textMuted font-mono">Yasin (36)</span>
+                  <span class="inline-flex items-center gap-1 text-indigo-400 font-bold group-hover:underline">
+                    <span>Putar</span>
+                    <i data-lucide="play-circle" class="w-3.5 h-3.5 fill-current"></i>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Card 3: Protection & Ruqyah -->
+              <div onclick="playMoodCollection('ruqyah')" class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#09221C] to-[#040E0B] border border-emerald-500/20 hover:border-emerald-400/60 p-4 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(16,185,129,0.2)]">
+                <div class="flex items-start justify-between mb-3">
+                  <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <i data-lucide="shield-check" class="w-5 h-5"></i>
+                  </div>
+                  <span class="px-2 py-0.5 rounded-md text-[9px] font-extrabold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Ruqyah</span>
+                </div>
+                <h4 class="text-sm font-bold text-white group-hover:text-emerald-400 transition-colors">Perlindungan & Ruqyah</h4>
+                <p class="text-[11px] text-brand-textMuted mt-1 leading-snug">Ayat pembenteng diri: Al-Baqarah, Ayat Kursi, dan Al-Mu'awwidzatain penolak was-was.</p>
+                <div class="mt-4 flex items-center justify-between pt-2 border-t border-white/[0.06] text-[11px]">
+                  <span class="text-brand-textMuted font-mono">Al-Baqarah (2)</span>
+                  <span class="inline-flex items-center gap-1 text-emerald-400 font-bold group-hover:underline">
+                    <span>Putar</span>
+                    <i data-lucide="play-circle" class="w-3.5 h-3.5 fill-current"></i>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Card 4: Emotional & Heart Touching -->
+              <div onclick="playMoodCollection('heart')" class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#27150A] to-[#0E0703] border border-amber-500/20 hover:border-amber-400/60 p-4 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(245,158,11,0.2)]">
+                <div class="flex items-start justify-between mb-3">
+                  <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <i data-lucide="heart" class="w-5 h-5"></i>
+                  </div>
+                  <span class="px-2 py-0.5 rounded-md text-[9px] font-extrabold uppercase bg-amber-500/20 text-amber-300 border border-amber-500/30">Peace</span>
+                </div>
+                <h4 class="text-sm font-bold text-white group-hover:text-amber-400 transition-colors">Penyejuk Kalbu & Haru</h4>
+                <p class="text-[11px] text-brand-textMuted mt-1 leading-snug">Kisah ketabahan Maryam & Yusuf yang menghadirkan keharuan mendalam dan ketenangan jiwa.</p>
+                <div class="mt-4 flex items-center justify-between pt-2 border-t border-white/[0.06] text-[11px]">
+                  <span class="text-brand-textMuted font-mono">Maryam (19)</span>
+                  <span class="inline-flex items-center gap-1 text-amber-400 font-bold group-hover:underline">
+                    <span>Putar</span>
+                    <i data-lucide="play-circle" class="w-3.5 h-3.5 fill-current"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Featured Section & Last Read Card (Sesuai Layar 1 Gambar) -->
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
             <!-- Featured Card (Daily Dakwah - Ramadan Study) -->
@@ -839,6 +931,8 @@
               <span class="wave-bar"></span>
               <span class="wave-bar"></span>
             </div>
+            <!-- Sleep Timer Badge -->
+            <span id="mini-timer-indicator" class="hidden text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-md bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/30">⏱️ 30m</span>
           </div>
           <p id="mini-player-reciter" class="text-[11px] text-brand-textMuted truncate">Syekh Yasser Al-Dosari</p>
         </div>
@@ -903,7 +997,10 @@
       <button onclick="closeMurottalModal()" class="w-10 h-10 rounded-full bg-brand-surface border border-brand-border flex items-center justify-center text-white hover:text-brand-cyan transition-colors">
         <i data-lucide="chevron-left" class="w-6 h-6"></i>
       </button>
-      <h3 class="font-extrabold text-sm tracking-widest text-brand-cyan uppercase">MUROTTAL</h3>
+      <div class="flex items-center gap-2">
+        <h3 class="font-extrabold text-sm tracking-widest text-brand-cyan uppercase">MUROTTAL</h3>
+        <span id="murottal-timer-indicator" class="hidden px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/40">⏱️ 30m</span>
+      </div>
       <button onclick="bookmarkCurrentAudioSurah()" class="w-10 h-10 rounded-full bg-brand-surface border border-brand-border flex items-center justify-center text-white hover:text-brand-cyan transition-colors" title="Bookmark Surah">
         <i data-lucide="bookmark" class="w-5 h-5"></i>
       </button>
@@ -1022,6 +1119,11 @@
         <button onclick="toggleAudioSpeed()" id="murottal-speed-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-surface border border-brand-border text-brand-textMuted hover:text-white font-mono">
           <i data-lucide="volume-2" class="w-4 h-4 text-brand-cyan"></i>
           <span id="murottal-speed-text">1.0x</span>
+        </button>
+
+        <button onclick="openSleepTimerModal()" id="murottal-timer-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-surface border border-brand-border text-brand-textMuted hover:text-brand-cyan transition-colors" title="Atur Waktu Tidur">
+          <i data-lucide="timer" class="w-4 h-4 text-brand-cyan"></i>
+          <span id="murottal-timer-label">Sleep Timer</span>
         </button>
 
         <button onclick="closeMurottalModal(); openSurahDetail(AppState.currentSurah ? AppState.currentSurah.nomor : 1);" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-surface border border-brand-border text-brand-textMuted hover:text-white">
@@ -1191,6 +1293,61 @@
     </div>
   </div>
 
+  <!-- ==================== SLEEP TIMER MODAL (ALA QURANIFY) ==================== -->
+  <div id="sleep-timer-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#0A0F18] border border-brand-cyan/30 rounded-3xl w-full max-w-sm p-6 relative shadow-2xl">
+      <button onclick="closeSleepTimerModal()" class="absolute top-5 right-5 text-brand-textMuted hover:text-white">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-10 h-10 rounded-xl bg-brand-cyan/15 text-brand-cyan flex items-center justify-center border border-brand-cyan/30">
+          <i data-lucide="timer" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-white">Pengatur Waktu Tidur</h3>
+          <p class="text-xs text-brand-textMuted">Audio akan berhenti otomatis saat Anda terlelap</p>
+        </div>
+      </div>
+
+      <div class="space-y-2" id="sleep-timer-options">
+        <button onclick="setSleepTimer(15)" class="w-full text-left px-4 py-3 rounded-xl bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-cyan/40 text-xs font-semibold text-white flex items-center justify-between transition-colors">
+          <span>15 Menit</span>
+          <i data-lucide="clock" class="w-4 h-4 text-brand-textMuted"></i>
+        </button>
+        <button onclick="setSleepTimer(30)" class="w-full text-left px-4 py-3 rounded-xl bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-cyan/40 text-xs font-semibold text-white flex items-center justify-between transition-colors">
+          <span>30 Menit (Dianjurkan)</span>
+          <i data-lucide="clock" class="w-4 h-4 text-brand-cyan"></i>
+        </button>
+        <button onclick="setSleepTimer(45)" class="w-full text-left px-4 py-3 rounded-xl bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-cyan/40 text-xs font-semibold text-white flex items-center justify-between transition-colors">
+          <span>45 Menit</span>
+          <i data-lucide="clock" class="w-4 h-4 text-brand-textMuted"></i>
+        </button>
+        <button onclick="setSleepTimer(60)" class="w-full text-left px-4 py-3 rounded-xl bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-cyan/40 text-xs font-semibold text-white flex items-center justify-between transition-colors">
+          <span>60 Menit (1 Jam)</span>
+          <i data-lucide="clock" class="w-4 h-4 text-brand-textMuted"></i>
+        </button>
+        <button onclick="setSleepTimer('end_of_surah')" class="w-full text-left px-4 py-3 rounded-xl bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-cyan/40 text-xs font-semibold text-white flex items-center justify-between transition-colors">
+          <span>Hingga Surah Ini Selesai</span>
+          <i data-lucide="check-circle" class="w-4 h-4 text-brand-textMuted"></i>
+        </button>
+      </div>
+
+      <div class="mt-4 pt-3 border-t border-brand-border flex items-center justify-between">
+        <button onclick="cancelSleepTimer()" class="text-xs text-rose-400 hover:text-rose-300 font-semibold flex items-center gap-1.5">
+          <i data-lucide="slash" class="w-3.5 h-3.5"></i>
+          <span>Matikan Timer</span>
+        </button>
+        <button onclick="closeSleepTimerModal()" class="px-4 py-2 rounded-xl bg-brand-surface border border-brand-border hover:bg-brand-surfaceHover text-white text-xs font-bold">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Floating Container -->
+  <div id="toast-container" class="fixed top-5 left-1/2 -translate-x-1/2 z-[60] flex flex-col items-center gap-2 pointer-events-none w-full max-w-sm px-4"></div>
+
   <!-- ==================== JAVASCRIPT APP LOGIC ==================== -->
   <script>
     // URL Google Apps Script Web App Terhubung ke Google Spreadsheet Anda
@@ -1315,6 +1472,11 @@
       isRepeat: false,
       isShuffle: false,
       playbackSpeed: 1.0,
+      sleepTimer: {
+        type: null,
+        endTime: null,
+        intervalId: null
+      },
       activePlayingAyah: null,
       surahs: [],
       currentSurah: null,
@@ -1900,6 +2062,15 @@
       });
 
       audio.addEventListener('ended', () => {
+        // Cek jika Sleep Timer aktif hingga akhir surah
+        if (AppState.sleepTimer && AppState.sleepTimer.type === 'end_of_surah') {
+          cancelSleepTimer();
+          audio.pause();
+          setAmbientMurottalBlur(false);
+          showToast('🌙 Surah selesai. Audio dijeda otomatis sesuai Sleep Timer.', 'sleep');
+          return;
+        }
+
         if (AppState.isRepeat) {
           audio.currentTime = 0;
           audio.play();
@@ -2107,6 +2278,169 @@
     function bookmarkCurrentAudioSurah() {
       if (!AppState.currentSurah) return;
       toggleBookmarkAyah(AppState.currentSurah.nomor, 1);
+    }
+
+    // ==================== MODERN FLOATING TOAST NOTIFICATION (ALA QURANIFY) ====================
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      toast.className = 'pointer-events-auto transform transition-all duration-300 ease-out -translate-y-2 opacity-0 flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-[#091522]/95 backdrop-blur-xl border border-brand-cyan/40 shadow-2xl text-xs text-white max-w-sm';
+
+      let icon = 'sparkles';
+      if (type === 'success') icon = 'check-circle';
+      if (type === 'warn') icon = 'alert-triangle';
+      if (type === 'sleep') icon = 'moon';
+
+      toast.innerHTML = `
+        <div class="w-6 h-6 rounded-full bg-brand-cyan/20 text-brand-cyan flex items-center justify-center shrink-0">
+          <i data-lucide="${icon}" class="w-3.5 h-3.5"></i>
+        </div>
+        <span class="flex-1 font-medium leading-tight">${message}</span>
+      `;
+
+      container.appendChild(toast);
+      lucide.createIcons();
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('-translate-y-2', 'opacity-0');
+        toast.classList.add('translate-y-0', 'opacity-100');
+      });
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('-translate-y-2', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // ==================== SLEEP TIMER SYSTEM (ALA QURANIFY) ====================
+    function openSleepTimerModal() {
+      const modal = document.getElementById('sleep-timer-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        lucide.createIcons();
+      }
+    }
+
+    function closeSleepTimerModal() {
+      const modal = document.getElementById('sleep-timer-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function setSleepTimer(val) {
+      if (AppState.sleepTimer && AppState.sleepTimer.intervalId) {
+        clearInterval(AppState.sleepTimer.intervalId);
+        AppState.sleepTimer.intervalId = null;
+      }
+
+      if (val === 'end_of_surah') {
+        AppState.sleepTimer = {
+          type: 'end_of_surah',
+          endTime: null,
+          intervalId: null
+        };
+        updateSleepTimerDisplay('Akhir Surah');
+        showToast('⏱️ Sleep Timer aktif: Berhenti saat surah ini selesai.', 'sleep');
+      } else {
+        const minutes = parseInt(val, 10);
+        const endTime = Date.now() + minutes * 60 * 1000;
+        
+        AppState.sleepTimer = {
+          type: 'minutes',
+          endTime: endTime,
+          intervalId: setInterval(() => {
+            const remainingMs = AppState.sleepTimer.endTime - Date.now();
+            if (remainingMs <= 0) {
+              clearInterval(AppState.sleepTimer.intervalId);
+              AppState.sleepTimer = { type: null, endTime: null, intervalId: null };
+              const audio = document.getElementById('main-audio-player');
+              if (audio) audio.pause();
+              setAmbientMurottalBlur(false);
+              updateSleepTimerDisplay(null);
+              showToast('🌙 Waktu tidur tercapai. Tilawah telah dijeda otomatis.', 'sleep');
+            } else {
+              const remMins = Math.ceil(remainingMs / 60000);
+              updateSleepTimerDisplay(`${remMins}m`);
+            }
+          }, 1000)
+        };
+
+        updateSleepTimerDisplay(`${minutes}m`);
+        showToast(`⏱️ Sleep Timer diatur untuk ${minutes} menit ke depan.`, 'sleep');
+      }
+
+      closeSleepTimerModal();
+    }
+
+    function cancelSleepTimer() {
+      if (AppState.sleepTimer && AppState.sleepTimer.intervalId) {
+        clearInterval(AppState.sleepTimer.intervalId);
+      }
+      AppState.sleepTimer = { type: null, endTime: null, intervalId: null };
+      updateSleepTimerDisplay(null);
+      showToast('Sleep Timer dimatikan.', 'info');
+      closeSleepTimerModal();
+    }
+
+    function updateSleepTimerDisplay(text) {
+      const mIndicator = document.getElementById('murottal-timer-indicator');
+      const mLabel = document.getElementById('murottal-timer-label');
+      const miniIndicator = document.getElementById('mini-timer-indicator');
+
+      if (text) {
+        if (mIndicator) {
+          mIndicator.textContent = `⏱️ ${text}`;
+          mIndicator.classList.remove('hidden');
+        }
+        if (mLabel) mLabel.textContent = text;
+        if (miniIndicator) {
+          miniIndicator.textContent = `⏱️ ${text}`;
+          miniIndicator.classList.remove('hidden');
+        }
+      } else {
+        if (mIndicator) mIndicator.classList.add('hidden');
+        if (mLabel) mLabel.textContent = 'Sleep Timer';
+        if (miniIndicator) miniIndicator.classList.add('hidden');
+      }
+    }
+
+    // ==================== QURANIFY CURATED MOOD COLLECTIONS ====================
+    const MOOD_COLLECTIONS = {
+      focus: {
+        surahNumber: 55, // Ar-Rahman
+        title: 'Deep Focus: Surah Ar-Rahman',
+        desc: 'Lantunan penenang pikiran dan fokus bekerja'
+      },
+      sleep: {
+        surahNumber: 36, // Yasin
+        title: 'Sleep Calm: Surah Yasin',
+        desc: 'Murattal lembut penyejuk lelap malam'
+      },
+      ruqyah: {
+        surahNumber: 2, // Al-Baqarah
+        title: 'Ruqyah Syar\'iyyah: Surah Al-Baqarah',
+        desc: 'Benteng perlindungan spiritual harian'
+      },
+      heart: {
+        surahNumber: 19, // Maryam
+        title: 'Penyejuk Kalbu: Surah Maryam',
+        desc: 'Keharuan tilawah yang menyentuh hati'
+      }
+    };
+
+    function playMoodCollection(moodKey) {
+      const col = MOOD_COLLECTIONS[moodKey];
+      if (!col) return;
+
+      quickPlaySurahAudio(col.surahNumber);
+      showToast(`✨ Memutar koleksi: ${col.title}`);
+
+      // Buka modal murottal di mobile agar pengalaman audio-first terasa
+      if (window.innerWidth < 768) {
+        setTimeout(() => openMurottalModal(), 400);
+      }
     }
 
     // ==================== RENDER AYAT DENGAN QORI AKTIF ====================
