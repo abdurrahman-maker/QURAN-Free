@@ -24,18 +24,25 @@
         extend: {
           colors: {
             brand: {
-              dark: '#11141D',
-              surface: '#1A1E2B',
-              surfaceHover: '#23283A',
-              card: '#1F2433',
-              border: '#2A3044',
-              gold: '#EAB338',
-              goldLight: '#F3CD68',
-              goldDark: '#BF8A1A',
-              goldMuted: 'rgba(234, 179, 56, 0.15)',
-              text: '#F1F3F7',
-              textMuted: '#8E95A8',
-              accent: '#39415A'
+              dark: '#070B11',
+              darker: '#04070B',
+              surface: '#0F1722',
+              surfaceHover: '#162334',
+              card: '#131D2A',
+              border: '#1B2A3D',
+              cyan: '#00D2EE',
+              cyanLight: '#67E8F9',
+              cyanDark: '#0891B2',
+              cyanMuted: 'rgba(0, 210, 238, 0.12)',
+              cyanGlow: 'rgba(0, 210, 238, 0.35)',
+              // Backward compatibility aliases mapped to Electric Cyan Neon
+              gold: '#00D2EE',
+              goldLight: '#38BDF8',
+              goldDark: '#0891B2',
+              goldMuted: 'rgba(0, 210, 238, 0.15)',
+              text: '#F8FAFC',
+              textMuted: '#94A3B8',
+              accent: '#1E293B'
             }
           },
           fontFamily: {
@@ -48,11 +55,21 @@
   </script>
 
   <style>
-    /* Custom Scrollbar */
+    /* Custom Scrollbar - Deep Midnight Cyan */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #11141D; }
-    ::-webkit-scrollbar-thumb { background: #2A3044; border-radius: 999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #EAB338; }
+    ::-webkit-scrollbar-track { background: #070B11; }
+    ::-webkit-scrollbar-thumb { background: #1B2A3D; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #00D2EE; }
+
+    /* Geometric Islamic Watermark Background */
+    body {
+      background-color: #070B11;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(0, 210, 238, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(8, 145, 178, 0.05) 0%, transparent 50%),
+        radial-gradient(rgba(0, 210, 238, 0.04) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 28px 28px;
+    }
 
     .arabic-text {
       font-family: 'Amiri', 'Scheherazade New', serif;
@@ -60,7 +77,7 @@
       line-height: 2.2;
     }
 
-    /* Islamic Octagonal Badge */
+    /* Islamic Octagonal Badge - Neon Cyan Glow */
     .islamic-badge {
       display: inline-flex;
       align-items: center;
@@ -68,28 +85,64 @@
       width: 36px;
       height: 36px;
       position: relative;
-      background: rgba(234, 179, 56, 0.12);
-      border: 1px solid #EAB338;
+      background: rgba(0, 210, 238, 0.10);
+      border: 1px solid #00D2EE;
       border-radius: 8px;
       transform: rotate(45deg);
+      box-shadow: 0 0 10px rgba(0, 210, 238, 0.2);
     }
     .islamic-badge span {
       transform: rotate(-45deg);
       font-size: 13px;
       font-weight: 700;
-      color: #EAB338;
+      color: #00D2EE;
     }
 
-    /* Mosque Siluet Background */
+    /* Mosque Siluet / Soft Cyan Glow Background */
     .mosque-bg {
-      background-image: radial-gradient(circle at bottom, rgba(234, 179, 56, 0.08) 0%, transparent 70%);
+      background-image: radial-gradient(circle at top right, rgba(0, 210, 238, 0.12) 0%, transparent 70%);
     }
 
-    /* Glass effect */
+    /* Glass Effect with Cyan Accent */
     .glass-card {
-      background: rgba(26, 30, 43, 0.85);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(234, 179, 56, 0.15);
+      background: rgba(15, 23, 34, 0.85);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 210, 238, 0.18);
+    }
+
+    .cyan-glow {
+      box-shadow: 0 0 20px rgba(0, 210, 238, 0.35);
+    }
+
+    .cyan-glow-lg {
+      box-shadow: 0 0 35px rgba(0, 210, 238, 0.45);
+    }
+
+    /* Soundwave Equalizer Animation */
+    @keyframes bounceWave {
+      0%, 100% { height: 4px; }
+      50% { height: 20px; }
+    }
+    .wave-bar {
+      display: inline-block;
+      width: 3px;
+      background-color: #00D2EE;
+      border-radius: 9999px;
+      animation: bounceWave 1.1s ease-in-out infinite;
+    }
+    .wave-bar:nth-child(2) { animation-delay: 0.15s; }
+    .wave-bar:nth-child(3) { animation-delay: 0.35s; }
+    .wave-bar:nth-child(4) { animation-delay: 0.5s; }
+    .wave-bar:nth-child(5) { animation-delay: 0.2s; }
+
+    /* Radial Visualizer Waves in Murottal Player */
+    @keyframes pulseRing {
+      0% { transform: scale(0.96); opacity: 0.5; }
+      50% { transform: scale(1.04); opacity: 0.9; }
+      100% { transform: scale(0.96); opacity: 0.5; }
+    }
+    .pulse-ring {
+      animation: pulseRing 3s ease-in-out infinite;
     }
   </style>
 </head>
@@ -207,11 +260,11 @@
         <!-- ================= PAGE 1: BERANDA (HOME) ================= -->
         <section id="page-home" class="space-y-6">
           
-          <!-- Top Interactive Announcement / Hadits Banner (Feature 5) -->
-          <div id="top-announcement-banner" class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#2B2313] via-brand-card to-[#1B2236] border border-brand-gold/30 p-5 md:p-6 shadow-xl">
+          <!-- Top Interactive Announcement / Hadits Banner -->
+          <div id="top-announcement-banner" class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#091824] via-[#0F263A] to-[#07131F] border border-brand-cyan/30 p-5 md:p-6 shadow-2xl">
             <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div class="max-w-2xl">
-                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-gold/15 text-brand-gold text-xs font-semibold mb-3 border border-brand-gold/25">
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-cyan/15 text-brand-cyan text-xs font-semibold mb-3 border border-brand-cyan/25">
                   <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
                   <span>Pengingat & Kutipan Hari Ini</span>
                 </div>
@@ -222,27 +275,30 @@
                   HR. Bukhari No. 5027. Luangkan waktu minimal 15 menit hari ini untuk bertilawah.
                 </p>
               </div>
-              <button onclick="navigateTo('surah-list')" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-brand-gold to-brand-goldLight text-brand-dark font-bold text-sm shadow-lg shadow-brand-gold/20 hover:opacity-95 transition-all self-start md:self-auto shrink-0">
+              <button onclick="navigateTo('surah-list')" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-brand-cyan to-brand-cyanLight text-brand-dark font-extrabold text-sm shadow-lg shadow-brand-cyan/25 hover:opacity-95 transition-all self-start md:self-auto shrink-0 cyan-glow">
                 <i data-lucide="book-open" class="w-4 h-4"></i>
                 <span>Mulai Membaca</span>
               </button>
             </div>
             <!-- Subtle Mosque Background Decor -->
             <div class="absolute -right-6 -bottom-8 opacity-10 pointer-events-none">
-              <i data-lucide="moon" class="w-48 h-48 text-brand-gold"></i>
+              <i data-lucide="moon" class="w-48 h-48 text-brand-cyan"></i>
             </div>
           </div>
 
-          <!-- Referensi UI: Header Greeting & Prayer Times Card -->
+          <!-- Referensi UI Layar 1: Greeting & Prayer Times Card -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
             <!-- Greeting & Quick Stats -->
-            <div class="md:col-span-2 bg-brand-surface rounded-3xl p-5 md:p-6 border border-brand-border flex flex-col justify-between relative overflow-hidden">
+            <div class="md:col-span-2 bg-brand-surface rounded-3xl p-5 md:p-6 border border-brand-border flex flex-col justify-between relative overflow-hidden shadow-xl">
               <div class="flex items-center justify-between">
                 <div>
-                  <span class="text-xs text-brand-gold font-semibold uppercase tracking-wider">Ahlan Wa Sahlan</span>
-                  <h2 id="home-greeting-name" class="text-xl md:text-2xl font-bold text-white mt-0.5">Assalamu'alaikum, Sahabat</h2>
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs text-brand-cyan font-bold tracking-widest uppercase">Ahlan Wa Sahlan</span>
+                    <span class="arabic-text text-brand-cyan text-sm">أهلاً وسهلاً</span>
+                  </div>
+                  <h2 id="home-greeting-name" class="text-xl md:text-2xl font-bold text-white mt-1">Assalamu'alaikum, Sahabat</h2>
                 </div>
-                <div class="w-12 h-12 rounded-2xl bg-brand-card border border-brand-border flex items-center justify-center text-brand-gold">
+                <div class="w-12 h-12 rounded-2xl bg-brand-card border border-brand-border flex items-center justify-center text-brand-cyan cyan-glow">
                   <i data-lucide="compass" class="w-6 h-6"></i>
                 </div>
               </div>
@@ -251,42 +307,61 @@
               <div class="mt-6 pt-5 border-t border-brand-border/60">
                 <div class="flex justify-between text-xs mb-2">
                   <span class="text-brand-textMuted">Progres Khatam Tilawah</span>
-                  <span id="quick-khatam-pct" class="font-bold text-brand-gold">0% (0 / 6236 Ayat)</span>
+                  <span id="quick-khatam-pct" class="font-bold text-brand-cyan">0% (0 / 6236 Ayat)</span>
                 </div>
                 <div class="w-full h-2.5 bg-brand-card rounded-full overflow-hidden border border-brand-border">
-                  <div id="quick-khatam-bar" class="h-full bg-gradient-to-r from-brand-goldDark to-brand-gold rounded-full transition-all duration-500" style="width: 2%;"></div>
+                  <div id="quick-khatam-bar" class="h-full bg-gradient-to-r from-brand-cyanDark via-brand-cyan to-brand-cyanLight rounded-full transition-all duration-500 shadow-sm" style="width: 2%;"></div>
                 </div>
               </div>
             </div>
 
-            <!-- Prayer / Jadwal Sholat Widget Sesuai Lokasi Pengguna -->
-            <div class="bg-gradient-to-br from-brand-card to-[#19202F] rounded-3xl p-5 border border-brand-border flex flex-col justify-between shadow-lg">
+            <!-- Prayer / Jadwal Sholat Widget Sesuai Layar 1 Gambar Referensi -->
+            <div class="bg-gradient-to-br from-[#0D1C2B] via-[#0A1622] to-[#070F18] rounded-3xl p-5 border border-brand-cyan/25 flex flex-col justify-between shadow-xl relative overflow-hidden">
               <div class="flex items-center justify-between">
-                <div class="flex items-center gap-1.5 text-xs font-bold text-brand-gold uppercase tracking-wider">
+                <div class="flex items-center gap-1.5 text-xs font-bold text-brand-cyan uppercase tracking-wider">
                   <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
                   <span id="prayer-location-city">Mendeteksi Lokasi...</span>
                 </div>
-                <span class="text-[11px] text-brand-textMuted bg-brand-surface px-2.5 py-0.5 rounded-full font-mono" id="realtime-clock">--:-- WIB</span>
+                <span class="text-[11px] text-brand-cyan/90 bg-brand-surface px-2.5 py-0.5 rounded-full font-mono border border-brand-cyan/20" id="realtime-clock">--:-- WIB</span>
               </div>
 
-              <div class="my-4 flex items-center justify-between">
+              <div class="my-3.5 flex items-center justify-between">
                 <div>
                   <div class="flex items-center gap-2">
-                    <h4 class="text-2xl font-black text-white tracking-wide" id="prayer-name">DZUHUR</h4>
-                    <span id="prayer-time-val" class="text-xs px-2 py-0.5 rounded-md bg-brand-gold/15 text-brand-gold font-mono font-bold">--:--</span>
+                    <h4 class="text-2xl font-black text-white tracking-wider" id="prayer-name">DZUHUR</h4>
+                    <span id="prayer-time-val" class="text-xs px-2.5 py-0.5 rounded-md bg-brand-cyan/15 text-brand-cyan font-mono font-bold border border-brand-cyan/30">12 : 16 PM</span>
                   </div>
-                  <p class="text-xs text-brand-textMuted mt-1" id="prayer-countdown">Menyesuaikan jadwal sholat...</p>
+                  <p class="text-[11px] text-brand-textMuted mt-1" id="prayer-countdown">Menyesuaikan jadwal sholat...</p>
                 </div>
-                <!-- Weather / Sun Icon Dynamic -->
-                <div id="prayer-icon-box" class="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-inner">
-                  <i data-lucide="sun" class="w-7 h-7" id="prayer-weather-icon"></i>
+                
+                <!-- 3D Crescent Moon & Clouds Vector Sesuai Layar 1 -->
+                <div class="relative w-16 h-16 flex items-center justify-center shrink-0">
+                  <svg viewBox="0 0 100 100" class="w-16 h-16 filter drop-shadow-[0_0_12px_rgba(0,210,238,0.4)]">
+                    <!-- Clouds Base -->
+                    <ellipse cx="50" cy="70" rx="35" ry="14" fill="#17293D" opacity="0.9" />
+                    <ellipse cx="65" cy="65" rx="20" ry="12" fill="#1C354E" opacity="0.95" />
+                    <ellipse cx="35" cy="67" rx="18" ry="10" fill="#1A3047" opacity="0.9" />
+                    <!-- Crescent Moon -->
+                    <path d="M 46 22 A 28 28 0 1 0 74 65 A 24 24 0 1 1 46 22 Z" fill="url(#prayerMoonGrad)" />
+                    <!-- Stars -->
+                    <circle cx="28" cy="30" r="1.5" fill="#67E8F9" />
+                    <circle cx="78" cy="35" r="1.2" fill="#67E8F9" />
+                    <circle cx="68" cy="22" r="1.8" fill="#FFFFFF" />
+                    <defs>
+                      <linearGradient id="prayerMoonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#CFFAFE" />
+                        <stop offset="50%" stop-color="#00D2EE" />
+                        <stop offset="100%" stop-color="#0891B2" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
                 </div>
               </div>
 
               <!-- List 5 Waktu Sholat Lengkap -->
               <div class="grid grid-cols-5 gap-1 text-center text-brand-textMuted pt-3 border-t border-brand-border/60" id="prayer-timings-grid">
                 <div><span class="block text-[10px] text-brand-textMuted">Subuh</span><span class="font-bold text-white font-mono text-[11px]" id="time-subuh">04:30</span></div>
-                <div><span class="block text-[10px] text-brand-textMuted">Dzuhur</span><span class="font-bold text-white font-mono text-[11px]" id="time-dzuhur">11:58</span></div>
+                <div><span class="block text-[10px] text-brand-textMuted">Dzuhur</span><span class="font-bold text-brand-cyan font-mono text-[11px]" id="time-dzuhur">11:58</span></div>
                 <div><span class="block text-[10px] text-brand-textMuted">Ashar</span><span class="font-bold text-white font-mono text-[11px]" id="time-ashar">15:15</span></div>
                 <div><span class="block text-[10px] text-brand-textMuted">Maghrib</span><span class="font-bold text-white font-mono text-[11px]" id="time-maghrib">18:02</span></div>
                 <div><span class="block text-[10px] text-brand-textMuted">Isya</span><span class="font-bold text-white font-mono text-[11px]" id="time-isya">19:14</span></div>
@@ -294,68 +369,112 @@
             </div>
           </div>
 
-          <!-- Referensi UI: Last Read Card + Action Buttons -->
+          <!-- Quick Navigation Hub (Qur'an, Zakat, Dzikir Sesuai Layar 1) -->
+          <div class="grid grid-cols-3 gap-3.5">
+            <div onclick="navigateTo('surah-list')" class="bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-cyan/40 rounded-2xl p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200 group shadow-md">
+              <div class="w-13 h-13 p-3 rounded-2xl bg-brand-cyan/10 text-brand-cyan group-hover:scale-110 transition-transform mb-2 border border-brand-cyan/20">
+                <i data-lucide="book" class="w-6 h-6 stroke-[2.2]"></i>
+              </div>
+              <span class="text-xs font-bold text-white group-hover:text-brand-cyan transition-colors">Qur'an</span>
+              <span class="text-[10px] text-brand-textMuted">114 Surah</span>
+            </div>
+
+            <div onclick="navigateTo('donation')" class="bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-cyan/40 rounded-2xl p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200 group shadow-md">
+              <div class="w-13 h-13 p-3 rounded-2xl bg-cyan-500/10 text-cyan-400 group-hover:scale-110 transition-transform mb-2 border border-cyan-500/20">
+                <i data-lucide="hand-heart" class="w-6 h-6 stroke-[2.2]"></i>
+              </div>
+              <span class="text-xs font-bold text-white group-hover:text-brand-cyan transition-colors">Zakat / Infaq</span>
+              <span class="text-[10px] text-brand-textMuted">Sedekah QRIS</span>
+            </div>
+
+            <div onclick="showDzikirModal()" class="bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-cyan/40 rounded-2xl p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200 group shadow-md">
+              <div class="w-13 h-13 p-3 rounded-2xl bg-sky-500/10 text-sky-400 group-hover:scale-110 transition-transform mb-2 border border-sky-500/20">
+                <i data-lucide="moon-star" class="w-6 h-6 stroke-[2.2]"></i>
+              </div>
+              <span class="text-xs font-bold text-white group-hover:text-brand-cyan transition-colors">Dzikir</span>
+              <span class="text-[10px] text-brand-textMuted">Pagi & Petang</span>
+            </div>
+          </div>
+
+          <!-- ================= RECITERS (QORI) CAROUSEL (Sesuai Layar 1 Gambar) ================= -->
+          <div class="bg-brand-surface rounded-3xl p-5 md:p-6 border border-brand-border shadow-xl">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="text-base font-bold text-white tracking-wide">Reciters (Qori)</h3>
+                <p class="text-xs text-brand-textMuted">Pilih Qori favorit untuk lantunan murattal ayat & surah</p>
+              </div>
+              <button onclick="openQoriModal()" class="text-xs text-brand-cyan font-bold hover:underline">Lihat Semua</button>
+            </div>
+
+            <!-- Horizontal Avatar Carousel -->
+            <div class="flex items-center gap-5 overflow-x-auto pb-2 pt-1 scrollbar-none" id="home-reciters-bar">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- Featured Section & Last Read Card (Sesuai Layar 1 Gambar) -->
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-            <!-- Last Read Golden Card (Sesuai Referensi Screen 3) -->
-            <div class="lg:col-span-2 bg-gradient-to-r from-[#DFB045] to-[#F1CB6C] text-brand-dark rounded-3xl p-6 shadow-xl relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-6">
+            <!-- Featured Card (Daily Dakwah - Ramadan Study) -->
+            <div class="bg-gradient-to-br from-[#0A2234] via-[#0E3048] to-[#071624] rounded-3xl p-6 border border-brand-cyan/30 text-white flex flex-col justify-between shadow-xl relative overflow-hidden">
+              <div class="relative z-10">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/30">
+                    Daily Dakwah
+                  </span>
+                  <button onclick="navigateTo('surah-list')" class="text-xs text-brand-cyan hover:underline font-bold">View All</button>
+                </div>
+                <h3 class="text-xl font-black text-white">Ramadan Study</h3>
+                <p class="text-xs text-brand-textMuted mt-1">Panduan tadabbur dan jadwal tilawah harian terstruktur.</p>
+              </div>
+
+              <!-- 3D Calendar / Study Illustration Sesuai Layar 1 -->
+              <div class="mt-6 flex items-center justify-between relative z-10">
+                <button onclick="navigateTo('surah-list')" class="px-4 py-2 rounded-xl bg-brand-cyan text-brand-dark font-black text-xs hover:opacity-90 transition-opacity cyan-glow">
+                  Buka Tilawah
+                </button>
+                <div class="w-16 h-16 rounded-2xl bg-brand-card/80 border border-brand-cyan/30 flex flex-col items-center justify-center p-2 text-center shadow-lg">
+                  <i data-lucide="calendar" class="w-6 h-6 text-brand-cyan mb-0.5"></i>
+                  <span class="text-[9px] font-bold text-white font-mono">1447 H</span>
+                </div>
+              </div>
+
+              <!-- Background Glow Ornament -->
+              <div class="absolute -right-10 -bottom-10 w-36 h-36 rounded-full bg-brand-cyan/10 blur-2xl pointer-events-none"></div>
+            </div>
+
+            <!-- Last Read Cyan Card -->
+            <div class="lg:col-span-2 bg-gradient-to-r from-[#0B2132] via-[#0E2D44] to-[#123A57] text-white rounded-3xl p-6 shadow-xl relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-6 border border-brand-cyan/30">
               <div class="z-10 text-center sm:text-left">
-                <div class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-dark/75 mb-2">
+                <div class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-cyan mb-2">
                   <i data-lucide="bookmark-check" class="w-4 h-4"></i>
                   <span>Terakhir Dibaca (Last Read)</span>
                 </div>
-                <h3 id="last-read-surah" class="text-2xl sm:text-3xl font-black text-brand-dark tracking-tight">Al-Fatihah</h3>
-                <p id="last-read-detail" class="text-xs font-medium text-brand-dark/80 mt-1">Ayat 1 - 7 • Pembukaan</p>
-                <button onclick="resumeLastReading()" class="mt-4 px-5 py-2.5 rounded-xl bg-brand-dark text-brand-gold font-bold text-xs inline-flex items-center gap-2 hover:bg-black transition-colors shadow-md">
+                <h3 id="last-read-surah" class="text-2xl sm:text-3xl font-black text-white tracking-tight">Al-Fatihah</h3>
+                <p id="last-read-detail" class="text-xs font-medium text-brand-textMuted mt-1">Ayat 1 - 7 • Pembukaan</p>
+                <button onclick="resumeLastReading()" class="mt-4 px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-cyan to-brand-cyanLight text-brand-dark font-extrabold text-xs inline-flex items-center gap-2 hover:opacity-95 transition-all shadow-lg cyan-glow">
                   <span>Lanjutkan Tilawah</span>
                   <i data-lucide="chevron-right" class="w-4 h-4"></i>
                 </button>
               </div>
 
-              <!-- 3D Book Graphic Illusion -->
-              <div class="relative w-32 h-40 bg-[#2B2313] rounded-r-xl rounded-l-md border-r-4 border-b-4 border-amber-800/40 p-3 flex flex-col items-center justify-center text-center shadow-2xl shrink-0">
-                <div class="w-16 h-16 rounded-full border-2 border-brand-gold/60 flex items-center justify-center mb-2">
-                  <span class="arabic-text text-xl text-brand-gold font-bold">القرآن</span>
+              <!-- 3D Book Graphic Cyan Accent -->
+              <div class="relative w-32 h-40 bg-[#091522] rounded-r-xl rounded-l-md border-r-4 border-b-4 border-cyan-800/40 p-3 flex flex-col items-center justify-center text-center shadow-2xl shrink-0 border border-brand-cyan/30">
+                <div class="w-16 h-16 rounded-full border-2 border-brand-cyan/60 flex items-center justify-center mb-2 cyan-glow">
+                  <span class="arabic-text text-xl text-brand-cyan font-bold">القرآن</span>
                 </div>
-                <span class="text-[10px] text-brand-gold font-bold tracking-widest uppercase">Al-Qur'an</span>
-              </div>
-            </div>
-
-            <!-- Quick Shortcut Hub (Qur'an, Zakat/Infaq, Dzikir) -->
-            <div class="grid grid-cols-3 gap-3">
-              <div onclick="navigateTo('surah-list')" class="bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border rounded-2xl p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all">
-                <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-brand-gold flex items-center justify-center mb-2.5">
-                  <i data-lucide="book" class="w-6 h-6"></i>
-                </div>
-                <span class="text-xs font-bold text-white">Qur'an</span>
-                <span class="text-[10px] text-brand-textMuted">114 Surah</span>
-              </div>
-
-              <div onclick="navigateTo('donation')" class="bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border rounded-2xl p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all">
-                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-2.5">
-                  <i data-lucide="heart-handshake" class="w-6 h-6"></i>
-                </div>
-                <span class="text-xs font-bold text-white">Infaq QRIS</span>
-                <span class="text-[10px] text-brand-textMuted">Sedekah</span>
-              </div>
-
-              <div onclick="showDzikirModal()" class="bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border rounded-2xl p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all">
-                <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-2.5">
-                  <i data-lucide="sparkle" class="w-6 h-6"></i>
-                </div>
-                <span class="text-xs font-bold text-white">Dzikir</span>
-                <span class="text-[10px] text-brand-textMuted">Pagi & Petang</span>
+                <span class="text-[10px] text-brand-cyan font-extrabold tracking-widest uppercase">Al-Qur'an</span>
               </div>
             </div>
           </div>
 
-          <!-- Featured Daily Study Section (Sesuai Referensi UI "Featured") -->
+          <!-- Featured Daily Study Section (Surah Pilihan) -->
           <div class="bg-brand-surface rounded-3xl p-5 md:p-6 border border-brand-border">
             <div class="flex items-center justify-between mb-4">
               <div>
                 <h3 class="text-base font-bold text-white">Surah Pilihan Harian</h3>
                 <p class="text-xs text-brand-textMuted">Surah yang dianjurkan dibaca secara berkala</p>
               </div>
-              <button onclick="navigateTo('surah-list')" class="text-xs text-brand-gold font-bold hover:underline">Lihat Semua</button>
+              <button onclick="navigateTo('surah-list')" class="text-xs text-brand-cyan font-bold hover:underline">Lihat Semua</button>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3.5" id="quick-surah-cards">
@@ -365,13 +484,15 @@
 
         </section>
 
-        <!-- ================= PAGE 2: DAFTAR SURAH (SURAH LIST) ================= -->
+        <!-- ================= PAGE 2: DAFTAR SURAH (SURAH LIST - Sesuai Layar 3 Gambar) ================= -->
         <section id="page-surah-list" class="hidden space-y-5">
-          <!-- Header Filter & Tabs (Sesuai Referensi UI Screen 3: Surah, Para/Juz, Bookmark) -->
+          <!-- Header Filter & Tabs (Sesuai Referensi Layar 3: Surah, Para, Page, Hijb) -->
           <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div class="flex items-center gap-2 border-b border-brand-border pb-2 md:pb-0">
-              <button id="tab-surah" onclick="switchSurahTab('surah')" class="px-4 py-2 text-sm font-bold border-b-2 border-brand-gold text-brand-gold">Surah (114)</button>
-              <button id="tab-juz" onclick="switchSurahTab('juz')" class="px-4 py-2 text-sm font-bold border-b-2 border-transparent text-brand-textMuted hover:text-white">Juz (30)</button>
+            <div class="flex items-center gap-1 border-b border-brand-border pb-2 md:pb-0 overflow-x-auto">
+              <button id="tab-surah" onclick="switchSurahTab('surah')" class="px-4 py-2 text-xs sm:text-sm font-bold border-b-2 border-brand-cyan text-brand-cyan whitespace-nowrap">Surah</button>
+              <button id="tab-juz" onclick="switchSurahTab('juz')" class="px-4 py-2 text-xs sm:text-sm font-bold border-b-2 border-transparent text-brand-textMuted hover:text-white whitespace-nowrap">Para (Juz)</button>
+              <button id="tab-page" onclick="switchSurahTab('page')" class="px-4 py-2 text-xs sm:text-sm font-bold border-b-2 border-transparent text-brand-textMuted hover:text-white whitespace-nowrap">Page</button>
+              <button id="tab-hijb" onclick="switchSurahTab('hijb')" class="px-4 py-2 text-xs sm:text-sm font-bold border-b-2 border-transparent text-brand-textMuted hover:text-white whitespace-nowrap">Hijb</button>
             </div>
 
             <!-- Search Bar in Surah Page -->
@@ -379,7 +500,7 @@
               <div class="relative w-full md:w-80">
                 <i data-lucide="search" class="w-4 h-4 text-brand-textMuted absolute left-3.5 top-1/2 -translate-y-1/2"></i>
                 <input type="text" id="surah-filter-input" onkeyup="filterSurahList()" placeholder="Ketik nama surah atau arti..." 
-                       class="w-full bg-brand-surface border border-brand-border rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-brand-textMuted focus:outline-none focus:border-brand-gold">
+                       class="w-full bg-brand-surface border border-brand-border rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-brand-textMuted focus:outline-none focus:border-brand-cyan">
               </div>
             </div>
           </div>
@@ -388,7 +509,7 @@
           <div id="surah-items-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
             <!-- Loading indicator -->
             <div class="col-span-full py-16 text-center">
-              <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-brand-gold mb-3"></div>
+              <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-brand-cyan mb-3"></div>
               <p class="text-sm text-brand-textMuted">Memuat daftar 114 Surah Al-Qur'an...</p>
             </div>
           </div>
@@ -694,9 +815,47 @@
       </div>
     </main>
 
-    <!-- ==================== MOBILE BOTTOM NAVIGATION (Sesuai Referensi UI) ==================== -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-[#161A26]/95 backdrop-blur-lg border-t border-brand-border z-30 px-6 py-2.5 flex items-center justify-between shadow-2xl">
-      <button onclick="navigateTo('home')" class="mobile-nav-btn active flex flex-col items-center gap-1 text-brand-gold">
+    <!-- ==================== FLOATING BOTTOM MINI PLAYER (Sesuai Layar 3 Gambar) ==================== -->
+    <div id="floating-mini-player" class="fixed bottom-20 md:bottom-6 left-3 right-3 md:left-auto md:right-8 md:w-96 bg-[#0B1522]/95 backdrop-blur-xl border border-brand-cyan/40 rounded-2xl p-2.5 shadow-2xl z-40 flex items-center justify-between cursor-pointer hover:border-brand-cyan transition-all cyan-glow">
+      <!-- Left: Reciter Avatar & Surah Info -->
+      <div class="flex items-center gap-3 min-w-0" onclick="openMurottalModal()">
+        <div class="relative w-11 h-11 rounded-full overflow-hidden border-2 border-brand-cyan shrink-0">
+          <img id="mini-player-avatar" src="https://images.unsplash.com/photo-1544717305-2782549b5136?fit=crop&w=150&h=150&q=80" alt="Qori" class="w-full h-full object-cover">
+          <!-- Live Playing Dot -->
+          <span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-brand-cyan border-2 border-brand-dark"></span>
+        </div>
+        <div class="truncate">
+          <div class="flex items-center gap-1.5">
+            <h4 id="mini-player-surah" class="text-xs sm:text-sm font-black text-white truncate">Al-Fatihah</h4>
+            <!-- Equalizer Soundwave Bars -->
+            <div id="mini-equalizer-bars" class="flex items-end gap-0.5 h-3.5 shrink-0">
+              <span class="wave-bar"></span>
+              <span class="wave-bar"></span>
+              <span class="wave-bar"></span>
+              <span class="wave-bar"></span>
+            </div>
+          </div>
+          <p id="mini-player-reciter" class="text-[11px] text-brand-textMuted truncate">Syekh Yasser Al-Dosari</p>
+        </div>
+      </div>
+
+      <!-- Right: Playback Controls (Prev, Big Cyan Play, Next) -->
+      <div class="flex items-center gap-2 shrink-0">
+        <button onclick="event.stopPropagation(); playPrevSurah();" title="Surah Sebelumnya" class="p-1.5 text-brand-textMuted hover:text-white transition-colors">
+          <i data-lucide="skip-back" class="w-4 h-4"></i>
+        </button>
+        <button id="mini-player-play-btn" onclick="event.stopPropagation(); toggleAudio();" class="w-9 h-9 rounded-full bg-brand-cyan text-brand-dark flex items-center justify-center font-black hover:scale-105 active:scale-95 transition-all shadow-md cyan-glow">
+          <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
+        </button>
+        <button onclick="event.stopPropagation(); playNextSurah();" title="Surah Selanjutnya" class="p-1.5 text-brand-textMuted hover:text-white transition-colors">
+          <i data-lucide="skip-forward" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================== MOBILE BOTTOM NAVIGATION (Sesuai Layar 1 & 3 Gambar) ==================== -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-[#070D15]/95 backdrop-blur-xl border-t border-brand-border z-30 px-6 py-2.5 flex items-center justify-between shadow-2xl">
+      <button onclick="navigateTo('home')" class="mobile-nav-btn active flex flex-col items-center gap-1 text-brand-cyan">
         <i data-lucide="home" class="w-5 h-5"></i>
         <span class="text-[10px] font-bold">Home</span>
       </button>
@@ -706,9 +865,9 @@
         <span class="text-[10px] font-medium">Qur'an</span>
       </button>
 
-      <!-- Center Curved Search Button (Sesuai Referensi Gambar Layar 2) -->
+      <!-- Center Curved Search Button (Sesuai Referensi Gambar Layar 1 & 3) -->
       <div class="relative -top-5">
-        <button onclick="openQuickSearchModal()" class="w-13 h-13 p-3.5 rounded-full bg-gradient-to-tr from-brand-goldDark via-brand-gold to-brand-goldLight text-brand-dark shadow-xl shadow-brand-gold/30 flex items-center justify-center transform active:scale-95 transition-transform">
+        <button onclick="openQuickSearchModal()" class="w-13 h-13 p-3.5 rounded-full bg-gradient-to-tr from-brand-cyanDark via-brand-cyan to-brand-cyanLight text-brand-dark shadow-xl shadow-brand-cyan/30 flex items-center justify-center transform active:scale-95 transition-transform cyan-glow">
           <i data-lucide="search" class="w-6 h-6 stroke-[2.5]"></i>
         </button>
       </div>
@@ -726,16 +885,152 @@
 
   </div>
 
-  <!-- ==================== AUTH MODAL (LOGIN & DAFTAR - Sesuai Referensi Layar 1) ==================== -->
+  <!-- ==================== MUROTTAL FULL PLAYER MODAL (Sesuai Layar 2 Gambar) ==================== -->
+  <div id="murottal-modal" class="fixed inset-0 bg-black/90 backdrop-blur-xl z-50 hidden flex flex-col justify-between p-6 sm:p-8 max-w-lg mx-auto">
+    <!-- Top Navigation Bar -->
+    <div class="flex items-center justify-between">
+      <button onclick="closeMurottalModal()" class="w-10 h-10 rounded-full bg-brand-surface border border-brand-border flex items-center justify-center text-white hover:text-brand-cyan transition-colors">
+        <i data-lucide="chevron-left" class="w-6 h-6"></i>
+      </button>
+      <h3 class="font-extrabold text-sm tracking-widest text-brand-cyan uppercase">MUROTTAL</h3>
+      <button onclick="bookmarkCurrentAudioSurah()" class="w-10 h-10 rounded-full bg-brand-surface border border-brand-border flex items-center justify-center text-white hover:text-brand-cyan transition-colors" title="Bookmark Surah">
+        <i data-lucide="bookmark" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Center Graphic: Circular Reciter Portrait with Radial Cyan Soundwave Lines (Layar 2) -->
+    <div class="relative my-auto flex flex-col items-center justify-center py-6">
+      <div class="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center">
+        <!-- SVG Radial Glowing Soundwave Lines -->
+        <svg viewBox="0 0 300 300" class="absolute inset-0 w-full h-full pulse-ring filter drop-shadow-[0_0_15px_rgba(0,210,238,0.45)]">
+          <g stroke="#00D2EE" stroke-width="2.2" stroke-linecap="round">
+            <!-- 48 Radial Waveform Spikes at varying lengths around circle -->
+            <line x1="150" y1="20" x2="150" y2="42" opacity="0.9" />
+            <line x1="167" y1="22" x2="164" y2="38" opacity="0.6" />
+            <line x1="183" y1="28" x2="177" y2="44" opacity="0.8" />
+            <line x1="200" y1="36" x2="191" y2="52" opacity="1.0" />
+            <line x1="215" y1="48" x2="203" y2="60" opacity="0.7" />
+            <line x1="228" y1="62" x2="214" y2="72" opacity="0.9" />
+            <line x1="240" y1="78" x2="223" y2="86" opacity="0.5" />
+            <line x1="250" y1="96" x2="231" y2="102" opacity="0.8" />
+            <line x1="256" y1="116" x2="235" y2="120" opacity="1.0" />
+            <line x1="260" y1="136" x2="237" y2="137" opacity="0.6" />
+            <line x1="260" y1="150" x2="238" y2="150" opacity="0.9" />
+            <line x1="258" y1="168" x2="236" y2="165" opacity="0.8" />
+            <line x1="252" y1="187" x2="232" y2="181" opacity="1.0" />
+            <line x1="242" y1="205" x2="225" y2="196" opacity="0.7" />
+            <line x1="230" y1="222" x2="215" y2="210" opacity="0.9" />
+            <line x1="216" y1="238" x2="204" y2="224" opacity="0.6" />
+            <line x1="199" y1="251" x2="190" y2="235" opacity="0.8" />
+            <line x1="181" y1="261" x2="175" y2="243" opacity="1.0" />
+            <line x1="163" y1="268" x2="160" y2="248" opacity="0.7" />
+            <line x1="150" y1="270" x2="150" y2="248" opacity="0.9" />
+            <line x1="137" y1="268" x2="140" y2="248" opacity="0.6" />
+            <line x1="119" y1="261" x2="125" y2="243" opacity="0.8" />
+            <line x1="101" y1="251" x2="110" y2="235" opacity="1.0" />
+            <line x1="84" y1="238" x2="96" y2="224" opacity="0.7" />
+            <line x1="70" y1="222" x2="85" y2="210" opacity="0.9" />
+            <line x1="58" y1="205" x2="75" y2="196" opacity="0.6" />
+            <line x1="48" y1="187" x2="68" y2="181" opacity="0.8" />
+            <line x1="42" y1="168" x2="64" y2="165" opacity="1.0" />
+            <line x1="40" y1="150" x2="62" y2="150" opacity="0.9" />
+            <line x1="40" y1="136" x2="63" y2="137" opacity="0.6" />
+            <line x1="44" y1="116" x2="65" y2="120" opacity="0.8" />
+            <line x1="50" y1="96" x2="69" y2="102" opacity="1.0" />
+            <line x1="60" y1="78" x2="77" y2="86" opacity="0.7" />
+            <line x1="72" y1="62" x2="86" y2="72" opacity="0.9" />
+            <line x1="85" y1="48" x2="97" y2="60" opacity="0.5" />
+            <line x1="100" y1="36" x2="109" y2="52" opacity="0.8" />
+            <line x1="117" y1="28" x2="123" y2="44" opacity="1.0" />
+            <line x1="133" y1="22" x2="136" y2="38" opacity="0.7" />
+          </g>
+          <!-- Soft glowing inner circle -->
+          <circle cx="150" cy="150" r="94" fill="none" stroke="#00D2EE" stroke-width="2" opacity="0.8" />
+        </svg>
+
+        <!-- Center Circular Qori Portrait -->
+        <div class="w-44 h-44 sm:w-48 sm:h-48 rounded-full overflow-hidden border-4 border-brand-cyan shadow-2xl z-10 cyan-glow-lg">
+          <img id="murottal-modal-avatar" src="https://images.unsplash.com/photo-1544717305-2782549b5136?fit=crop&w=300&h=300&q=80" alt="Qori" class="w-full h-full object-cover">
+        </div>
+      </div>
+
+      <!-- Surah Title & Reciter Name -->
+      <div class="text-center mt-6">
+        <h2 id="murottal-modal-surah" class="text-2xl font-black text-white">Surah Al-Fatihah (الفاتحة)</h2>
+        <p id="murottal-modal-reciter" class="text-sm font-semibold text-brand-cyan mt-1">Yasser Al-Dosari</p>
+      </div>
+
+      <!-- Bismillah Calligraphy (Sesuai Layar 2) -->
+      <div class="mt-4 text-center">
+        <p class="arabic-text text-xl sm:text-2xl text-white/95 font-medium tracking-wide">
+          بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        </p>
+      </div>
+    </div>
+
+    <!-- Bottom Audio Controls & Scrubber (Sesuai Layar 2) -->
+    <div class="space-y-4">
+      <!-- Scrubber Slider -->
+      <div>
+        <div class="relative w-full flex items-center">
+          <input type="range" id="murottal-progress" min="0" max="100" value="38" onchange="seekAudio(this.value)" 
+                 class="w-full h-1.5 bg-brand-surface rounded-lg appearance-none cursor-pointer accent-brand-cyan">
+        </div>
+        <div class="flex justify-between text-[11px] font-mono text-brand-textMuted mt-1.5">
+          <span id="murottal-cur-time">01:24</span>
+          <span id="murottal-dur-time">03:45</span>
+        </div>
+      </div>
+
+      <!-- Playback Controls Row (Shuffle, Prev, Big Cyan Play, Next, Repeat) -->
+      <div class="flex items-center justify-between px-4 py-2">
+        <button id="btn-shuffle" onclick="toggleShuffle()" class="text-brand-textMuted hover:text-white transition-colors" title="Acak">
+          <i data-lucide="shuffle" class="w-5 h-5"></i>
+        </button>
+
+        <button onclick="playPrevSurah()" class="text-brand-textMuted hover:text-white transition-colors" title="Sebelumnya">
+          <i data-lucide="skip-back" class="w-7 h-7"></i>
+        </button>
+
+        <!-- Big Round Cyan Play / Pause Button Sesuai Layar 2 -->
+        <button id="murottal-big-play-btn" onclick="toggleAudio()" class="w-16 h-16 rounded-full bg-brand-cyan text-brand-dark flex items-center justify-center font-black hover:scale-105 active:scale-95 transition-all shadow-xl cyan-glow">
+          <i data-lucide="pause" class="w-7 h-7 fill-current" id="murottal-big-play-icon"></i>
+        </button>
+
+        <button onclick="playNextSurah()" class="text-brand-textMuted hover:text-white transition-colors" title="Selanjutnya">
+          <i data-lucide="skip-forward" class="w-7 h-7"></i>
+        </button>
+
+        <button id="btn-repeat" onclick="toggleRepeat()" class="text-brand-textMuted hover:text-white transition-colors" title="Ulangi">
+          <i data-lucide="repeat" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Footer Speed Selector & Text Reader Shortcut -->
+      <div class="flex items-center justify-between pt-2 border-t border-brand-border/60 text-xs">
+        <button onclick="toggleAudioSpeed()" id="murottal-speed-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-surface border border-brand-border text-brand-textMuted hover:text-white font-mono">
+          <i data-lucide="volume-2" class="w-4 h-4 text-brand-cyan"></i>
+          <span id="murottal-speed-text">1.0x</span>
+        </button>
+
+        <button onclick="closeMurottalModal(); openSurahDetail(AppState.currentSurah ? AppState.currentSurah.nomor : 1);" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-surface border border-brand-border text-brand-textMuted hover:text-white">
+          <i data-lucide="file-text" class="w-4 h-4 text-brand-cyan"></i>
+          <span>Baca Teks Ayat</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== AUTH MODAL (LOGIN & DAFTAR - Sesuai Tema Midnight Cyan) ==================== -->
   <div id="auth-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-[#171926] border border-brand-gold/30 rounded-3xl w-full max-w-md p-6 sm:p-8 relative shadow-2xl mosque-bg">
+    <div class="bg-[#0D1520] border border-brand-cyan/30 rounded-3xl w-full max-w-md p-6 sm:p-8 relative shadow-2xl mosque-bg">
       <button onclick="showAuthModal(false)" class="absolute top-5 right-5 text-brand-textMuted hover:text-white">
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
 
       <!-- Logo & Title -->
       <div class="text-center mb-6">
-        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-goldDark to-brand-gold text-brand-dark flex items-center justify-center mx-auto mb-3 shadow-lg shadow-brand-gold/20">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-cyanDark to-brand-cyan text-brand-dark flex items-center justify-center mx-auto mb-3 shadow-lg shadow-brand-cyan/25 cyan-glow">
           <i data-lucide="book-marked" class="w-7 h-7"></i>
         </div>
         <h3 id="auth-modal-title" class="text-2xl font-black text-white">Masuk ke Akun</h3>
@@ -744,7 +1039,7 @@
 
       <!-- Tab Switcher (Masuk vs Daftar) -->
       <div class="flex bg-brand-surface p-1 rounded-xl mb-5 border border-brand-border">
-        <button id="auth-tab-login" onclick="switchAuthMode('login')" class="flex-1 py-1.5 rounded-lg text-xs font-bold bg-brand-gold text-brand-dark transition-all">Masuk</button>
+        <button id="auth-tab-login" onclick="switchAuthMode('login')" class="flex-1 py-1.5 rounded-lg text-xs font-bold bg-brand-cyan text-brand-dark transition-all">Masuk</button>
         <button id="auth-tab-register" onclick="switchAuthMode('register')" class="flex-1 py-1.5 rounded-lg text-xs font-bold text-brand-textMuted hover:text-white transition-all">Daftar Akun</button>
       </div>
 
@@ -930,13 +1225,74 @@
       }
     }
 
-    // Daftar Qori Resmi (Sumber: equran.id v2)
+    // ==================== DAFTAR QORI RESMI (Sesuai Layar 1 & 2 Gambar) ====================
     const QORI_LIST = [
-      { id: '05', name: 'Syekh Misyari Rasyid Al-Afasi', shortName: 'Misyari Rasyid', origin: 'Kuwait', style: 'Tartil Merdu & Populer', icon: '🎙️' },
-      { id: '01', name: 'Syekh Abdullah Al-Juhany', shortName: 'Al-Juhany', origin: 'Imam Masjidil Haram, Makkah', style: 'Irama Khas Hijazi', icon: '🕋' },
-      { id: '02', name: 'Syekh Abdul Muhsin Al-Qasim', shortName: 'Al-Qasim', origin: 'Imam Masjid Nabawi, Madinah', style: 'Tenang & Khusyuk', icon: '🕌' },
-      { id: '03', name: 'Syekh Abdurrahman As-Sudais', shortName: 'As-Sudais', origin: 'Imam Besar Masjidil Haram', style: 'Cepat & Berwibawa', icon: '✨' },
-      { id: '04', name: 'Syekh Ibrahim Al-Dossari', shortName: 'Al-Dossari', origin: 'Arab Saudi', style: 'Murattal Ahli Qiraat', icon: '📖' }
+      { 
+        id: '05', 
+        equranKey: '05',
+        name: 'Syekh Yasser Al-Dosari', 
+        shortName: 'Yasser Al-Dosari', 
+        origin: 'Imam Masjidil Haram, Makkah', 
+        originShort: 'Makkah',
+        style: 'Tartil Khusyuk & Populer', 
+        icon: '🎙️',
+        avatar: 'https://images.unsplash.com/photo-1544717305-2782549b5136?fit=crop&w=250&h=250&q=80'
+      },
+      { 
+        id: '06', 
+        equranKey: '05',
+        name: 'Syekh Misyari Rasyid Al-Afasi', 
+        shortName: 'Misyari Rasyid', 
+        origin: 'Kuwait', 
+        originShort: 'Kuwait',
+        style: 'Tartil Syahdu & Merdu', 
+        icon: '🎙️',
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=250&h=250&q=80'
+      },
+      { 
+        id: '01', 
+        equranKey: '01',
+        name: 'Syekh Abdullah Al-Juhany', 
+        shortName: 'Al-Juhany', 
+        origin: 'Imam Masjidil Haram, Makkah', 
+        originShort: 'Makkah',
+        style: 'Irama Khas Hijazi', 
+        icon: '🕋',
+        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?fit=crop&w=250&h=250&q=80'
+      },
+      { 
+        id: '02', 
+        equranKey: '02',
+        name: 'Syekh Abdul Muhsin Al-Qasim', 
+        shortName: 'Al-Qasim', 
+        origin: 'Imam Masjid Nabawi, Madinah', 
+        originShort: 'Madinah',
+        style: 'Tenang & Mendalam', 
+        icon: '🕌',
+        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?fit=crop&w=250&h=250&q=80'
+      },
+      { 
+        id: '03', 
+        equranKey: '03',
+        name: 'Syekh Abdurrahman As-Sudais', 
+        shortName: 'As-Sudais', 
+        origin: 'Imam Besar Masjidil Haram', 
+        originShort: 'Makkah',
+        style: 'Cepat & Berwibawa', 
+        icon: '✨',
+        avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?fit=crop&w=250&h=250&q=80'
+      },
+      { 
+        id: '04', 
+        equranKey: '04',
+        name: 'Syekh Ibrahim Al-Dossari', 
+        shortName: 'Al-Dossari', 
+        origin: 'Arab Saudi', 
+        originShort: 'Saudi',
+        style: 'Murattal Ahli Qiraat', 
+        icon: '📖',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?fit=crop&w=250&h=250&q=80'
+      }
     ];
 
     // State Aplikasi
@@ -945,6 +1301,9 @@
       authToken: localStorage.getItem('quran_app_token') || null,
       selectedQori: localStorage.getItem('quran_selected_qori') || '05',
       autoNextAyah: localStorage.getItem('quran_auto_next') === 'true',
+      isRepeat: false,
+      isShuffle: false,
+      playbackSpeed: 1.0,
       activePlayingAyah: null,
       surahs: [],
       currentSurah: null,
@@ -969,6 +1328,7 @@
       initPrayerTimesByLocation();
       restoreSavedSession();
       initQoriSystem();
+      initAudioEvents();
       loadSurahList();
       initMonthlyChart();
       loadInitialCloudData();
@@ -1228,27 +1588,28 @@
         return;
       }
 
-      container.innerHTML = list.map(s => `
-        <div onclick="openSurahDetail(${s.nomor})" class="bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-gold/40 rounded-2xl p-4 transition-all duration-200 cursor-pointer flex items-center justify-between group shadow-sm">
-          <div class="flex items-center gap-3.5">
-            <!-- Octagonal Badge Sesuai Referensi UI Screen 3 -->
-            <div class="islamic-badge shrink-0">
-              <span>${s.nomor}</span>
+      container.innerHTML = list.map(s => {
+        const isCurrentPlaying = AppState.currentSurah && AppState.currentSurah.nomor === s.nomor && AppState.isPlayingAudio;
+        return `
+          <div class="bg-brand-surface hover:bg-brand-surfaceHover border ${isCurrentPlaying ? 'border-brand-cyan bg-brand-cyan/5 shadow-lg shadow-brand-cyan/15 ring-1 ring-brand-cyan/40' : 'border-brand-border hover:border-brand-cyan/40'} rounded-2xl p-4 transition-all duration-200 flex items-center justify-between group shadow-sm">
+            <div class="flex items-center gap-3.5 cursor-pointer flex-1 min-w-0" onclick="openSurahDetail(${s.nomor})">
+              <!-- Numbering Sesuai Layar 3: 1. Al-Fatihah (الفاتحة) -->
+              <span class="text-sm font-black text-brand-textMuted font-mono shrink-0">${s.nomor}.</span>
+              <div class="truncate">
+                <h4 class="font-bold text-sm text-white group-hover:text-brand-cyan transition-colors truncate">
+                  ${s.namaLatin} <span class="arabic-text text-brand-cyan text-sm font-bold">(${s.nama})</span>
+                </h4>
+                <p class="text-[11px] text-brand-textMuted truncate">${s.tempatTurun} • ${s.jumlahAyat} Ayat • ${s.arti}</p>
+              </div>
             </div>
-            <div>
-              <h4 class="font-bold text-sm text-white group-hover:text-brand-gold transition-colors">${s.namaLatin}</h4>
-              <p class="text-[11px] text-brand-textMuted">${s.tempatTurun} • ${s.jumlahAyat} Ayat</p>
-            </div>
+            
+            <!-- Round Cyan Play Button Sesuai Layar 3 Gambar -->
+            <button onclick="quickPlaySurahAudio(${s.nomor}, event)" class="w-9 h-9 rounded-full bg-brand-cyan text-brand-dark flex items-center justify-center font-black hover:scale-110 active:scale-95 transition-all shadow-md cyan-glow shrink-0 ml-3" title="Putar Murottal Surah">
+              <i data-lucide="${isCurrentPlaying ? 'pause' : 'play'}" class="w-4 h-4 ml-0.5 fill-current"></i>
+            </button>
           </div>
-          <div class="text-right flex items-center gap-3">
-            <span class="arabic-text text-lg text-brand-gold font-bold">${s.nama}</span>
-            <!-- Round Play Button Icon Sesuai Referensi UI Screen 3 -->
-            <div class="w-7 h-7 rounded-full bg-brand-card group-hover:bg-brand-gold text-brand-gold group-hover:text-brand-dark flex items-center justify-center transition-all">
-              <i data-lucide="play" class="w-3.5 h-3.5 ml-0.5"></i>
-            </div>
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
 
       lucide.createIcons();
     }
@@ -1257,9 +1618,9 @@
       const container = document.getElementById('quick-surah-cards');
       if (!container) return;
       container.innerHTML = list.map(s => `
-        <div onclick="openSurahDetail(${s.nomor})" class="bg-brand-card hover:bg-brand-surfaceHover border border-brand-border rounded-2xl p-3.5 cursor-pointer transition-all">
+        <div onclick="openSurahDetail(${s.nomor})" class="bg-brand-card hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-cyan/40 rounded-2xl p-3.5 cursor-pointer transition-all">
           <div class="flex justify-between items-center mb-1.5">
-            <span class="text-xs font-bold text-brand-gold">#${s.nomor}</span>
+            <span class="text-xs font-bold text-brand-cyan">#${s.nomor}</span>
             <span class="arabic-text text-base text-white">${s.nama}</span>
           </div>
           <h5 class="text-xs font-bold text-white truncate">${s.namaLatin}</h5>
@@ -1295,7 +1656,7 @@
       const container = document.getElementById('ayah-list-container');
       container.innerHTML = `
         <div class="text-center py-16">
-          <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-brand-gold mb-3"></div>
+          <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-brand-cyan mb-3"></div>
           <p class="text-xs text-brand-textMuted">Memuat ayat-ayat surah...</p>
         </div>
       `;
@@ -1323,8 +1684,10 @@
           // Setup audio player sesuai Qori aktif
           updateAudioSourcesForSelectedQori();
 
-          // Update Last Read Banner
+          // Update Last Read Banner & Mini Player
           updateLastReadCard(json.data.namaLatin, `Ayat 1 - ${json.data.jumlahAyat} • ${json.data.arti}`, json.data.nomor);
+          updateMiniPlayerUI();
+          updateMurottalModalUI();
 
           renderAyahs(AppState.currentAyahs);
         }
@@ -1334,7 +1697,7 @@
       }
     }
 
-    // ==================== SISTEM PILIHAN QORI' ====================
+    // ==================== SISTEM PILIHAN QORI & AUDIO EVENTS ====================
     function getQoriById(id) {
       return QORI_LIST.find(q => q.id === id) || QORI_LIST[0];
     }
@@ -1344,9 +1707,37 @@
       const autoNextCb = document.getElementById('toggle-auto-next');
       if (autoNextCb) autoNextCb.checked = AppState.autoNextAyah;
 
-      // Update Qori Pill & Select
+      // Update Qori UI, Carousel, & Modal
       updateQoriUIElements();
+      renderHomeRecitersBar();
       renderQoriModalCards();
+    }
+
+    // Render Carousel Horizontal Reciters di Beranda (Sesuai Layar 1)
+    function renderHomeRecitersBar() {
+      const container = document.getElementById('home-reciters-bar');
+      if (!container) return;
+
+      container.innerHTML = QORI_LIST.map(q => {
+        const isSelected = q.id === AppState.selectedQori;
+        return `
+          <div onclick="selectQori('${q.id}')" class="flex flex-col items-center cursor-pointer group shrink-0 transition-transform hover:scale-105">
+            <div class="relative w-16 h-16 rounded-full p-0.5 transition-all ${
+              isSelected 
+                ? 'ring-2 ring-brand-cyan ring-offset-2 ring-offset-[#070B11] cyan-glow shadow-lg' 
+                : 'opacity-70 group-hover:opacity-100 border border-brand-border'
+            }">
+              <img src="${q.avatar}" alt="${q.shortName}" class="w-full h-full object-cover rounded-full">
+              ${isSelected ? `<span class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-brand-cyan border-2 border-brand-dark flex items-center justify-center text-[8px] text-brand-dark font-black">✓</span>` : ''}
+            </div>
+            <span class="text-xs font-bold text-white mt-2 group-hover:text-brand-cyan transition-colors text-center w-24 truncate">${q.shortName}</span>
+            ${isSelected 
+              ? `<span class="mt-1 px-2 py-0.5 rounded-full text-[9px] font-extrabold bg-brand-cyan text-brand-dark cyan-glow animate-pulse">Now Playing</span>` 
+              : `<span class="text-[10px] text-brand-textMuted mt-0.5">${q.originShort}</span>`
+            }
+          </div>
+        `;
+      }).join('');
     }
 
     function updateQoriUIElements() {
@@ -1364,6 +1755,14 @@
       if (audioText && !AppState.isPlayingAudio) {
         audioText.textContent = `Putar: ${q.shortName}`;
       }
+
+      // Update Mini Player & Murottal Modal Avatar
+      const miniAvatar = document.getElementById('mini-player-avatar');
+      if (miniAvatar) miniAvatar.src = q.avatar;
+      const modalAvatar = document.getElementById('murottal-modal-avatar');
+      if (modalAvatar) modalAvatar.src = q.avatar;
+      const modalReciter = document.getElementById('murottal-modal-reciter');
+      if (modalReciter) modalReciter.textContent = q.name;
     }
 
     function renderQoriModalCards() {
@@ -1375,26 +1774,24 @@
         return `
           <div onclick="selectQori('${q.id}')" class="p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between group ${
             isSelected 
-              ? 'bg-brand-card border-brand-gold shadow-lg shadow-brand-gold/10' 
-              : 'bg-brand-surface border-brand-border hover:border-brand-gold/40 hover:bg-brand-surfaceHover'
+              ? 'bg-brand-card border-brand-cyan shadow-lg shadow-brand-cyan/20 ring-1 ring-brand-cyan/40' 
+              : 'bg-brand-surface border-brand-border hover:border-brand-cyan/40 hover:bg-brand-surfaceHover'
           }">
             <div class="flex items-center gap-3.5">
-              <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl shrink-0 ${
-                isSelected ? 'bg-brand-gold text-brand-dark font-black' : 'bg-brand-card border border-brand-border text-white'
-              }">
-                ${q.icon}
+              <div class="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 border ${isSelected ? 'border-brand-cyan' : 'border-brand-border'}">
+                <img src="${q.avatar}" class="w-full h-full object-cover">
               </div>
               <div>
                 <div class="flex items-center gap-2">
-                  <h4 class="font-bold text-xs sm:text-sm text-white group-hover:text-brand-gold transition-colors">${q.name}</h4>
-                  ${isSelected ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-brand-gold text-brand-dark">Aktif</span>` : ''}
+                  <h4 class="font-bold text-xs sm:text-sm text-white group-hover:text-brand-cyan transition-colors">${q.name}</h4>
+                  ${isSelected ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-brand-cyan text-brand-dark">Aktif</span>` : ''}
                 </div>
-                <p class="text-[11px] text-brand-textMuted mt-0.5">${q.origin} • <span class="text-brand-gold/80">${q.style}</span></p>
+                <p class="text-[11px] text-brand-textMuted mt-0.5">${q.origin} • <span class="text-brand-cyan/80">${q.style}</span></p>
               </div>
             </div>
             <div class="text-right shrink-0">
               <button class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                isSelected ? 'bg-brand-gold text-brand-dark' : 'bg-brand-card text-brand-textMuted group-hover:text-white group-hover:bg-brand-surfaceHover'
+                isSelected ? 'bg-brand-cyan text-brand-dark cyan-glow' : 'bg-brand-card text-brand-textMuted group-hover:text-white group-hover:bg-brand-surfaceHover'
               }">
                 ${isSelected ? 'Dipilih' : 'Pilih'}
               </button>
@@ -1417,10 +1814,10 @@
       AppState.selectedQori = qoriId;
       localStorage.setItem('quran_selected_qori', qoriId);
       updateQoriUIElements();
+      renderHomeRecitersBar();
       updateAudioSourcesForSelectedQori();
       closeQoriModal();
 
-      // Render ulang ayat jika sedang melihat surah agar audio URL per ayat menyesuaikan
       if (AppState.currentAyahs && AppState.currentAyahs.length > 0) {
         renderAyahs(AppState.currentAyahs);
       }
@@ -1440,9 +1837,9 @@
 
       const audioPlayer = document.getElementById('main-audio-player');
       const qori = getQoriById(AppState.selectedQori);
+      const audioKey = qori.equranKey || '05';
 
-      // Cek audio full sesuai qori, atau fallback ke key pertama
-      const audioUrl = AppState.currentSurah.audioFull[AppState.selectedQori] || Object.values(AppState.currentSurah.audioFull)[0];
+      const audioUrl = AppState.currentSurah.audioFull[audioKey] || Object.values(AppState.currentSurah.audioFull)[0];
 
       const wasPlaying = AppState.isPlayingAudio;
       if (wasPlaying && audioPlayer) {
@@ -1451,6 +1848,7 @@
 
       if (audioPlayer) {
         audioPlayer.src = audioUrl;
+        audioPlayer.playbackRate = AppState.playbackSpeed || 1.0;
         if (wasPlaying) {
           audioPlayer.play();
         }
@@ -1460,6 +1858,223 @@
       if (audioText) {
         audioText.textContent = wasPlaying ? `Memutar: ${qori.shortName}` : `Putar: ${qori.shortName}`;
       }
+    }
+
+    // ==================== LISTENER AUDIO EVENTS & TIME SCRUBBER ====================
+    function initAudioEvents() {
+      const audio = document.getElementById('main-audio-player');
+      if (!audio) return;
+
+      audio.addEventListener('timeupdate', () => {
+        if (!audio.duration) return;
+        const pct = (audio.currentTime / audio.duration) * 100;
+        const prog = document.getElementById('murottal-progress');
+        if (prog) prog.value = pct;
+
+        const curEl = document.getElementById('murottal-cur-time');
+        if (curEl) curEl.textContent = formatAudioTime(audio.currentTime);
+
+        const durEl = document.getElementById('murottal-dur-time');
+        if (durEl) durEl.textContent = formatAudioTime(audio.duration);
+      });
+
+      audio.addEventListener('play', () => {
+        AppState.isPlayingAudio = true;
+        updateAllPlayButtons(true);
+      });
+
+      audio.addEventListener('pause', () => {
+        AppState.isPlayingAudio = false;
+        updateAllPlayButtons(false);
+      });
+
+      audio.addEventListener('ended', () => {
+        if (AppState.isRepeat) {
+          audio.currentTime = 0;
+          audio.play();
+        } else if (AppState.isShuffle) {
+          const rand = Math.floor(Math.random() * 114) + 1;
+          quickPlaySurahAudio(rand);
+        } else {
+          playNextSurah();
+        }
+      });
+    }
+
+    function formatAudioTime(seconds) {
+      if (!seconds || isNaN(seconds)) return "00:00";
+      const m = Math.floor(seconds / 60);
+      const s = Math.floor(seconds % 60);
+      return `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    function updateAllPlayButtons(isPlaying) {
+      const iconName = isPlaying ? 'pause' : 'play';
+      
+      const btnReader = document.getElementById('audio-play-btn');
+      if (btnReader) btnReader.innerHTML = `<i data-lucide="${iconName}" class="w-3.5 h-3.5 ${iconName === 'play' ? 'ml-0.5' : ''}"></i>`;
+
+      const btnMini = document.getElementById('mini-player-play-btn');
+      if (btnMini) btnMini.innerHTML = `<i data-lucide="${iconName}" class="w-4 h-4 ${iconName === 'play' ? 'ml-0.5' : ''} fill-current"></i>`;
+
+      const btnMurottal = document.getElementById('murottal-big-play-btn');
+      if (btnMurottal) btnMurottal.innerHTML = `<i data-lucide="${iconName}" class="w-7 h-7 fill-current"></i>`;
+
+      const miniBars = document.getElementById('mini-equalizer-bars');
+      if (miniBars) {
+        miniBars.style.opacity = isPlaying ? '1' : '0.4';
+      }
+
+      if (AppState.surahs && AppState.surahs.length > 0) {
+        renderSurahList(AppState.surahs);
+      }
+      lucide.createIcons();
+    }
+
+    // Toggle Surah Full Audio
+    function toggleAudio() {
+      const audio = document.getElementById('main-audio-player');
+      const qori = getQoriById(AppState.selectedQori);
+
+      if (currentAyahAudioEl) {
+        currentAyahAudioEl.pause();
+        AppState.activePlayingAyah = null;
+        if (AppState.currentAyahs) renderAyahs(AppState.currentAyahs);
+      }
+
+      // Jika belum ada surah yang dimuat, muat Al-Fatihah (1)
+      if (!audio.src || audio.src === window.location.href) {
+        quickPlaySurahAudio(1);
+        return;
+      }
+
+      if (AppState.isPlayingAudio) {
+        audio.pause();
+      } else {
+        audio.play().catch(e => console.log('Audio error:', e));
+      }
+    }
+
+    // Quick Play Surah Audio from Surah List or Widget
+    async function quickPlaySurahAudio(surahNumber, event) {
+      if (event) event.stopPropagation();
+
+      const audio = document.getElementById('main-audio-player');
+      const qori = getQoriById(AppState.selectedQori);
+      const audioKey = qori.equranKey || '05';
+
+      // Jika sudah surah ini dan sedang memutar, pause
+      if (AppState.currentSurah && AppState.currentSurah.nomor === surahNumber) {
+        toggleAudio();
+        return;
+      }
+
+      try {
+        const res = await fetch(`https://equran.id/api/v2/surat/${surahNumber}`);
+        const json = await res.json();
+        if (json.code === 200) {
+          AppState.currentSurah = json.data;
+          AppState.currentAyahs = json.data.ayat;
+
+          const audioUrl = json.data.audioFull[audioKey] || Object.values(json.data.audioFull)[0];
+          audio.src = audioUrl;
+          audio.playbackRate = AppState.playbackSpeed || 1.0;
+          audio.play().catch(e => console.log('Autoplay error:', e));
+
+          updateMiniPlayerUI();
+          updateMurottalModalUI();
+          updateLastReadCard(json.data.namaLatin, `Ayat 1 - ${json.data.jumlahAyat} • ${json.data.arti}`, json.data.nomor);
+          renderSurahList(AppState.surahs);
+        }
+      } catch (err) {
+        console.error('Gagal memutar audio surah:', err);
+      }
+    }
+
+    function updateMiniPlayerUI() {
+      if (!AppState.currentSurah) return;
+      const qori = getQoriById(AppState.selectedQori);
+
+      const titleEl = document.getElementById('mini-player-surah');
+      if (titleEl) titleEl.textContent = `${AppState.currentSurah.nomor}. ${AppState.currentSurah.namaLatin}`;
+
+      const reciterEl = document.getElementById('mini-player-reciter');
+      if (reciterEl) reciterEl.textContent = qori.name;
+
+      const avatarEl = document.getElementById('mini-player-avatar');
+      if (avatarEl) avatarEl.src = qori.avatar;
+    }
+
+    function updateMurottalModalUI() {
+      if (!AppState.currentSurah) return;
+      const qori = getQoriById(AppState.selectedQori);
+
+      const titleEl = document.getElementById('murottal-modal-surah');
+      if (titleEl) titleEl.textContent = `Surah ${AppState.currentSurah.namaLatin} (${AppState.currentSurah.nama})`;
+
+      const reciterEl = document.getElementById('murottal-modal-reciter');
+      if (reciterEl) reciterEl.textContent = qori.name;
+
+      const avatarEl = document.getElementById('murottal-modal-avatar');
+      if (avatarEl) avatarEl.src = qori.avatar;
+    }
+
+    function openMurottalModal() {
+      updateMurottalModalUI();
+      document.getElementById('murottal-modal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeMurottalModal() {
+      document.getElementById('murottal-modal').classList.add('hidden');
+    }
+
+    function seekAudio(val) {
+      const audio = document.getElementById('main-audio-player');
+      if (audio && audio.duration) {
+        audio.currentTime = (val / 100) * audio.duration;
+      }
+    }
+
+    function toggleAudioSpeed() {
+      const audio = document.getElementById('main-audio-player');
+      const speeds = [1.0, 1.25, 1.5, 0.75];
+      let idx = speeds.indexOf(AppState.playbackSpeed);
+      idx = (idx + 1) % speeds.length;
+      AppState.playbackSpeed = speeds[idx];
+
+      if (audio) audio.playbackRate = AppState.playbackSpeed;
+      const speedText = document.getElementById('murottal-speed-text');
+      if (speedText) speedText.textContent = `${AppState.playbackSpeed}x`;
+    }
+
+    function toggleShuffle() {
+      AppState.isShuffle = !AppState.isShuffle;
+      const btn = document.getElementById('btn-shuffle');
+      if (btn) btn.classList.toggle('text-brand-cyan', AppState.isShuffle);
+    }
+
+    function toggleRepeat() {
+      AppState.isRepeat = !AppState.isRepeat;
+      const btn = document.getElementById('btn-repeat');
+      if (btn) btn.classList.toggle('text-brand-cyan', AppState.isRepeat);
+    }
+
+    function playNextSurah() {
+      const currentNum = AppState.currentSurah ? AppState.currentSurah.nomor : 1;
+      const nextNum = currentNum >= 114 ? 1 : currentNum + 1;
+      quickPlaySurahAudio(nextNum);
+    }
+
+    function playPrevSurah() {
+      const currentNum = AppState.currentSurah ? AppState.currentSurah.nomor : 1;
+      const prevNum = currentNum <= 1 ? 114 : currentNum - 1;
+      quickPlaySurahAudio(prevNum);
+    }
+
+    function bookmarkCurrentAudioSurah() {
+      if (!AppState.currentSurah) return;
+      toggleBookmarkAyah(AppState.currentSurah.nomor, 1);
     }
 
     // ==================== RENDER AYAT DENGAN QORI AKTIF ====================
@@ -2162,15 +2777,28 @@
     }
 
     function switchSurahTab(tab) {
-      const isSurah = tab === 'surah';
-      document.getElementById('tab-surah').className = isSurah ? 'px-4 py-2 text-sm font-bold border-b-2 border-brand-gold text-brand-gold' : 'px-4 py-2 text-sm font-bold border-b-2 border-transparent text-brand-textMuted hover:text-white';
-      document.getElementById('tab-juz').className = !isSurah ? 'px-4 py-2 text-sm font-bold border-b-2 border-brand-gold text-brand-gold' : 'px-4 py-2 text-sm font-bold border-b-2 border-transparent text-brand-textMuted hover:text-white';
+      const tabs = ['surah', 'juz', 'page', 'hijb'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tab-${t}`);
+        if (btn) {
+          if (t === tab) {
+            btn.className = 'px-4 py-2 text-xs sm:text-sm font-bold border-b-2 border-brand-cyan text-brand-cyan whitespace-nowrap';
+          } else {
+            btn.className = 'px-4 py-2 text-xs sm:text-sm font-bold border-b-2 border-transparent text-brand-textMuted hover:text-white whitespace-nowrap';
+          }
+        }
+      });
 
+      const isSurah = tab === 'surah';
       document.getElementById('surah-items-list').classList.toggle('hidden', !isSurah);
       document.getElementById('juz-items-list').classList.toggle('hidden', isSurah);
 
-      if (!isSurah && document.getElementById('juz-items-list').children.length === 0) {
+      if (tab === 'juz') {
         renderJuzList();
+      } else if (tab === 'page') {
+        renderPageList();
+      } else if (tab === 'hijb') {
+        renderHijbList();
       }
     }
 
@@ -2178,12 +2806,42 @@
       const container = document.getElementById('juz-items-list');
       const juzs = Array.from({ length: 30 }, (_, i) => i + 1);
       container.innerHTML = juzs.map(j => `
-        <div onclick="navigateTo('surah-list'); filterSurahList();" class="bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border rounded-2xl p-4 text-center cursor-pointer transition-all">
+        <div onclick="navigateTo('surah-list');" class="bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-cyan/40 rounded-2xl p-4 text-center cursor-pointer transition-all">
           <div class="islamic-badge mx-auto mb-3">
             <span>${j}</span>
           </div>
           <h5 class="text-sm font-bold text-white">Juz ${j}</h5>
-          <p class="text-[10px] text-brand-textMuted mt-1">Tilawah Juz ${j}</p>
+          <p class="text-[10px] text-brand-textMuted mt-1">Tilawah Juz ${j} Al-Qur'an</p>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function renderPageList() {
+      const container = document.getElementById('juz-items-list');
+      const pages = [1, 2, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 604];
+      container.innerHTML = pages.map(p => `
+        <div onclick="openSurahDetail(1)" class="bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-cyan/40 rounded-2xl p-4 text-center cursor-pointer transition-all">
+          <div class="islamic-badge mx-auto mb-3">
+            <span>${p}</span>
+          </div>
+          <h5 class="text-sm font-bold text-white">Halaman ${p}</h5>
+          <p class="text-[10px] text-brand-textMuted mt-1">Mushaf Standar Madinah</p>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function renderHijbList() {
+      const container = document.getElementById('juz-items-list');
+      const hizbs = Array.from({ length: 60 }, (_, i) => i + 1);
+      container.innerHTML = hizbs.slice(0, 30).map(h => `
+        <div onclick="navigateTo('surah-list');" class="bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-cyan/40 rounded-2xl p-4 text-center cursor-pointer transition-all">
+          <div class="islamic-badge mx-auto mb-3">
+            <span>${h}</span>
+          </div>
+          <h5 class="text-sm font-bold text-white">Hizb ${h}</h5>
+          <p class="text-[10px] text-brand-textMuted mt-1">Pembagian 1/60 Al-Qur'an</p>
         </div>
       `).join('');
       lucide.createIcons();
