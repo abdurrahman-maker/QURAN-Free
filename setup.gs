@@ -277,30 +277,40 @@ function initialSetup() {
  * @private
  */
 function getOrCreateSpreadsheet_() {
+  // 1. UTAMAKAN spreadsheet yang sedang dibuka (Container-bound ke file yang ada di layar pengguna!)
+  try {
+    var activeSs = SpreadsheetApp.getActiveSpreadsheet();
+    if (activeSs) {
+      var activeId = activeSs.getId();
+      PropertiesService.getScriptProperties().setProperty(PROP_SPREADSHEET_ID, activeId);
+      PropertiesService.getScriptProperties().setProperty('SPREADSHEET_ID', activeId);
+      Logger.log("✅ Menggunakan spreadsheet aktif saat ini: " + activeSs.getName() + " (ID: " + activeId + ")");
+      return activeSs;
+    }
+  } catch (e) {
+    Logger.log("Info: Script berjalan di luar active spreadsheet, mencoba ID...");
+  }
+
   var props = PropertiesService.getScriptProperties();
-  var ssId = props.getProperty(PROP_SPREADSHEET_ID);
+  var ssId = props.getProperty(PROP_SPREADSHEET_ID) || props.getProperty('SPREADSHEET_ID');
 
   // Coba buka spreadsheet yang sudah ada berdasarkan ID tersimpan
   if (ssId) {
     try {
       var existingSs = SpreadsheetApp.openById(ssId);
-      // Verifikasi spreadsheet masih bisa diakses
       existingSs.getName();
       Logger.log("📂 Menggunakan spreadsheet yang sudah ada (ID: " + ssId + ")");
       return existingSs;
     } catch (e) {
-      // Spreadsheet tidak ditemukan atau tidak bisa diakses
-      // Lanjut ke pembuatan baru
       Logger.log("⚠️ Spreadsheet lama tidak ditemukan, membuat baru...");
     }
   }
 
-  // Buat spreadsheet baru
+  // Buat spreadsheet baru hanya jika benar-benar tidak ada
   var newSs = SpreadsheetApp.create(SPREADSHEET_NAME);
   var newId = newSs.getId();
-
-  // Simpan ID ke PropertiesService agar bisa diakses lagi nanti
   props.setProperty(PROP_SPREADSHEET_ID, newId);
+  props.setProperty('SPREADSHEET_ID', newId);
 
   Logger.log("📝 Spreadsheet baru dibuat (ID: " + newId + ")");
   return newSs;
@@ -527,6 +537,16 @@ function seedDefaultConfig_() {
  *
  * @private
  */
+function createAdminAccount() {
+  seedDefaultAdmin_();
+  Logger.log("================================================");
+  Logger.log("✅ Akun Admin berhasil ditaruh langsung di Spreadsheet!");
+  Logger.log("   Email: admin@quran.app");
+  Logger.log("   Password: admin123");
+  Logger.log("   Role: admin");
+  Logger.log("================================================");
+}
+
 function seedDefaultAdmin_() {
   var ss = getOrCreateSpreadsheet_();
   var sheet = ss.getSheetByName(SHEET_USERS.name);

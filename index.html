@@ -259,26 +259,37 @@
               </div>
             </div>
 
-            <!-- Prayer / Jadwal Sholat Widget (Sesuai Referensi UI) -->
-            <div class="bg-gradient-to-br from-brand-card to-[#19202F] rounded-3xl p-5 border border-brand-border flex flex-col justify-between">
+            <!-- Prayer / Jadwal Sholat Widget Sesuai Lokasi Pengguna -->
+            <div class="bg-gradient-to-br from-brand-card to-[#19202F] rounded-3xl p-5 border border-brand-border flex flex-col justify-between shadow-lg">
               <div class="flex items-center justify-between">
-                <span class="text-xs font-bold text-brand-gold uppercase tracking-wider">Waktu Sholat</span>
-                <span class="text-[11px] text-brand-textMuted bg-brand-surface px-2 py-0.5 rounded-full" id="realtime-clock">12:16 WIB</span>
+                <div class="flex items-center gap-1.5 text-xs font-bold text-brand-gold uppercase tracking-wider">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                  <span id="prayer-location-city">Mendeteksi Lokasi...</span>
+                </div>
+                <span class="text-[11px] text-brand-textMuted bg-brand-surface px-2.5 py-0.5 rounded-full font-mono" id="realtime-clock">--:-- WIB</span>
               </div>
+
               <div class="my-4 flex items-center justify-between">
                 <div>
-                  <h4 class="text-2xl font-black text-white" id="prayer-name">DZUHUR</h4>
-                  <p class="text-xs text-brand-textMuted mt-0.5">Waktu Jakarta & Sekitarnya</p>
+                  <div class="flex items-center gap-2">
+                    <h4 class="text-2xl font-black text-white tracking-wide" id="prayer-name">DZUHUR</h4>
+                    <span id="prayer-time-val" class="text-xs px-2 py-0.5 rounded-md bg-brand-gold/15 text-brand-gold font-mono font-bold">--:--</span>
+                  </div>
+                  <p class="text-xs text-brand-textMuted mt-1" id="prayer-countdown">Menyesuaikan jadwal sholat...</p>
                 </div>
-                <!-- Sun/Cloud 3D icon replacement -->
-                <div class="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-inner">
-                  <i data-lucide="sun" class="w-8 h-8"></i>
+                <!-- Weather / Sun Icon Dynamic -->
+                <div id="prayer-icon-box" class="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-inner">
+                  <i data-lucide="sun" class="w-7 h-7" id="prayer-weather-icon"></i>
                 </div>
               </div>
-              <div class="flex items-center justify-between text-xs text-brand-textMuted pt-3 border-t border-brand-border/60">
-                <span>Subuh: 04:32</span>
-                <span>Maghrib: 17:58</span>
-                <span>Isya: 19:08</span>
+
+              <!-- List 5 Waktu Sholat Lengkap -->
+              <div class="grid grid-cols-5 gap-1 text-center text-brand-textMuted pt-3 border-t border-brand-border/60" id="prayer-timings-grid">
+                <div><span class="block text-[10px] text-brand-textMuted">Subuh</span><span class="font-bold text-white font-mono text-[11px]" id="time-subuh">04:30</span></div>
+                <div><span class="block text-[10px] text-brand-textMuted">Dzuhur</span><span class="font-bold text-white font-mono text-[11px]" id="time-dzuhur">11:58</span></div>
+                <div><span class="block text-[10px] text-brand-textMuted">Ashar</span><span class="font-bold text-white font-mono text-[11px]" id="time-ashar">15:15</span></div>
+                <div><span class="block text-[10px] text-brand-textMuted">Maghrib</span><span class="font-bold text-white font-mono text-[11px]" id="time-maghrib">18:02</span></div>
+                <div><span class="block text-[10px] text-brand-textMuted">Isya</span><span class="font-bold text-white font-mono text-[11px]" id="time-isya">19:14</span></div>
               </div>
             </div>
           </div>
@@ -470,6 +481,21 @@
             </button>
           </div>
 
+          <!-- Guest Banner Monitoring -->
+          <div id="monitoring-guest-banner" class="bg-amber-500/10 border border-brand-gold/30 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-brand-gold/20 text-brand-gold flex items-center justify-center shrink-0">
+                <i data-lucide="lock" class="w-4 h-4"></i>
+              </div>
+              <p class="text-xs text-brand-text leading-relaxed">
+                <strong class="text-brand-gold">Perhatian:</strong> Anda belum masuk akun. Masuk sekarang agar riwayat tilawah, mutasi ayat, dan grafik progres khatam Anda tercatat di Google Spreadsheet.
+              </p>
+            </div>
+            <button onclick="showAuthModal(true)" class="px-4 py-2 rounded-xl bg-brand-gold text-brand-dark font-bold text-xs shrink-0 hover:opacity-90 transition-all">
+              Masuk / Daftar
+            </button>
+          </div>
+
           <!-- Monitoring Metric Cards -->
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div class="bg-brand-surface p-4 rounded-2xl border border-brand-border">
@@ -536,6 +562,21 @@
           <div>
             <h2 class="text-xl md:text-2xl font-black text-white">Bookmark & Catatan Pribadi</h2>
             <p class="text-xs md:text-sm text-brand-textMuted">Koleksi ayat penanda dan refleksi/tafsir yang Anda simpan</p>
+          </div>
+
+          <!-- Guest Banner Bookmark -->
+          <div id="bookmark-guest-banner" class="bg-amber-500/10 border border-brand-gold/30 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-brand-gold/20 text-brand-gold flex items-center justify-center shrink-0">
+                <i data-lucide="bookmark" class="w-4 h-4"></i>
+              </div>
+              <p class="text-xs text-brand-text leading-relaxed">
+                <strong class="text-brand-gold">Perhatian:</strong> Masuk atau buat akun agar penanda ayat dan catatan tafsir Anda tersimpan aman dan tidak hilang saat ganti perangkat.
+              </p>
+            </div>
+            <button onclick="showAuthModal(true)" class="px-4 py-2 rounded-xl bg-brand-gold text-brand-dark font-bold text-xs shrink-0 hover:opacity-90 transition-all">
+              Masuk / Daftar
+            </button>
           </div>
 
           <!-- Tabs Bookmark vs Notes -->
@@ -750,13 +791,6 @@
           Daftarkan Akun
         </button>
       </form>
-
-      <!-- Demo Info Notice -->
-      <div class="mt-5 pt-4 border-t border-brand-border text-center">
-        <p class="text-[11px] text-brand-textMuted">
-          Demo Admin: <span class="text-brand-gold font-mono">admin@quran.app</span> | Sandi: <span class="text-brand-gold font-mono">admin123</span>
-        </p>
-      </div>
     </div>
   </div>
 
@@ -853,6 +887,49 @@
 
   <!-- ==================== JAVASCRIPT APP LOGIC ==================== -->
   <script>
+    // URL Google Apps Script Web App Terhubung ke Google Spreadsheet Anda
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbyvKu4_NY-cTfngJGAUhcdq0SGortrnY-_K3dg9FX8F_4HnCArk8Bma5UnTs8E8GOSA/exec";
+
+    // Jembatan Komunikasi (API Connector) dari GitHub Pages ke Google Spreadsheet
+    async function callGasApi(action, data = {}) {
+      if (!GAS_API_URL) return { success: false, error: 'URL Google Apps Script belum dikonfigurasi.' };
+      try {
+        const payload = JSON.stringify({ action: action, ...data });
+        // Menggunakan text/plain agar tidak memicu preflight CORS OPTIONS pada Google Apps Script
+        const response = await fetch(GAS_API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+          },
+          body: payload,
+          redirect: 'follow'
+        });
+
+        const text = await response.text();
+        try {
+          return JSON.parse(text);
+        } catch (parseErr) {
+          console.error('Response bukan JSON:', text);
+          if (text.includes('accounts.google.com') || text.includes('ServiceLogin') || text.includes('sign in')) {
+            return {
+              success: false,
+              error: 'Google Meminta Login: Pengaturan izin Web App Anda belum disetel ke "Siapa saja" (Anyone). Di editor Apps Script: Klik Deploy > Manage Deployments > Edit > Who has access ganti jadi "Anyone".'
+            };
+          }
+          return {
+            success: false,
+            error: 'Server mengembalikan respon error: ' + text.substring(0, 120)
+          };
+        }
+      } catch (err) {
+        console.error(`Sinkronisasi Google Spreadsheet (${action}) gagal:`, err);
+        return {
+          success: false,
+          error: 'Koneksi gagal (' + err.message + '). Pastikan URL Web App Apps Script aktif dan izin akses diset ke "Anyone" (Siapa saja).'
+        };
+      }
+    }
+
     // Daftar Qori Resmi (Sumber: equran.id v2)
     const QORI_LIST = [
       { id: '05', name: 'Syekh Misyari Rasyid Al-Afasi', shortName: 'Misyari Rasyid', origin: 'Kuwait', style: 'Tartil Merdu & Populer', icon: '🎙️' },
@@ -889,20 +966,197 @@
     document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
       initClock();
+      initPrayerTimesByLocation();
       restoreSavedSession();
       initQoriSystem();
       loadSurahList();
       initMonthlyChart();
+      loadInitialCloudData();
     });
 
-    // Realtime Clock Updater
+    // Realtime Clock & Prayer Countdown Updater
     function initClock() {
       setInterval(() => {
         const now = new Date();
         const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WIB';
         const el = document.getElementById('realtime-clock');
         if (el) el.textContent = timeStr;
+
+        // Perbarui highlight & countdown sholat setiap menit
+        if (prayerTimesData) {
+          updateCurrentPrayerHighlight(prayerTimesData);
+        }
       }, 1000);
+    }
+
+    // ==================== JADWAL SHOLAT BERBASIS LOKASI REALTIME ====================
+    let prayerTimesData = null;
+
+    function initPrayerTimesByLocation() {
+      // 1. Coba deteksi via GPS Geolocation perangkat
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const lat = pos.coords.latitude;
+            const lng = pos.coords.longitude;
+            fetchLocationNameAndPrayerTimes(lat, lng);
+          },
+          (err) => {
+            console.log('Izin GPS tidak diberikan, fallback ke IP Geolocation:', err.message);
+            fetchPrayerTimesByIP();
+          },
+          { timeout: 8000 }
+        );
+      } else {
+        fetchPrayerTimesByIP();
+      }
+    }
+
+    // Ambil Jadwal berdasarkan Latitude & Longitude (Kemenag RI Method 20)
+    async function fetchLocationNameAndPrayerTimes(lat, lng) {
+      try {
+        let cityName = "Lokasi Anda";
+        try {
+          const geoRes = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=id`);
+          const geoData = await geoRes.json();
+          cityName = geoData.city || geoData.locality || geoData.principalSubdivision || "Lokasi Anda";
+        } catch (e) {}
+
+        const cityEl = document.getElementById('prayer-location-city');
+        if (cityEl) cityEl.textContent = cityName;
+
+        // Aladhan API dengan Method 20 (Kementerian Agama RI)
+        const res = await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lng}&method=20`);
+        const json = await res.json();
+        if (json.code === 200 && json.data && json.data.timings) {
+          prayerTimesData = json.data.timings;
+          applyPrayerTimes(prayerTimesData, cityName);
+        }
+      } catch (e) {
+        console.warn('Gagal memuat jadwal sholat GPS, mencoba IP:', e);
+        fetchPrayerTimesByIP();
+      }
+    }
+
+    // Fallback Geolocation berdasarkan IP
+    async function fetchPrayerTimesByIP() {
+      try {
+        const ipRes = await fetch('https://ipapi.co/json/');
+        const ipData = await ipRes.json();
+        const lat = ipData.latitude || -6.2088;
+        const lng = ipData.longitude || 106.8456;
+        const cityName = ipData.city || "Jakarta & Sekitarnya";
+
+        const cityEl = document.getElementById('prayer-location-city');
+        if (cityEl) cityEl.textContent = cityName;
+
+        const res = await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lng}&method=20`);
+        const json = await res.json();
+        if (json.code === 200 && json.data && json.data.timings) {
+          prayerTimesData = json.data.timings;
+          applyPrayerTimes(prayerTimesData, cityName);
+        }
+      } catch (err) {
+        // Fallback default WIB
+        const defaultTimings = {
+          Fajr: "04:30",
+          Dhuhr: "11:58",
+          Asr: "15:15",
+          Maghrib: "18:02",
+          Isha: "19:14"
+        };
+        applyPrayerTimes(defaultTimings, "WIB (Default)");
+      }
+    }
+
+    function applyPrayerTimes(timings, cityName) {
+      if (!timings) return;
+      const elSubuh = document.getElementById('time-subuh');
+      const elDzuhur = document.getElementById('time-dzuhur');
+      const elAshar = document.getElementById('time-ashar');
+      const elMaghrib = document.getElementById('time-maghrib');
+      const elIsya = document.getElementById('time-isya');
+
+      if (elSubuh) elSubuh.textContent = timings.Fajr || "04:30";
+      if (elDzuhur) elDzuhur.textContent = timings.Dhuhr || "11:58";
+      if (elAshar) elAshar.textContent = timings.Asr || "15:15";
+      if (elMaghrib) elMaghrib.textContent = timings.Maghrib || "18:02";
+      if (elIsya) elIsya.textContent = timings.Isha || "19:14";
+
+      updateCurrentPrayerHighlight(timings);
+    }
+
+    function updateCurrentPrayerHighlight(timings) {
+      if (!timings) return;
+      const now = new Date();
+      const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+      function toMinutes(timeStr) {
+        if (!timeStr) return 0;
+        const parts = timeStr.split(':');
+        return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+      }
+
+      const fajr = toMinutes(timings.Fajr);
+      const dhuhr = toMinutes(timings.Dhuhr);
+      const asr = toMinutes(timings.Asr);
+      const maghrib = toMinutes(timings.Maghrib);
+      const isha = toMinutes(timings.Isha);
+
+      let currentName = "ISYA";
+      let currentTime = timings.Isha || "19:14";
+      let nextName = "Subuh";
+      let nextDiff = (24 * 60 - currentMinutes) + fajr;
+      let icon = "moon";
+
+      if (currentMinutes >= fajr && currentMinutes < dhuhr) {
+        currentName = "SUBUH";
+        currentTime = timings.Fajr;
+        nextName = "Dzuhur";
+        nextDiff = dhuhr - currentMinutes;
+        icon = "sun";
+      } else if (currentMinutes >= dhuhr && currentMinutes < asr) {
+        currentName = "DZUHUR";
+        currentTime = timings.Dhuhr;
+        nextName = "Ashar";
+        nextDiff = asr - currentMinutes;
+        icon = "sun";
+      } else if (currentMinutes >= asr && currentMinutes < maghrib) {
+        currentName = "ASHAR";
+        currentTime = timings.Asr;
+        nextName = "Maghrib";
+        nextDiff = maghrib - currentMinutes;
+        icon = "sun";
+      } else if (currentMinutes >= maghrib && currentMinutes < isha) {
+        currentName = "MAGHRIB";
+        currentTime = timings.Maghrib;
+        nextName = "Isya";
+        nextDiff = isha - currentMinutes;
+        icon = "sunset";
+      } else if (currentMinutes < fajr) {
+        currentName = "ISYA";
+        currentTime = timings.Isha;
+        nextName = "Subuh";
+        nextDiff = fajr - currentMinutes;
+        icon = "moon";
+      }
+
+      const hoursLeft = Math.floor(nextDiff / 60);
+      const minsLeft = nextDiff % 60;
+      const countdownText = `Menuju ${nextName} (${hoursLeft > 0 ? hoursLeft + ' jam ' : ''}${minsLeft} mnt lagi)`;
+
+      const prayerNameEl = document.getElementById('prayer-name');
+      const prayerTimeValEl = document.getElementById('prayer-time-val');
+      const prayerCountdownEl = document.getElementById('prayer-countdown');
+      const iconBox = document.getElementById('prayer-icon-box');
+
+      if (prayerNameEl) prayerNameEl.textContent = currentName;
+      if (prayerTimeValEl) prayerTimeValEl.textContent = currentTime;
+      if (prayerCountdownEl) prayerCountdownEl.textContent = countdownText;
+      if (iconBox) {
+        iconBox.innerHTML = `<i data-lucide="${icon}" class="w-7 h-7"></i>`;
+        lucide.createIcons();
+      }
     }
 
     // ==================== NAVIGASI HALAMAN ====================
@@ -915,6 +1169,10 @@
 
       const target = document.getElementById(`page-${pageId}`);
       if (target) target.classList.remove('hidden');
+
+      if (pageId === 'admin') {
+        loadAdminUsersTable();
+      }
 
       // Update Desktop Nav Active
       document.querySelectorAll('#desktop-nav .nav-link').forEach(btn => {
@@ -1358,14 +1616,32 @@
     }
 
     // Record finish reading current surah (Feature 3)
-    function recordFinishReadingCurrentSurah() {
+    async function recordFinishReadingCurrentSurah() {
       if (!AppState.currentSurah) return;
+
+      // Proteksi Akun: Wajib login untuk mencatat progres tilawah
+      if (!AppState.currentUser) {
+        alert("Silakan Masuk atau Buat Akun terlebih dahulu agar riwayat tilawah & progres khatam Anda tercatat di Google Spreadsheet.");
+        showAuthModal(true);
+        return;
+      }
+
       const durationMin = AppState.readingStartTime ? Math.round((Date.now() - AppState.readingStartTime) / 60000) || 1 : 5;
 
       alert(`Alhamdulillah! Tilawah Surah ${AppState.currentSurah.namaLatin} (1 - ${AppState.currentSurah.jumlahAyat} ayat) telah dicatat.`);
 
       // Update Local Stats
       updateReadingHistoryUI(AppState.currentSurah.namaLatin, `1 - ${AppState.currentSurah.jumlahAyat}`, durationMin);
+
+      // Sinkronkan ke Google Spreadsheet
+      callGasApi('saveReadingProgress', {
+        userId: AppState.currentUser.userId || AppState.currentUser.email,
+        surahNumber: AppState.currentSurah.nomor,
+        surahName: AppState.currentSurah.namaLatin,
+        ayahFrom: 1,
+        ayahTo: AppState.currentSurah.jumlahAyat,
+        durationMinutes: durationMin
+      });
     }
 
     function updateLastReadCard(surahName, detail, number) {
@@ -1380,14 +1656,36 @@
     }
 
     // ==================== BOOKMARK & NOTES (Feature 2) ====================
-    function toggleBookmarkAyah(surahNum, ayahNum) {
+    async function toggleBookmarkAyah(surahNum, ayahNum) {
+      // Proteksi Akun: Wajib login untuk menyimpan bookmark
+      if (!AppState.currentUser) {
+        alert("Silakan Masuk atau Buat Akun terlebih dahulu agar penanda ayat (bookmark) tersimpan permanen di cloud.");
+        showAuthModal(true);
+        return;
+      }
+
       const item = { surah: surahNum, ayah: ayahNum, timestamp: new Date().toLocaleDateString('id-ID') };
       AppState.bookmarks.push(item);
       alert(`Bookmark disimpan untuk Surah ${surahNum} Ayat ${ayahNum}`);
       renderBookmarksUI();
+
+      // Sinkronkan ke Google Spreadsheet
+      callGasApi('addBookmark', {
+        userId: AppState.currentUser.userId || AppState.currentUser.email,
+        surahNumber: surahNum,
+        ayahNumber: ayahNum,
+        note: ''
+      });
     }
 
     function openNoteModal(surahNum, ayahNum) {
+      // Proteksi Akun: Wajib login untuk menambah catatan tafsir
+      if (!AppState.currentUser) {
+        alert("Silakan Masuk atau Buat Akun terlebih dahulu untuk menulis dan menyimpan catatan tafsir pribadi.");
+        showAuthModal(true);
+        return;
+      }
+
       AppState.activeNoteAyah = { surah: surahNum, ayah: ayahNum };
       document.getElementById('modal-note-title').textContent = `Catatan Surah ${surahNum} : Ayat ${ayahNum}`;
       document.getElementById('modal-note-content').value = '';
@@ -1398,7 +1696,7 @@
       document.getElementById('note-modal').classList.add('hidden');
     }
 
-    function saveCurrentAyahNote() {
+    async function saveCurrentAyahNote() {
       const content = document.getElementById('modal-note-content').value.trim();
       if (!content) return alert('Silakan tulis catatan terlebih dahulu.');
 
@@ -1412,6 +1710,16 @@
       closeNoteModal();
       alert('Catatan tafsir berhasil disimpan!');
       renderNotesUI();
+
+      // Sinkronkan ke Google Spreadsheet
+      if (AppState.currentUser) {
+        callGasApi('addNote', {
+          userId: AppState.currentUser.userId || AppState.currentUser.email,
+          surahNumber: AppState.activeNoteAyah.surah,
+          ayahNumber: AppState.activeNoteAyah.ayah,
+          content: content
+        });
+      }
     }
 
     function renderBookmarksUI() {
@@ -1527,51 +1835,92 @@
         : 'flex-1 py-1.5 rounded-lg text-xs font-bold text-brand-textMuted hover:text-white';
     }
 
-    function handleLoginSubmit(e) {
+    async function handleLoginSubmit(e) {
       e.preventDefault();
       const email = document.getElementById('login-email').value;
       const pass = document.getElementById('login-password').value;
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Memeriksa ke Spreadsheet...';
+      submitBtn.disabled = true;
 
-      // Check Admin Demo
-      if (email === 'admin@quran.app' && pass === 'admin123') {
-        setLoggedInUser({
-          nama: 'Administrator',
-          email: email,
-          role: 'admin'
-        });
-      } else {
-        setLoggedInUser({
-          nama: email.split('@')[0],
-          email: email,
-          role: 'pembaca'
-        });
+      try {
+        // Coba login via Google Apps Script API
+        const res = await callGasApi('login', { email: email, password: pass });
+
+        if (res && res.success && res.user) {
+          localStorage.setItem('quran_user_session', JSON.stringify(res.user));
+          if (res.token) localStorage.setItem('quran_app_token', res.token);
+          setLoggedInUser(res.user);
+          fetchUserCloudData(res.user.userId || res.user.email);
+          alert(`Selamat datang kembali, ${res.user.nama || 'Sahabat'}!`);
+        } else {
+          alert(res && res.message ? res.message : 'Email atau kata sandi tidak cocok di database Google Spreadsheet.');
+        }
+      } catch (err) {
+        console.error('Login error:', err);
+        alert('Gagal menghubungi database Google Spreadsheet. Cek koneksi Anda.');
+      } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+        showAuthModal(false);
       }
-      showAuthModal(false);
     }
 
-    function handleRegisterSubmit(e) {
+    async function handleRegisterSubmit(e) {
       e.preventDefault();
       const name = document.getElementById('reg-name').value;
       const email = document.getElementById('reg-email').value;
+      const pass = document.getElementById('reg-password').value;
       const role = document.getElementById('reg-role').value;
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Mendaftarkan ke Spreadsheet...';
+      submitBtn.disabled = true;
 
-      setLoggedInUser({
-        nama: name,
-        email: email,
-        role: role
-      });
-      showAuthModal(false);
-      alert(`Pendaftaran berhasil! Selamat datang di Al-Qur'an Simple, ${name}`);
+      try {
+        const res = await callGasApi('register', {
+          name: name,
+          nama: name,
+          email: email,
+          password: pass,
+          role: role
+        });
+
+        if (res && res.success) {
+          const newUser = res.user || { userId: 'user_' + Date.now(), name: name, nama: name, email: email, role: role };
+          localStorage.setItem('quran_user_session', JSON.stringify(newUser));
+          if (res.token) localStorage.setItem('quran_app_token', res.token);
+          setLoggedInUser(newUser);
+          alert(`Alhamdulillah! Akun berhasil didaftarkan dan tersimpan di Google Spreadsheet. Selamat datang, ${name}!`);
+          showAuthModal(false);
+        } else {
+          const errorMsg = (res && (res.error || res.message)) || 'Gagal mendaftar. Pastikan Google Apps Script sudah disetup.';
+          alert(errorMsg);
+        }
+      } catch (err) {
+        console.error('Register error:', err);
+        alert('Terjadi kendala saat mendaftarkan akun ke spreadsheet.');
+      } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }
     }
 
     function setLoggedInUser(user) {
       AppState.currentUser = user;
-      document.getElementById('user-name').textContent = user.nama;
-      document.getElementById('user-role-badge').textContent = `Peran: ${user.role}`;
-      document.getElementById('home-greeting-name').textContent = `Assalamu'alaikum, ${user.nama}`;
+      document.getElementById('user-name').textContent = user.nama || user.email;
+      document.getElementById('user-role-badge').textContent = `Peran: ${user.role || 'Pembaca'}`;
+      document.getElementById('home-greeting-name').textContent = `Assalamu'alaikum, ${user.nama || 'Sahabat'}`;
       document.getElementById('auth-action-btn').innerHTML = `<i data-lucide="log-out" class="w-4 h-4"></i>`;
 
-      // Show Admin Menu if Admin
+      // Sembunyikan banner peringatan tamu
+      const mb = document.getElementById('monitoring-guest-banner');
+      if (mb) mb.classList.add('hidden');
+      const bb = document.getElementById('bookmark-guest-banner');
+      if (bb) bb.classList.add('hidden');
+
+      // Tampilkan Menu Admin jika role admin
       const adminMenu = document.getElementById('admin-menu-item');
       if (adminMenu) {
         if (user.role === 'admin') adminMenu.classList.remove('hidden');
@@ -1585,10 +1934,20 @@
       if (AppState.currentUser) {
         if (confirm('Apakah Anda yakin ingin keluar dari akun?')) {
           AppState.currentUser = null;
+          localStorage.removeItem('quran_user_session');
+          localStorage.removeItem('quran_app_token');
           document.getElementById('user-name').textContent = 'Tamu (Belum Masuk)';
           document.getElementById('user-role-badge').textContent = 'Klik untuk Masuk';
+          document.getElementById('home-greeting-name').textContent = `Assalamu'alaikum, Sahabat`;
           document.getElementById('admin-menu-item').classList.add('hidden');
           document.getElementById('auth-action-btn').innerHTML = `<i data-lucide="log-in" class="w-4 h-4"></i>`;
+
+          // Tampilkan kembali banner peringatan tamu
+          const mb = document.getElementById('monitoring-guest-banner');
+          if (mb) mb.classList.remove('hidden');
+          const bb = document.getElementById('bookmark-guest-banner');
+          if (bb) bb.classList.remove('hidden');
+
           lucide.createIcons();
         }
       } else {
@@ -1597,32 +1956,189 @@
     }
 
     function restoreSavedSession() {
-      // Set default demo state
+      const savedUserStr = localStorage.getItem('quran_user_session');
+      if (savedUserStr) {
+        try {
+          const user = JSON.parse(savedUserStr);
+          if (user) {
+            setLoggedInUser(user);
+            fetchUserCloudData(user.userId || user.email);
+          }
+        } catch (e) {
+          console.log('Error restore session:', e);
+        }
+      }
+    }
+
+    // Ambil Data Bookmark & Riwayat dari Google Spreadsheet
+    async function fetchUserCloudData(userId) {
+      if (!userId) return;
+      try {
+        // Ambil Bookmarks dari Sheet
+        const bmRes = await callGasApi('getBookmarks', { userId });
+        if (bmRes && bmRes.success && Array.isArray(bmRes.data)) {
+          AppState.bookmarks = bmRes.data.map(b => ({
+            surah: b.surahNumber,
+            ayah: b.ayahNumber,
+            timestamp: b.createdAt ? new Date(b.createdAt).toLocaleDateString('id-ID') : 'Baru saja'
+          }));
+          renderBookmarksUI();
+        }
+
+        // Ambil Catatan dari Sheet
+        const noteRes = await callGasApi('getNotes', { userId });
+        if (noteRes && noteRes.success && Array.isArray(noteRes.data)) {
+          AppState.notes = noteRes.data.map(n => ({
+            surah: n.surahNumber,
+            ayah: n.ayahNumber,
+            content: n.content,
+            date: n.createdAt ? new Date(n.createdAt).toLocaleDateString('id-ID') : 'Baru saja'
+          }));
+          renderNotesUI();
+        }
+
+        // Ambil Statistik Khatam & Riwayat dari Sheet
+        const statsRes = await callGasApi('getReadingStats', { userId });
+        if (statsRes && statsRes.success && statsRes.data) {
+          const s = statsRes.data;
+          const ayahsRead = s.totalAyahsRead || 0;
+          const pct = ((ayahsRead / 6236) * 100).toFixed(1);
+
+          document.getElementById('stat-ayahs-read').textContent = ayahsRead;
+          document.getElementById('stat-khatam-pct').textContent = pct + '%';
+          document.getElementById('quick-khatam-pct').textContent = `${pct}% (${ayahsRead} / 6236 Ayat)`;
+          document.getElementById('quick-khatam-bar').style.width = Math.max(pct, 2) + '%';
+          document.getElementById('stat-total-duration').textContent = `${s.totalDurationMinutes || 0} Menit`;
+          document.getElementById('stat-surahs-completed').textContent = `${s.uniqueSurahsRead || 0} / 114`;
+        }
+      } catch (err) {
+        console.warn('Gagal memuat data cloud user:', err);
+      }
+    }
+
+    // Muat Pengumuman & QRIS dari Cloud Saat Buka Web
+    async function loadInitialCloudData() {
+      try {
+        // Otomatis pastikan akun admin sudah ada di sheet Users Spreadsheet
+        callGasApi('ensureAdminUser', { email: 'admin@quran.app', password: 'admin123', nama: 'Administrator' });
+
+        const annRes = await callGasApi('getActiveAnnouncements');
+        if (annRes && annRes.success && Array.isArray(annRes.data) && annRes.data.length > 0) {
+          const first = annRes.data[0];
+          document.getElementById('banner-title').textContent = `"${first.title}"`;
+          document.getElementById('banner-desc').textContent = first.content;
+        }
+
+        const qrisRes = await callGasApi('getQrisImage');
+        if (qrisRes && qrisRes.success && qrisRes.data && qrisRes.data.qrisImageUrl) {
+          document.getElementById('qris-display-img').src = qrisRes.data.qrisImageUrl;
+        }
+      } catch (e) {
+        console.log('Load initial cloud data error:', e);
+      }
+    }
+
+    // ==================== ROLE MANAGEMENT & ADMIN CONTROL ====================
+    async function loadAdminUsersTable() {
+      const tbody = document.getElementById('admin-users-table');
+      if (!tbody) return;
+      tbody.innerHTML = `<tr><td colspan="4" class="px-5 py-6 text-center text-brand-textMuted">Mengambil daftar pengguna dari Google Spreadsheet...</td></tr>`;
+
+      const res = await callGasApi('getAllUsers');
+      if (res && res.success && Array.isArray(res.data)) {
+        if (res.data.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="4" class="px-5 py-6 text-center text-brand-textMuted">Belum ada akun pengguna di spreadsheet.</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = res.data.map(u => {
+          const uRole = (u.role || 'pembaca').toLowerCase();
+          const uId = u.id || u.userId || u.email;
+          return `
+            <tr class="hover:bg-brand-surfaceHover transition-colors border-b border-brand-border/40">
+              <td class="px-5 py-3.5 font-bold text-white flex items-center gap-2">
+                <span>${u.name || u.nama || '-'}</span>
+                ${uRole === 'admin' ? '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">Admin</span>' : ''}
+                ${uRole === 'pengajar' ? '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Pengajar</span>' : ''}
+                ${uRole === 'pembaca' ? '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/15 text-blue-300">Pembaca</span>' : ''}
+              </td>
+              <td class="px-5 py-3.5 text-brand-textMuted font-mono text-xs">${u.email}</td>
+              <td class="px-5 py-3.5 capitalize font-medium text-brand-gold">${uRole}</td>
+              <td class="px-5 py-3.5">
+                <select onchange="changeUserRole('${uId}', this.value)" class="bg-brand-card border border-brand-border rounded-xl px-2.5 py-1 text-xs text-white focus:outline-none focus:border-brand-gold">
+                  <option value="pembaca" ${uRole === 'pembaca' ? 'selected' : ''}>Pembaca (Umum)</option>
+                  <option value="pengajar" ${uRole === 'pengajar' ? 'selected' : ''}>Pengajar (Ustadz)</option>
+                  <option value="admin" ${uRole === 'admin' ? 'selected' : ''}>Admin (Pengurus)</option>
+                </select>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      } else {
+        tbody.innerHTML = `<tr><td colspan="4" class="px-5 py-6 text-center text-brand-textMuted">Gagal memuat pengguna dari spreadsheet.</td></tr>`;
+      }
+    }
+
+    async function changeUserRole(targetUserId, newRole) {
+      if (!AppState.currentUser) return;
+      if (!confirm(`Ubah peran pengguna ini menjadi "${newRole}" di Google Spreadsheet?`)) {
+        loadAdminUsersTable();
+        return;
+      }
+
+      const res = await callGasApi('updateUserRole', {
+        adminUserId: AppState.currentUser.userId || AppState.currentUser.email,
+        targetUserId: targetUserId,
+        newRole: newRole
+      });
+
+      if (res && res.success) {
+        alert(`Peran pengguna berhasil diperbarui menjadi "${newRole}" langsung di Google Spreadsheet!`);
+        loadAdminUsersTable();
+      } else {
+        alert(res && res.error ? res.error : 'Gagal memperbarui peran di spreadsheet.');
+        loadAdminUsersTable();
+      }
     }
 
     // ==================== DONATION & ADMIN (Feature 5 & 8) ====================
-    function handleDonationSubmit(e) {
+    async function handleDonationSubmit(e) {
       e.preventDefault();
       const amount = document.getElementById('donation-amount').value || '10000';
       const donor = document.getElementById('donation-donor').value || 'Hamba Allah';
-      alert(`Jazakallahu Khairan! Konfirmasi infaq sebesar Rp ${parseInt(amount).toLocaleString('id-ID')} atas nama ${donor} telah tercatat.`);
+
+      // Catat ke Google Spreadsheet tab Donations
+      callGasApi('recordDonation', {
+        userId: AppState.currentUser ? (AppState.currentUser.userId || AppState.currentUser.email) : 'guest',
+        donorName: donor,
+        amount: parseInt(amount),
+        method: 'QRIS',
+        status: 'pending'
+      });
+
+      alert(`Jazakallahu Khairan! Konfirmasi infaq sebesar Rp ${parseInt(amount).toLocaleString('id-ID')} atas nama ${donor} telah terkirim ke spreadsheet.`);
       e.target.reset();
     }
 
-    function handleUpdateQrisUrl(e) {
+    async function handleUpdateQrisUrl(e) {
       e.preventDefault();
       const url = document.getElementById('admin-qris-url').value;
       document.getElementById('qris-display-img').src = url;
-      alert('Foto QRIS donasi berhasil diperbarui.');
+
+      // Update ke AppConfig di Google Spreadsheet
+      await callGasApi('updateQrisImage', { qrisImageUrl: url });
+      alert('Foto QRIS donasi berhasil diperbarui di Google Spreadsheet.');
     }
 
-    function handleCreateAnnouncement(e) {
+    async function handleCreateAnnouncement(e) {
       e.preventDefault();
       const title = document.getElementById('admin-ann-title').value;
       const content = document.getElementById('admin-ann-content').value;
       document.getElementById('banner-title').textContent = `"${title}"`;
       document.getElementById('banner-desc').textContent = content;
-      alert('Banner pengumuman beranda berhasil diperbarui.');
+
+      // Catat ke Sheet Announcements
+      await callGasApi('createAnnouncement', { title, content });
+      alert('Banner pengumuman beranda berhasil disimpan ke Google Spreadsheet.');
       navigateTo('home');
     }
 

@@ -11,15 +11,36 @@
  * ============================================================
  */
 
+/**
+ * JALANKAN FUNGSI INI DENGAN KLIK 'RUN / JALANKAN' DI ATAS!
+ * Fungsi ini langsung mengisi Spreadsheet Anda yang sedang dibuka dengan:
+ * 1. Seluruh 8 Tab Lembar Kerja (Users, ReadingHistory, Bookmarks, Notes, UserSettings, Announcements, Donations, AppConfig)
+ * 2. Akun Admin Asli (admin@quran.app / admin123)
+ * 3. Menghapus Sheet1 kosong default.
+ */
+function isiSpreadsheetSekarang() {
+  var res = setupDatabaseNow();
+  Logger.log("==================================================");
+  Logger.log("✅ STATUS: " + res.message);
+  Logger.log("Silakan lihat tab spreadsheet Anda sekarang!");
+  Logger.log("==================================================");
+}
+
 // ============================================================
 // KONFIGURASI GLOBAL
 // ============================================================
 
 /**
  * ID Spreadsheet yang digunakan sebagai database.
- * Ganti dengan ID spreadsheet Anda sendiri.
+ * Otomatis mengambil ID spreadsheet yang sedang dibuka (Container-bound).
  */
-const SPREADSHEET_ID = PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID') || '';
+const SPREADSHEET_ID = (function() {
+  try {
+    const active = SpreadsheetApp.getActiveSpreadsheet();
+    if (active) return active.getId();
+  } catch (e) {}
+  return PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID') || '';
+})();
 
 /**
  * Nama-nama sheet yang digunakan dalam spreadsheet.
@@ -91,6 +112,10 @@ function doPost(e) {
 
     // Routing berdasarkan action menggunakan switch
     switch (action) {
+      // --- Setup Database Otomatis ke Spreadsheet Aktif ---
+      case 'setupDatabase':
+        return sendJsonResponse_(setupDatabaseNow());
+
       // --- Autentikasi ---
       case 'login':
         return sendJsonResponse_(handleLogin(requestData));
@@ -98,6 +123,8 @@ function doPost(e) {
         return sendJsonResponse_(handleRegister(requestData));
       case 'logout':
         return sendJsonResponse_(handleLogout(requestData));
+      case 'ensureAdminUser':
+        return sendJsonResponse_(ensureAdminUser(requestData));
 
       // --- Data Al-Qur'an ---
       case 'getSurahList':
@@ -202,11 +229,11 @@ function handleLogin(data) {
     const allData = sheet.getDataRange().getValues();
     const headers = allData[0];
 
-    // Cari index kolom yang diperlukan
+    // Cari index kolom yang diperlukan (toleran terhadap variasi header)
     const emailIdx = headers.indexOf('email');
-    const passwordIdx = headers.indexOf('password');
-    const idIdx = headers.indexOf('id');
-    const nameIdx = headers.indexOf('name');
+    const passwordIdx = headers.indexOf('password') !== -1 ? headers.indexOf('password') : headers.indexOf('passwordHash');
+    const idIdx = headers.indexOf('id') !== -1 ? headers.indexOf('id') : headers.indexOf('userId');
+    const nameIdx = headers.indexOf('name') !== -1 ? headers.indexOf('name') : headers.indexOf('nama');
     const roleIdx = headers.indexOf('role');
     const createdAtIdx = headers.indexOf('createdAt');
 
@@ -272,26 +299,29 @@ function handleLogin(data) {
  */
 function handleRegister(data) {
   try {
-    const { name, email, password, role } = data;
+    const userName = (data.name || data.nama || '').trim();
+    const userEmail = (data.email || '').toLowerCase().trim();
+    const userPassword = data.password || '';
+    const role = data.role || 'pembaca';
 
     // Validasi input
-    if (!name || !email || !password) {
-      return { success: false, error: 'Nama, email, dan password harus diisi.' };
+    if (!userName || !userEmail || !userPassword) {
+      return { success: false, error: 'Nama lengkap, email, dan kata sandi harus diisi.' };
     }
 
     // Validasi format email sederhana
-    if (!email.includes('@') || !email.includes('.')) {
+    if (!userEmail.includes('@') || !userEmail.includes('.')) {
       return { success: false, error: 'Format email tidak valid.' };
     }
 
     // Validasi panjang password minimal 6 karakter
-    if (password.length < 6) {
-      return { success: false, error: 'Password minimal 6 karakter.' };
+    if (userPassword.length < 6) {
+      return { success: false, error: 'Kata sandi minimal 6 karakter.' };
     }
 
     // Validasi role (hanya pembaca atau pengajar yang diperbolehkan saat registrasi)
     const allowedRoles = ['pembaca', 'pengajar'];
-    const userRole = (role && allowedRoles.includes(role.toLowerCase())) ? role.toLowerCase() : 'pembaca';
+    const userRole = allowedRoles.includes(role.toLowerCase()) ? role.toLowerCase() : 'pembaca';
 
     // Cek apakah email sudah terdaftar
     const sheet = getSheet_(SHEET_NAMES.USERS);
@@ -300,21 +330,21 @@ function handleRegister(data) {
     const emailIdx = headers.indexOf('email');
 
     for (let i = 1; i < allData.length; i++) {
-      if (allData[i][emailIdx] === email.toLowerCase().trim()) {
-        return { success: false, error: 'Email sudah terdaftar.' };
+      if (allData[i][emailIdx] && allData[i][emailIdx].toString().toLowerCase().trim() === userEmail) {
+        return { success: false, error: 'Email ini (' + userEmail + ') sudah terdaftar di Spreadsheet. Silakan gunakan menu Masuk.' };
       }
     }
 
     // Buat ID unik untuk user baru
     const userId = generateId_();
-    const hashedPassword = hashPassword_(password);
+    const hashedPassword = hashPassword_(userPassword);
     const now = new Date().toISOString();
 
     // Tambahkan baris baru ke sheet
     sheet.appendRow([
       userId,
-      name.trim(),
-      email.toLowerCase().trim(),
+      userName,
+      userEmail,
       hashedPassword,
       userRole,
       now,   // createdAt
@@ -326,21 +356,24 @@ function handleRegister(data) {
     settingsSheet.appendRow([
       generateId_(),
       userId,
-      16,         // fontSize default
-      'LPMQ',    // fontFamily default (font Al-Qur'an LPMQ)
+      30,         // fontSize default
+      'Amiri',    // fontFamily default
       true,       // showLatin
       true,       // showTranslation
-      'light',    // theme
+      'dark',     // theme
+      '05',       // selectedQori default
       now         // updatedAt
     ]);
 
     return {
       success: true,
-      message: 'Registrasi berhasil. Silakan login.',
+      message: 'Registrasi berhasil! Akun telah tersimpan di Google Spreadsheet.',
       user: {
         id: userId,
-        name: name.trim(),
-        email: email.toLowerCase().trim(),
+        userId: userId,
+        name: userName,
+        nama: userName,
+        email: userEmail,
         role: userRole,
         createdAt: now
       }
@@ -372,6 +405,118 @@ function handleLogout(data) {
   } catch (error) {
     Logger.log('Error handleLogout: ' + error.message);
     return { success: false, error: 'Gagal logout: ' + error.message };
+  }
+}
+
+/**
+ * Memastikan akun admin ada di sheet Users Spreadsheet.
+ * Jika belum ada, otomatis membuat baris akun admin baru.
+ * @param {Object} data - Objek opsional berisi email, password, nama.
+ * @returns {Object} Hasil pembuatan atau penemuan admin.
+ */
+function ensureAdminUser(data) {
+  try {
+    const email = (data && data.email) ? data.email.toLowerCase().trim() : 'admin@quran.app';
+    const password = (data && data.password) ? data.password : 'admin123';
+    const nama = (data && data.nama) ? data.nama : 'Administrator';
+
+    const sheet = getSheet_(SHEET_NAMES.USERS);
+    const allData = sheet.getDataRange().getValues();
+    const headers = allData[0];
+    const emailIdx = headers.indexOf('email');
+
+    // Cek apakah email admin ini sudah ada
+    for (let i = 1; i < allData.length; i++) {
+      if (allData[i][emailIdx] === email) {
+        const rowNum = i + 1;
+        const roleIdx = headers.indexOf('role');
+        const passIdx = headers.indexOf('password');
+        if (roleIdx !== -1) sheet.getRange(rowNum, roleIdx + 1).setValue('admin');
+        if (passIdx !== -1) sheet.getRange(rowNum, passIdx + 1).setValue(hashPassword_(password));
+        return { 
+          success: true, 
+          message: 'Akun admin sudah terdaftar dan aktif di Google Spreadsheet.', 
+          user: { userId: allData[i][headers.indexOf('id')] || allData[i][headers.indexOf('userId')], email: email, nama: nama, role: 'admin' } 
+        };
+      }
+    }
+
+    // Jika belum ada, langsung buat baris baru di sheet Users
+    const userId = generateId_();
+    const now = new Date().toISOString();
+    const newRow = [];
+    headers.forEach(h => {
+      if (h === 'id' || h === 'userId') newRow.push(userId);
+      else if (h === 'email') newRow.push(email);
+      else if (h === 'password' || h === 'passwordHash') newRow.push(hashPassword_(password));
+      else if (h === 'name' || h === 'nama') newRow.push(nama);
+      else if (h === 'role') newRow.push('admin');
+      else if (h === 'createdAt') newRow.push(now);
+      else if (h === 'updatedAt' || h === 'lastLogin') newRow.push(now);
+      else newRow.push('');
+    });
+
+    sheet.appendRow(newRow);
+    return { 
+      success: true, 
+      message: 'Akun admin berhasil dibuat dan tersimpan langsung di Google Spreadsheet!', 
+      user: { userId: userId, email: email, nama: nama, role: 'admin' } 
+    };
+  } catch (err) {
+    Logger.log('Error ensureAdminUser: ' + err.message);
+    return { success: false, error: 'Gagal membuat akun admin: ' + err.message };
+  }
+}
+
+/**
+ * Inisialisasi seluruh tab database langsung ke file Spreadsheet yang aktif.
+ * Membuat tab Users, ReadingHistory, Bookmarks, Notes, UserSettings, Announcements, Donations, AppConfig
+ * serta menaruh 1 akun admin nyata ke dalam tab Users.
+ * @returns {Object} Hasil inisialisasi.
+ */
+function setupDatabaseNow() {
+  try {
+    const ss = getSpreadsheet_();
+    const sheetDefs = [
+      { name: SHEET_NAMES.USERS, headers: ['id', 'name', 'email', 'password', 'role', 'createdAt', 'updatedAt'] },
+      { name: SHEET_NAMES.READING_HISTORY, headers: ['id', 'userId', 'surahNumber', 'ayahFrom', 'ayahTo', 'ayahCount', 'duration', 'timestamp'] },
+      { name: SHEET_NAMES.BOOKMARKS, headers: ['id', 'userId', 'surahNumber', 'ayahNumber', 'surahName', 'createdAt'] },
+      { name: SHEET_NAMES.NOTES, headers: ['id', 'userId', 'surahNumber', 'ayahNumber', 'noteText', 'createdAt', 'updatedAt'] },
+      { name: SHEET_NAMES.USER_SETTINGS, headers: ['id', 'userId', 'fontSize', 'fontFamily', 'showLatin', 'showTranslation', 'theme', 'selectedQori', 'updatedAt'] },
+      { name: SHEET_NAMES.ANNOUNCEMENTS, headers: ['id', 'title', 'content', 'type', 'isActive', 'expiryDate', 'createdBy', 'createdAt', 'updatedAt'] },
+      { name: SHEET_NAMES.DONATIONS, headers: ['id', 'userId', 'donorName', 'amount', 'message', 'status', 'createdAt'] },
+      { name: SHEET_NAMES.APP_CONFIG, headers: ['id', 'key', 'value', 'description', 'createdAt', 'updatedAt'] }
+    ];
+
+    sheetDefs.forEach(function(sd) {
+      let sh = ss.getSheetByName(sd.name);
+      if (!sh) {
+        sh = ss.insertSheet(sd.name);
+        sh.getRange(1, 1, 1, sd.headers.length).setValues([sd.headers]);
+        sh.getRange(1, 1, 1, sd.headers.length)
+          .setFontWeight('bold')
+          .setBackground('#1f2433')
+          .setFontColor('#eab338');
+        sh.setFrozenRows(1);
+      }
+    });
+
+    // Masukkan data akun admin nyata ke sheet Users
+    ensureAdminUser({ email: 'admin@quran.app', password: 'admin123', nama: 'Administrator' });
+
+    // Hapus sheet kosong default bawaan Google (Sheet1) jika ada tab lain
+    const defaultSheet = ss.getSheetByName('Sheet1') || ss.getSheetByName('Sheet 1');
+    if (defaultSheet && ss.getSheets().length > 1) {
+      try { ss.deleteSheet(defaultSheet); } catch (e) {}
+    }
+
+    return { 
+      success: true, 
+      message: 'Berhasil! Seluruh 8 tab database dan akun Admin telah aktif di spreadsheet: ' + ss.getName() 
+    };
+  } catch (err) {
+    Logger.log('Error setupDatabaseNow: ' + err.message);
+    return { success: false, error: err.message };
   }
 }
 
@@ -1865,14 +2010,42 @@ function updateUserRole(data) {
 // ============================================================
 
 /**
- * Mengambil sheet berdasarkan nama dari spreadsheet yang sudah dikonfigurasi.
- * Jika sheet belum ada, akan dibuat secara otomatis dengan header yang sesuai.
+ * Mengambil objek Spreadsheet yang valid.
+ * Mengutamakan Spreadsheet aktif tempat script ini terpasang (Container-bound).
+ * @returns {Spreadsheet} Objek Spreadsheet.
+ * @private
+ */
+function getSpreadsheet_() {
+  // 1. Coba Spreadsheet aktif (saat terpasang di Spreadsheet lewat Ekstensi > Apps Script)
+  try {
+    const active = SpreadsheetApp.getActiveSpreadsheet();
+    if (active) return active;
+  } catch (e) {}
+
+  // 2. Coba dari PropertiesService
+  const propId = PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID') || 
+                 PropertiesService.getScriptProperties().getProperty('QURAN_APP_SPREADSHEET_ID');
+  if (propId) {
+    try { return SpreadsheetApp.openById(propId); } catch (e) {}
+  }
+
+  // 3. Coba dari variabel SPREADSHEET_ID jika diisi
+  if (typeof SPREADSHEET_ID !== 'undefined' && SPREADSHEET_ID && SPREADSHEET_ID.trim() !== '') {
+    try { return SpreadsheetApp.openById(SPREADSHEET_ID); } catch (e) {}
+  }
+
+  throw new Error("Spreadsheet tidak ditemukan! Pastikan script dipasang via menu 'Ekstensi > Apps Script' di Google Spreadsheet Anda.");
+}
+
+/**
+ * Mengambil sheet berdasarkan nama dari spreadsheet.
+ * Jika sheet belum ada di spreadsheet, akan langsung dibuat otomatis dengan header yang rapi.
  * @param {string} sheetName - Nama sheet.
  * @returns {Sheet} Objek sheet.
  * @private
  */
 function getSheet_(sheetName) {
-  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  const ss = getSpreadsheet_();
   let sheet = ss.getSheetByName(sheetName);
 
   // Jika sheet belum ada, buat dengan header yang sesuai
