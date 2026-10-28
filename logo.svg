@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A1A2E"/>
+      <stop offset="100%" style="stop-color:#16213E"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F2D06B"/>
+      <stop offset="50%" style="stop-color:#D4A854"/>
+      <stop offset="100%" style="stop-color:#B8860B"/>
+    </linearGradient>
+    <linearGradient id="goldLight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#F5E6A3"/>
+      <stop offset="100%" style="stop-color:#D4A854"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background Circle -->
+  <circle cx="256" cy="256" r="250" fill="url(#bgGrad)" stroke="url(#goldGrad)" stroke-width="4"/>
+  
+  <!-- Outer Islamic Border Pattern -->
+  <circle cx="256" cy="256" r="235" fill="none" stroke="url(#goldGrad)" stroke-width="1.5" stroke-dasharray="8,4" opacity="0.5"/>
+  
+  <!-- Corner Geometric Ornaments -->
+  <g opacity="0.3" fill="url(#goldGrad)">
+    <!-- Top -->
+    <path d="M256,30 L262,50 L256,45 L250,50 Z"/>
+    <!-- Bottom -->
+    <path d="M256,482 L262,462 L256,467 L250,462 Z"/>
+    <!-- Left -->
+    <path d="M30,256 L50,250 L45,256 L50,262 Z"/>
+    <!-- Right -->
+    <path d="M482,256 L462,250 L467,256 L462,262 Z"/>
+  </g>
+  
+  <!-- Open Book / Quran -->
+  <g transform="translate(256,195)" filter="url(#glow)">
+    <!-- Left page -->
+    <path d="M-8,-55 C-8,-55 -75,-50 -85,-30 C-95,-10 -90,45 -85,55 C-80,65 -8,58 -8,58 Z" 
+          fill="#F5E6A3" stroke="url(#goldGrad)" stroke-width="2"/>
+    <!-- Right page -->
+    <path d="M8,-55 C8,-55 75,-50 85,-30 C95,-10 90,45 85,55 C80,65 8,58 8,58 Z" 
+          fill="#FFF8E1" stroke="url(#goldGrad)" stroke-width="2"/>
+    <!-- Spine -->
+    <path d="M-8,-55 C-3,-50 3,-50 8,-55 L8,58 C3,55 -3,55 -8,58 Z" 
+          fill="url(#goldGrad)"/>
+    <!-- Page lines left -->
+    <g stroke="#D4A854" stroke-width="0.8" opacity="0.4">
+      <line x1="-70" y1="-20" x2="-18" y2="-22"/>
+      <line x1="-72" y1="-8" x2="-18" y2="-10"/>
+      <line x1="-74" y1="4" x2="-18" y2="2"/>
+      <line x1="-75" y1="16" x2="-18" y2="14"/>
+      <line x1="-74" y1="28" x2="-18" y2="26"/>
+      <line x1="-72" y1="40" x2="-18" y2="38"/>
+    </g>
+    <!-- Page lines right -->
+    <g stroke="#D4A854" stroke-width="0.8" opacity="0.4">
+      <line x1="70" y1="-20" x2="18" y2="-22"/>
+      <line x1="72" y1="-8" x2="18" y2="-10"/>
+      <line x1="74" y1="4" x2="18" y2="2"/>
+      <line x1="75" y1="16" x2="18" y2="14"/>
+      <line x1="74" y1="28" x2="18" y2="26"/>
+      <line x1="72" y1="40" x2="18" y2="38"/>
+    </g>
+  </g>
+  
+  <!-- Crescent Moon -->
+  <g transform="translate(256,110)" filter="url(#glow)">
+    <path d="M-15,-30 A25,25 0 1,0 -15,20 A18,18 0 1,1 -15,-30" 
+          fill="url(#goldGrad)"/>
+    <!-- Star -->
+    <path d="M18,-12 L20,-6 L26,-6 L21,-2 L23,4 L18,0 L13,4 L15,-2 L10,-6 L16,-6 Z" 
+          fill="url(#goldLight)"/>
+  </g>
+  
+  <!-- Arabic Bismillah style ornament -->
+  <g transform="translate(256,285)" opacity="0.15">
+    <rect x="-100" y="-1" width="200" height="2" rx="1" fill="url(#goldGrad)"/>
+    <circle cx="-105" cy="0" r="3" fill="url(#goldGrad)"/>
+    <circle cx="105" cy="0" r="3" fill="url(#goldGrad)"/>
+  </g>
+  
+  <!-- Text: Al-Qur'an -->
+  <text x="256" y="330" text-anchor="middle" font-family="'Georgia', 'Times New Roman', serif" 
+        font-size="48" font-weight="bold" fill="url(#goldGrad)" letter-spacing="3">
+    Al-Qur'an
+  </text>
+  
+  <!-- Text: Simple -->
+  <text x="256" y="365" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" 
+        font-size="22" fill="#A89060" letter-spacing="8" font-weight="300">
+    SIMPLE
+  </text>
+  
+  <!-- Bottom ornament -->
+  <g transform="translate(256,395)" opacity="0.4">
+    <path d="M-40,0 Q-20,-10 0,0 Q20,-10 40,0" fill="none" stroke="url(#goldGrad)" stroke-width="1.5"/>
+    <circle cx="0" cy="-5" r="2" fill="url(#goldGrad)"/>
+  </g>
+</svg>
+

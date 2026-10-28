@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Al-Qur'an Simple - Platform Pembaca & Monitoring Tilawah</title>
+  
+  <!-- Fonts: Plus Jakarta Sans & Amiri (Arabic) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Chart.js for Desktop Monitoring -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#11141D',
+              surface: '#1A1E2B',
+              surfaceHover: '#23283A',
+              card: '#1F2433',
+              border: '#2A3044',
+              gold: '#EAB338',
+              goldLight: '#F3CD68',
+              goldDark: '#BF8A1A',
+              goldMuted: 'rgba(234, 179, 56, 0.15)',
+              text: '#F1F3F7',
+              textMuted: '#8E95A8',
+              accent: '#39415A'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            arabic: ['"Amiri"', '"Scheherazade New"', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #11141D; }
+    ::-webkit-scrollbar-thumb { background: #2A3044; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #EAB338; }
+
+    .arabic-text {
+      font-family: 'Amiri', 'Scheherazade New', serif;
+      direction: rtl;
+      line-height: 2.2;
+    }
+
+    /* Islamic Octagonal Badge */
+    .islamic-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      position: relative;
+      background: rgba(234, 179, 56, 0.12);
+      border: 1px solid #EAB338;
+      border-radius: 8px;
+      transform: rotate(45deg);
+    }
+    .islamic-badge span {
+      transform: rotate(-45deg);
+      font-size: 13px;
+      font-weight: 700;
+      color: #EAB338;
+    }
+
+    /* Mosque Siluet Background */
+    .mosque-bg {
+      background-image: radial-gradient(circle at bottom, rgba(234, 179, 56, 0.08) 0%, transparent 70%);
+    }
+
+    /* Glass effect */
+    .glass-card {
+      background: rgba(26, 30, 43, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(234, 179, 56, 0.15);
+    }
+  </style>
+</head>
+<body class="bg-brand-dark text-brand-text font-sans antialiased min-h-screen selection:bg-brand-gold selection:text-brand-dark">
+
+  <!-- ==================== APP CONTAINER ==================== -->
+  <div id="app" class="flex flex-col md:flex-row min-h-screen max-w-[1600px] mx-auto relative overflow-x-hidden">
+
+    <!-- ==================== DESKTOP SIDEBAR ==================== -->
+    <aside id="desktop-sidebar" class="hidden md:flex flex-col w-72 bg-brand-surface border-r border-brand-border shrink-0 p-5 sticky top-0 h-screen justify-between z-30">
+      <div>
+        <!-- Brand / Logo -->
+        <div class="flex items-center gap-3.5 px-2 py-3 mb-8 cursor-pointer" onclick="navigateTo('home')">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-brand-goldDark to-brand-gold flex items-center justify-center shadow-lg shadow-brand-gold/20">
+            <svg class="w-6 h-6 text-brand-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+            </svg>
+          </div>
+          <div>
+            <h1 class="font-bold text-lg tracking-wide text-brand-text flex items-center gap-1.5">
+              Al-Qur'an <span class="text-brand-gold text-xs px-2 py-0.5 rounded bg-brand-goldMuted font-mono">Simple</span>
+            </h1>
+            <p class="text-xs text-brand-textMuted">Tilawah & Monitoring</p>
+          </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="space-y-1.5" id="desktop-nav">
+          <button onclick="navigateTo('home')" class="nav-link active flex items-center gap-3.5 w-full px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200">
+            <i data-lucide="home" class="w-5 h-5 text-brand-gold"></i>
+            <span>Beranda</span>
+          </button>
+          <button onclick="navigateTo('surah-list')" class="nav-link flex items-center gap-3.5 w-full px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 text-brand-textMuted hover:text-white hover:bg-brand-surfaceHover">
+            <i data-lucide="book-open" class="w-5 h-5"></i>
+            <span>Daftar Surah</span>
+          </button>
+          <button onclick="navigateTo('monitoring')" class="nav-link flex items-center gap-3.5 w-full px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 text-brand-textMuted hover:text-white hover:bg-brand-surfaceHover">
+            <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+            <span>Monitoring Khatam</span>
+          </button>
+          <button onclick="navigateTo('bookmarks')" class="nav-link flex items-center gap-3.5 w-full px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 text-brand-textMuted hover:text-white hover:bg-brand-surfaceHover">
+            <i data-lucide="bookmark" class="w-5 h-5"></i>
+            <span>Bookmark & Catatan</span>
+          </button>
+          <button onclick="navigateTo('donation')" class="nav-link flex items-center gap-3.5 w-full px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 text-brand-textMuted hover:text-white hover:bg-brand-surfaceHover">
+            <i data-lucide="qr-code" class="w-5 h-5"></i>
+            <span>Infaq QRIS</span>
+          </button>
+          <!-- Admin Only Menu (Hidden by default) -->
+          <div id="admin-menu-item" class="hidden pt-4 mt-4 border-t border-brand-border">
+            <span class="text-[11px] uppercase tracking-wider font-bold text-brand-gold px-4 block mb-2">Administrator</span>
+            <button onclick="navigateTo('admin')" class="nav-link flex items-center gap-3.5 w-full px-4 py-3 rounded-xl text-sm font-semibold text-brand-textMuted hover:text-white hover:bg-brand-surfaceHover">
+              <i data-lucide="shield-check" class="w-5 h-5 text-amber-400"></i>
+              <span>Admin Panel</span>
+            </button>
+          </div>
+        </nav>
+      </div>
+
+      <!-- User Account Widget in Sidebar -->
+      <div class="bg-brand-card border border-brand-border rounded-2xl p-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-3 cursor-pointer overflow-hidden" onclick="showAuthModal(true)">
+          <div id="user-avatar" class="w-10 h-10 rounded-full bg-brand-surfaceHover border border-brand-gold/40 flex items-center justify-center text-brand-gold font-bold shrink-0">
+            <i data-lucide="user" class="w-5 h-5"></i>
+          </div>
+          <div class="truncate">
+            <p id="user-name" class="text-sm font-bold text-white truncate">Tamu (Belum Masuk)</p>
+            <p id="user-role-badge" class="text-xs text-brand-gold capitalize truncate">Klik untuk Masuk</p>
+          </div>
+        </div>
+        <button id="auth-action-btn" onclick="handleAuthAction()" title="Masuk / Keluar" class="p-2 rounded-lg text-brand-textMuted hover:text-white hover:bg-brand-surfaceHover">
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ==================== MAIN CONTENT WRAPPER ==================== -->
+    <main class="flex-1 flex flex-col min-w-0 pb-20 md:pb-6">
+
+      <!-- Top Bar (Mobile & Desktop Header) -->
+      <header class="flex items-center justify-between px-4 py-3.5 md:px-8 border-b border-brand-border bg-brand-dark/95 backdrop-blur-md sticky top-0 z-20">
+        <!-- Mobile Logo -->
+        <div class="flex items-center gap-2.5 md:hidden" onclick="navigateTo('home')">
+          <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-brand-goldDark to-brand-gold flex items-center justify-center text-brand-dark font-black">
+            <i data-lucide="book" class="w-5 h-5"></i>
+          </div>
+          <span class="font-bold text-base tracking-wide text-brand-text">Al-Qur'an <span class="text-brand-gold">Simple</span></span>
+        </div>
+
+        <!-- Desktop Title Breadcrumb -->
+        <div class="hidden md:flex items-center gap-2">
+          <span id="page-title" class="font-bold text-lg text-white">Beranda Utama</span>
+          <span class="text-brand-textMuted text-xs">/ Monitoring Tilawah Harian</span>
+        </div>
+
+        <!-- Quick Top Actions -->
+        <div class="flex items-center gap-2">
+          <!-- Quick Search Trigger -->
+          <div class="relative hidden sm:block w-64">
+            <i data-lucide="search" class="w-4 h-4 text-brand-textMuted absolute left-3 top-1/2 -translate-y-1/2"></i>
+            <input type="text" id="global-search-input" onkeyup="handleGlobalSearch(event)" placeholder="Cari surah, arti, ayat..." 
+                   class="w-full bg-brand-surface border border-brand-border rounded-xl pl-9 pr-3 py-1.5 text-xs text-white placeholder-brand-textMuted focus:outline-none focus:border-brand-gold transition-colors">
+          </div>
+          <!-- Mobile Auth Quick Icon -->
+          <button class="md:hidden p-2 rounded-xl bg-brand-surface border border-brand-border text-brand-gold" onclick="showAuthModal(true)">
+            <i data-lucide="user" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- ==================== PAGES CONTAINER ==================== -->
+      <div class="p-4 md:p-8 flex-1">
+
+        <!-- ================= PAGE 1: BERANDA (HOME) ================= -->
+        <section id="page-home" class="space-y-6">
+          
+          <!-- Top Interactive Announcement / Hadits Banner (Feature 5) -->
+          <div id="top-announcement-banner" class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#2B2313] via-brand-card to-[#1B2236] border border-brand-gold/30 p-5 md:p-6 shadow-xl">
+            <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div class="max-w-2xl">
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-gold/15 text-brand-gold text-xs font-semibold mb-3 border border-brand-gold/25">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                  <span>Pengingat & Kutipan Hari Ini</span>
+                </div>
+                <h3 id="banner-title" class="text-lg md:text-xl font-bold text-white mb-1.5 leading-snug">
+                  "Sebaik-baik kalian adalah yang mempelajari Al-Qur'an dan mengajarkannya."
+                </h3>
+                <p id="banner-desc" class="text-xs md:text-sm text-brand-textMuted">
+                  HR. Bukhari No. 5027. Luangkan waktu minimal 15 menit hari ini untuk bertilawah.
+                </p>
+              </div>
+              <button onclick="navigateTo('surah-list')" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-brand-gold to-brand-goldLight text-brand-dark font-bold text-sm shadow-lg shadow-brand-gold/20 hover:opacity-95 transition-all self-start md:self-auto shrink-0">
+                <i data-lucide="book-open" class="w-4 h-4"></i>
+                <span>Mulai Membaca</span>
+              </button>
+            </div>
+            <!-- Subtle Mosque Background Decor -->
+            <div class="absolute -right-6 -bottom-8 opacity-10 pointer-events-none">
+              <i data-lucide="moon" class="w-48 h-48 text-brand-gold"></i>
+            </div>
+          </div>
+
+          <!-- Referensi UI: Header Greeting & Prayer Times Card -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <!-- Greeting & Quick Stats -->
+            <div class="md:col-span-2 bg-brand-surface rounded-3xl p-5 md:p-6 border border-brand-border flex flex-col justify-between relative overflow-hidden">
+              <div class="flex items-center justify-between">
+                <div>
+                  <span class="text-xs text-brand-gold font-semibold uppercase tracking-wider">Ahlan Wa Sahlan</span>
+                  <h2 id="home-greeting-name" class="text-xl md:text-2xl font-bold text-white mt-0.5">Assalamu'alaikum, Sahabat</h2>
+                </div>
+                <div class="w-12 h-12 rounded-2xl bg-brand-card border border-brand-border flex items-center justify-center text-brand-gold">
+                  <i data-lucide="compass" class="w-6 h-6"></i>
+                </div>
+              </div>
+
+              <!-- Quick Progress Mini Bar -->
+              <div class="mt-6 pt-5 border-t border-brand-border/60">
+                <div class="flex justify-between text-xs mb-2">
+                  <span class="text-brand-textMuted">Progres Khatam Tilawah</span>
+                  <span id="quick-khatam-pct" class="font-bold text-brand-gold">0% (0 / 6236 Ayat)</span>
+                </div>
+                <div class="w-full h-2.5 bg-brand-card rounded-full overflow-hidden border border-brand-border">
+                  <div id="quick-khatam-bar" class="h-full bg-gradient-to-r from-brand-goldDark to-brand-gold rounded-full transition-all duration-500" style="width: 2%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Prayer / Jadwal Sholat Widget (Sesuai Referensi UI) -->
+            <div class="bg-gradient-to-br from-brand-card to-[#19202F] rounded-3xl p-5 border border-brand-border flex flex-col justify-between">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-brand-gold uppercase tracking-wider">Waktu Sholat</span>
+                <span class="text-[11px] text-brand-textMuted bg-brand-surface px-2 py-0.5 rounded-full" id="realtime-clock">12:16 WIB</span>
+              </div>
+              <div class="my-4 flex items-center justify-between">
+                <div>
+                  <h4 class="text-2xl font-black text-white" id="prayer-name">DZUHUR</h4>
+                  <p class="text-xs text-brand-textMuted mt-0.5">Waktu Jakarta & Sekitarnya</p>
+                </div>
+                <!-- Sun/Cloud 3D icon replacement -->
+                <div class="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-inner">
+                  <i data-lucide="sun" class="w-8 h-8"></i>
+                </div>
+              </div>
+              <div class="flex items-center justify-between text-xs text-brand-textMuted pt-3 border-t border-brand-border/60">
+                <span>Subuh: 04:32</span>
+                <span>Maghrib: 17:58</span>
+                <span>Isya: 19:08</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Referensi UI: Last Read Card + Action Buttons -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+            <!-- Last Read Golden Card (Sesuai Referensi Screen 3) -->
+            <div class="lg:col-span-2 bg-gradient-to-r from-[#DFB045] to-[#F1CB6C] text-brand-dark rounded-3xl p-6 shadow-xl relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-6">
+              <div class="z-10 text-center sm:text-left">
+                <div class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-dark/75 mb-2">
+                  <i data-lucide="bookmark-check" class="w-4 h-4"></i>
+                  <span>Terakhir Dibaca (Last Read)</span>
+                </div>
+                <h3 id="last-read-surah" class="text-2xl sm:text-3xl font-black text-brand-dark tracking-tight">Al-Fatihah</h3>
+                <p id="last-read-detail" class="text-xs font-medium text-brand-dark/80 mt-1">Ayat 1 - 7 • Pembukaan</p>
+                <button onclick="resumeLastReading()" class="mt-4 px-5 py-2.5 rounded-xl bg-brand-dark text-brand-gold font-bold text-xs inline-flex items-center gap-2 hover:bg-black transition-colors shadow-md">
+                  <span>Lanjutkan Tilawah</span>
+                  <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </button>
+              </div>
+
+              <!-- 3D Book Graphic Illusion -->
+              <div class="relative w-32 h-40 bg-[#2B2313] rounded-r-xl rounded-l-md border-r-4 border-b-4 border-amber-800/40 p-3 flex flex-col items-center justify-center text-center shadow-2xl shrink-0">
+                <div class="w-16 h-16 rounded-full border-2 border-brand-gold/60 flex items-center justify-center mb-2">
+                  <span class="arabic-text text-xl text-brand-gold font-bold">القرآن</span>
+                </div>
+                <span class="text-[10px] text-brand-gold font-bold tracking-widest uppercase">Al-Qur'an</span>
+              </div>
+            </div>
+
+            <!-- Quick Shortcut Hub (Qur'an, Zakat/Infaq, Dzikir) -->
+            <div class="grid grid-cols-3 gap-3">
+              <div onclick="navigateTo('surah-list')" class="bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border rounded-2xl p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all">
+                <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-brand-gold flex items-center justify-center mb-2.5">
+                  <i data-lucide="book" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xs font-bold text-white">Qur'an</span>
+                <span class="text-[10px] text-brand-textMuted">114 Surah</span>
+              </div>
+
+              <div onclick="navigateTo('donation')" class="bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border rounded-2xl p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all">
+                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-2.5">
+                  <i data-lucide="heart-handshake" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xs font-bold text-white">Infaq QRIS</span>
+                <span class="text-[10px] text-brand-textMuted">Sedekah</span>
+              </div>
+
+              <div onclick="showDzikirModal()" class="bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border rounded-2xl p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all">
+                <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-2.5">
+                  <i data-lucide="sparkle" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xs font-bold text-white">Dzikir</span>
+                <span class="text-[10px] text-brand-textMuted">Pagi & Petang</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Featured Daily Study Section (Sesuai Referensi UI "Featured") -->
+          <div class="bg-brand-surface rounded-3xl p-5 md:p-6 border border-brand-border">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="text-base font-bold text-white">Surah Pilihan Harian</h3>
+                <p class="text-xs text-brand-textMuted">Surah yang dianjurkan dibaca secara berkala</p>
+              </div>
+              <button onclick="navigateTo('surah-list')" class="text-xs text-brand-gold font-bold hover:underline">Lihat Semua</button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3.5" id="quick-surah-cards">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ================= PAGE 2: DAFTAR SURAH (SURAH LIST) ================= -->
+        <section id="page-surah-list" class="hidden space-y-5">
+          <!-- Header Filter & Tabs (Sesuai Referensi UI Screen 3: Surah, Para/Juz, Bookmark) -->
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex items-center gap-2 border-b border-brand-border pb-2 md:pb-0">
+              <button id="tab-surah" onclick="switchSurahTab('surah')" class="px-4 py-2 text-sm font-bold border-b-2 border-brand-gold text-brand-gold">Surah (114)</button>
+              <button id="tab-juz" onclick="switchSurahTab('juz')" class="px-4 py-2 text-sm font-bold border-b-2 border-transparent text-brand-textMuted hover:text-white">Juz (30)</button>
+            </div>
+
+            <!-- Search Bar in Surah Page -->
+            <div class="flex items-center gap-2.5">
+              <div class="relative w-full md:w-80">
+                <i data-lucide="search" class="w-4 h-4 text-brand-textMuted absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input type="text" id="surah-filter-input" onkeyup="filterSurahList()" placeholder="Ketik nama surah atau arti..." 
+                       class="w-full bg-brand-surface border border-brand-border rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-brand-textMuted focus:outline-none focus:border-brand-gold">
+              </div>
+            </div>
+          </div>
+
+          <!-- Surah Container Grid/List -->
+          <div id="surah-items-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+            <!-- Loading indicator -->
+            <div class="col-span-full py-16 text-center">
+              <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-brand-gold mb-3"></div>
+              <p class="text-sm text-brand-textMuted">Memuat daftar 114 Surah Al-Qur'an...</p>
+            </div>
+          </div>
+
+          <!-- Juz Container (Hidden by default) -->
+          <div id="juz-items-list" class="hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5">
+            <!-- Rendered via JS -->
+          </div>
+        </section>
+
+        <!-- ================= PAGE 3: DETAIL SURAH & AYAT (READER) ================= -->
+        <section id="page-surah-detail" class="hidden space-y-6">
+          <!-- Back button & Reader Toolbar -->
+          <div class="flex flex-wrap items-center justify-between gap-3 bg-brand-surface p-4 rounded-2xl border border-brand-border">
+            <button onclick="navigateTo('surah-list')" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-brand-card hover:bg-brand-surfaceHover text-xs font-bold text-white border border-brand-border">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              <span>Kembali ke Daftar</span>
+            </button>
+
+            <!-- Audio Player Bar (Murattal) & Pilihan Qori -->
+            <div class="flex flex-wrap items-center gap-2.5">
+              <!-- Qori Selector Pill -->
+              <button onclick="openQoriModal()" id="current-qori-pill" title="Ganti Qori Murattal" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-brand-card hover:bg-brand-surfaceHover text-xs text-brand-gold border border-brand-gold/40 font-bold transition-all shadow-sm">
+                <span id="current-qori-icon">🎙️</span>
+                <span id="current-qori-name">Misyari Rasyid</span>
+                <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-70"></i>
+              </button>
+
+              <!-- Main Full Surah Audio Box -->
+              <div id="surah-audio-box" class="flex items-center gap-2.5 bg-brand-card px-3.5 py-1.5 rounded-xl border border-brand-border text-xs">
+                <button id="audio-play-btn" onclick="toggleAudio()" class="w-7 h-7 rounded-full bg-brand-gold text-brand-dark flex items-center justify-center font-bold hover:scale-105 transition-transform">
+                  <i data-lucide="play" class="w-3.5 h-3.5 ml-0.5"></i>
+                </button>
+                <span id="audio-status-text" class="text-white font-medium text-[11px] sm:text-xs">Putar Surah Penuh</span>
+                <audio id="main-audio-player" class="hidden"></audio>
+              </div>
+
+              <!-- Autoplay Continuous Next Ayah Toggle -->
+              <label class="hidden sm:inline-flex items-center gap-1.5 cursor-pointer bg-brand-card px-2.5 py-1.5 rounded-xl border border-brand-border text-xs text-brand-textMuted hover:text-white select-none">
+                <input type="checkbox" id="toggle-auto-next" onchange="toggleAutoNextAyah(this.checked)" class="w-3.5 h-3.5 accent-brand-gold rounded">
+                <span class="text-[11px]">Autoplay Ayat Lanjut</span>
+              </label>
+            </div>
+
+            <!-- Reader Settings Button -->
+            <button onclick="openReaderSettingsModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-card hover:bg-brand-surfaceHover text-xs text-brand-gold border border-brand-border font-bold">
+              <i data-lucide="sliders" class="w-4 h-4"></i>
+              <span>Atur Tampilan</span>
+            </button>
+          </div>
+
+          <!-- Surah Header Card with Islamic Ornament -->
+          <div class="bg-gradient-to-b from-brand-card to-brand-surface rounded-3xl p-6 md:p-8 border border-brand-gold/30 text-center relative overflow-hidden">
+            <h2 id="detail-surah-name" class="text-3xl md:text-4xl font-black text-brand-gold tracking-wide">Al-Fatihah</h2>
+            <p id="detail-surah-arabic" class="arabic-text text-3xl md:text-4xl text-white mt-2">الفاتحة</p>
+            <p id="detail-surah-info" class="text-xs md:text-sm text-brand-textMuted mt-3 font-medium">
+              Surah ke-1 • 7 Ayat • Makkiyyah • Artinya: Pembukaan
+            </p>
+
+            <!-- Bismillah Decoration -->
+            <div id="bismillah-container" class="mt-6 pt-6 border-t border-brand-border/60">
+              <p class="arabic-text text-2xl md:text-3xl text-brand-gold">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+            </div>
+          </div>
+
+          <!-- Ayah List Container -->
+          <div id="ayah-list-container" class="space-y-4">
+            <!-- Rendered via JS -->
+          </div>
+
+          <!-- Bottom Floating Reading Progress Marker -->
+          <div class="sticky bottom-20 md:bottom-6 z-10 flex justify-center">
+            <button onclick="recordFinishReadingCurrentSurah()" class="px-6 py-3 rounded-full bg-gradient-to-r from-brand-gold to-brand-goldLight text-brand-dark font-bold text-xs shadow-2xl shadow-brand-gold/40 flex items-center gap-2 hover:scale-105 transition-transform">
+              <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+              <span>Tandai Selesai Membaca Surah Ini</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- ================= PAGE 4: MONITORING & STATISTIK KHATAM ================= -->
+        <section id="page-monitoring" class="hidden space-y-6">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-xl md:text-2xl font-black text-white">Monitoring Progres Khatam</h2>
+              <p class="text-xs md:text-sm text-brand-textMuted">Pemantauan histori tilawah, durasi membaca, dan kalkulasi mutasi ayat</p>
+            </div>
+            <button onclick="refreshUserStats()" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border text-xs text-brand-gold font-bold self-start">
+              <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+              <span>Perbarui Data</span>
+            </button>
+          </div>
+
+          <!-- Monitoring Metric Cards -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-brand-surface p-4 rounded-2xl border border-brand-border">
+              <span class="text-xs text-brand-textMuted font-medium">Persentase Khatam</span>
+              <p id="stat-khatam-pct" class="text-2xl md:text-3xl font-black text-brand-gold mt-1">0.0%</p>
+              <span class="text-[10px] text-brand-textMuted">dari total 6,236 ayat</span>
+            </div>
+            <div class="bg-brand-surface p-4 rounded-2xl border border-brand-border">
+              <span class="text-xs text-brand-textMuted font-medium">Ayat Dibaca</span>
+              <p id="stat-ayahs-read" class="text-2xl md:text-3xl font-black text-white mt-1">0</p>
+              <span class="text-[10px] text-brand-textMuted">Akumulasi tilawah</span>
+            </div>
+            <div class="bg-brand-surface p-4 rounded-2xl border border-brand-border">
+              <span class="text-xs text-brand-textMuted font-medium">Total Waktu Baca</span>
+              <p id="stat-total-duration" class="text-2xl md:text-3xl font-black text-emerald-400 mt-1">0 Menit</p>
+              <span class="text-[10px] text-brand-textMuted">Waktu tilawah aktif</span>
+            </div>
+            <div class="bg-brand-surface p-4 rounded-2xl border border-brand-border">
+              <span class="text-xs text-brand-textMuted font-medium">Surah Diselesaikan</span>
+              <p id="stat-surahs-completed" class="text-2xl md:text-3xl font-black text-indigo-400 mt-1">0 / 114</p>
+              <span class="text-[10px] text-brand-textMuted">Target khatam 30 juz</span>
+            </div>
+          </div>
+
+          <!-- Chart Area: Monthly Tilawah History (Feature 3) -->
+          <div class="bg-brand-surface p-5 md:p-6 rounded-3xl border border-brand-border">
+            <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
+              <i data-lucide="trending-up" class="w-4 h-4 text-brand-gold"></i>
+              <span>Grafik Durasi & Aktivitas Membaca Bulanan</span>
+            </h3>
+            <div class="h-64 w-full">
+              <canvas id="monthlyReadingChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Reading History Table -->
+          <div class="bg-brand-surface rounded-3xl border border-brand-border overflow-hidden">
+            <div class="p-5 border-b border-brand-border flex items-center justify-between">
+              <h3 class="text-sm font-bold text-white">Histori Sesi Tilawah Terakhir</h3>
+              <span class="text-xs text-brand-textMuted">Tercatat di Google Sheets</span>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-brand-card text-brand-textMuted uppercase font-semibold">
+                  <tr>
+                    <th class="px-5 py-3">Waktu</th>
+                    <th class="px-5 py-3">Surah</th>
+                    <th class="px-5 py-3">Rentang Ayat</th>
+                    <th class="px-5 py-3">Durasi</th>
+                  </tr>
+                </thead>
+                <tbody id="history-table-body" class="divide-y divide-brand-border text-white">
+                  <tr>
+                    <td colspan="4" class="px-5 py-8 text-center text-brand-textMuted">Belum ada riwayat membaca yang tercatat.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= PAGE 5: BOOKMARK & CATATAN ================= -->
+        <section id="page-bookmarks" class="hidden space-y-6">
+          <div>
+            <h2 class="text-xl md:text-2xl font-black text-white">Bookmark & Catatan Pribadi</h2>
+            <p class="text-xs md:text-sm text-brand-textMuted">Koleksi ayat penanda dan refleksi/tafsir yang Anda simpan</p>
+          </div>
+
+          <!-- Tabs Bookmark vs Notes -->
+          <div class="flex gap-2 border-b border-brand-border pb-2">
+            <button id="subtab-bookmarks" onclick="switchBookmarkSubTab('bookmarks')" class="px-4 py-2 text-sm font-bold border-b-2 border-brand-gold text-brand-gold">Penanda Ayat</button>
+            <button id="subtab-notes" onclick="switchBookmarkSubTab('notes')" class="px-4 py-2 text-sm font-bold border-b-2 border-transparent text-brand-textMuted hover:text-white">Catatan & Tafsir</button>
+          </div>
+
+          <div id="bookmarks-list-box" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Rendered via JS -->
+          </div>
+
+          <div id="notes-list-box" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Rendered via JS -->
+          </div>
+        </section>
+
+        <!-- ================= PAGE 6: DONASI / INFAQ QRIS ================= -->
+        <section id="page-donation" class="hidden space-y-6 max-w-2xl mx-auto">
+          <div class="text-center">
+            <div class="w-14 h-14 rounded-2xl bg-amber-500/10 text-brand-gold mx-auto flex items-center justify-center mb-3">
+              <i data-lucide="heart" class="w-7 h-7"></i>
+            </div>
+            <h2 class="text-xl md:text-2xl font-black text-white">Infaq & Dukungan Operasional</h2>
+            <p class="text-xs md:text-sm text-brand-textMuted mt-1">Dukung pengembangan Web App Al-Qur'an Simple bebas iklan & berkelanjutan melalui QRIS resmi</p>
+          </div>
+
+          <div class="bg-brand-surface rounded-3xl p-6 border border-brand-gold/30 text-center shadow-xl">
+            <!-- QRIS Code Image Container -->
+            <div class="bg-white p-5 rounded-2xl inline-block max-w-[280px] shadow-lg mb-4">
+              <img id="qris-display-img" src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=00020101021126580014ID.GO.GOPAY.WWW011893600914361234567802150000000000000015204581253033605802ID5916ALQURAN%20SIMPLE6013JAKARTA%20PUSAT61051011062070703A0163042E94" 
+                   alt="QRIS Donasi Al-Qur'an Simple" class="w-full h-auto rounded-lg">
+            </div>
+            <p class="text-xs font-bold text-white">Scan dengan GoPay, OVO, Dana, BCA, Livin, atau Semua Aplikasi Banking</p>
+            <p class="text-[11px] text-brand-textMuted mt-1">NMID: ID102003829102 • Al-Qur'an Simple Foundation</p>
+
+            <!-- Konfirmasi Donasi Form -->
+            <form onsubmit="handleDonationSubmit(event)" class="mt-6 pt-6 border-t border-brand-border text-left space-y-3">
+              <label class="block text-xs font-bold text-brand-gold">Konfirmasi Catatan Infaq (Opsional)</label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <input type="number" id="donation-amount" placeholder="Nominal (Contoh: 50000)" class="bg-brand-card border border-brand-border rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-brand-gold">
+                <input type="text" id="donation-donor" placeholder="Nama Hamba Allah / Pengirim" class="bg-brand-card border border-brand-border rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-brand-gold">
+              </div>
+              <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-brand-gold to-brand-goldLight text-brand-dark font-bold text-xs shadow-md">
+                Kirim Bukti Konfirmasi Infaq
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <!-- ================= PAGE 7: ADMIN PANEL ================= -->
+        <section id="page-admin" class="hidden space-y-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-xl md:text-2xl font-black text-amber-400 flex items-center gap-2">
+                <i data-lucide="shield" class="w-6 h-6"></i>
+                <span>Admin & Pengurus Dashboard</span>
+              </h2>
+              <p class="text-xs md:text-sm text-brand-textMuted">Kelola banner pengumuman, perbarui QRIS donasi, dan kontrol pengguna</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Update QRIS Image Form -->
+            <div class="bg-brand-surface p-5 rounded-3xl border border-brand-border">
+              <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
+                <i data-lucide="upload" class="w-4 h-4 text-brand-gold"></i>
+                <span>Perbarui URL Foto QRIS Donasi</span>
+              </h3>
+              <form onsubmit="handleUpdateQrisUrl(event)" class="space-y-3">
+                <input type="url" id="admin-qris-url" placeholder="https://domain.com/qris-terbaru.jpg" required class="w-full bg-brand-card border border-brand-border rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-brand-gold">
+                <button type="submit" class="px-4 py-2 rounded-xl bg-brand-gold text-brand-dark font-bold text-xs">Simpan QRIS Baru</button>
+              </form>
+            </div>
+
+            <!-- Create Announcement Form -->
+            <div class="bg-brand-surface p-5 rounded-3xl border border-brand-border">
+              <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
+                <i data-lucide="megaphone" class="w-4 h-4 text-brand-gold"></i>
+                <span>Buat Pengumuman / Hadits Banner Baru</span>
+              </h3>
+              <form onsubmit="handleCreateAnnouncement(event)" class="space-y-3">
+                <input type="text" id="admin-ann-title" placeholder="Judul Pengumuman / Hadits" required class="w-full bg-brand-card border border-brand-border rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-brand-gold">
+                <textarea id="admin-ann-content" placeholder="Isi kutipan ayat, hadits, atau pengumuman amalan harian..." rows="3" required class="w-full bg-brand-card border border-brand-border rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-brand-gold"></textarea>
+                <button type="submit" class="px-4 py-2 rounded-xl bg-brand-gold text-brand-dark font-bold text-xs">Publikasikan Banner</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Registered Users List -->
+          <div class="bg-brand-surface rounded-3xl border border-brand-border overflow-hidden">
+            <div class="p-5 border-b border-brand-border flex items-center justify-between">
+              <h3 class="text-sm font-bold text-white">Daftar Akun Pengguna / Pengajar Terdaftar</h3>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-brand-card text-brand-textMuted uppercase font-semibold">
+                  <tr>
+                    <th class="px-5 py-3">Nama</th>
+                    <th class="px-5 py-3">Email</th>
+                    <th class="px-5 py-3">Role</th>
+                    <th class="px-5 py-3">Aksi Ubah Role</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-users-table" class="divide-y divide-brand-border text-white">
+                  <tr>
+                    <td colspan="4" class="px-5 py-6 text-center text-brand-textMuted">Memuat daftar pengguna...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- ==================== MOBILE BOTTOM NAVIGATION (Sesuai Referensi UI) ==================== -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-[#161A26]/95 backdrop-blur-lg border-t border-brand-border z-30 px-6 py-2.5 flex items-center justify-between shadow-2xl">
+      <button onclick="navigateTo('home')" class="mobile-nav-btn active flex flex-col items-center gap-1 text-brand-gold">
+        <i data-lucide="home" class="w-5 h-5"></i>
+        <span class="text-[10px] font-bold">Home</span>
+      </button>
+
+      <button onclick="navigateTo('surah-list')" class="mobile-nav-btn flex flex-col items-center gap-1 text-brand-textMuted hover:text-white">
+        <i data-lucide="book" class="w-5 h-5"></i>
+        <span class="text-[10px] font-medium">Qur'an</span>
+      </button>
+
+      <!-- Center Curved Search Button (Sesuai Referensi Gambar Layar 2) -->
+      <div class="relative -top-5">
+        <button onclick="openQuickSearchModal()" class="w-13 h-13 p-3.5 rounded-full bg-gradient-to-tr from-brand-goldDark via-brand-gold to-brand-goldLight text-brand-dark shadow-xl shadow-brand-gold/30 flex items-center justify-center transform active:scale-95 transition-transform">
+          <i data-lucide="search" class="w-6 h-6 stroke-[2.5]"></i>
+        </button>
+      </div>
+
+      <button onclick="navigateTo('monitoring')" class="mobile-nav-btn flex flex-col items-center gap-1 text-brand-textMuted hover:text-white">
+        <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
+        <span class="text-[10px] font-medium">Progres</span>
+      </button>
+
+      <button onclick="showAuthModal(true)" class="mobile-nav-btn flex flex-col items-center gap-1 text-brand-textMuted hover:text-white">
+        <i data-lucide="user" class="w-5 h-5"></i>
+        <span class="text-[10px] font-medium">Akun</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- ==================== AUTH MODAL (LOGIN & DAFTAR - Sesuai Referensi Layar 1) ==================== -->
+  <div id="auth-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#171926] border border-brand-gold/30 rounded-3xl w-full max-w-md p-6 sm:p-8 relative shadow-2xl mosque-bg">
+      <button onclick="showAuthModal(false)" class="absolute top-5 right-5 text-brand-textMuted hover:text-white">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Logo & Title -->
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-goldDark to-brand-gold text-brand-dark flex items-center justify-center mx-auto mb-3 shadow-lg shadow-brand-gold/20">
+          <i data-lucide="book-marked" class="w-7 h-7"></i>
+        </div>
+        <h3 id="auth-modal-title" class="text-2xl font-black text-white">Masuk ke Akun</h3>
+        <p class="text-xs text-brand-textMuted mt-1">Simpan bookmark, histori tilawah, dan pantau progres khatam Anda</p>
+      </div>
+
+      <!-- Tab Switcher (Masuk vs Daftar) -->
+      <div class="flex bg-brand-surface p-1 rounded-xl mb-5 border border-brand-border">
+        <button id="auth-tab-login" onclick="switchAuthMode('login')" class="flex-1 py-1.5 rounded-lg text-xs font-bold bg-brand-gold text-brand-dark transition-all">Masuk</button>
+        <button id="auth-tab-register" onclick="switchAuthMode('register')" class="flex-1 py-1.5 rounded-lg text-xs font-bold text-brand-textMuted hover:text-white transition-all">Daftar Akun</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="form-login" onsubmit="handleLoginSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-medium text-brand-textMuted mb-1">Email</label>
+          <input type="email" id="login-email" required placeholder="nama@email.com" class="w-full bg-brand-surface border border-brand-border rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-brand-gold">
+        </div>
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label class="text-xs font-medium text-brand-textMuted">Kata Sandi</label>
+            <a href="#" class="text-[11px] text-brand-gold hover:underline">Lupa Sandi?</a>
+          </div>
+          <input type="password" id="login-password" required placeholder="••••••••" class="w-full bg-brand-surface border border-brand-border rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-brand-gold">
+        </div>
+        <button type="submit" class="w-full py-3 rounded-2xl bg-gradient-to-r from-brand-gold to-brand-goldLight text-brand-dark font-black text-sm shadow-xl shadow-brand-gold/20 hover:opacity-95 transition-all mt-2">
+          Masuk Sekarang
+        </button>
+      </form>
+
+      <!-- Register Form (Hidden by default) -->
+      <form id="form-register" onsubmit="handleRegisterSubmit(event)" class="hidden space-y-3.5">
+        <div>
+          <label class="block text-xs font-medium text-brand-textMuted mb-1">Nama Lengkap</label>
+          <input type="text" id="reg-name" required placeholder="Contoh: Ahmad Fauzi" class="w-full bg-brand-surface border border-brand-border rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-brand-gold">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-brand-textMuted mb-1">Email</label>
+          <input type="email" id="reg-email" required placeholder="nama@email.com" class="w-full bg-brand-surface border border-brand-border rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-brand-gold">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-brand-textMuted mb-1">Kata Sandi</label>
+          <input type="password" id="reg-password" required placeholder="Minimal 6 karakter" class="w-full bg-brand-surface border border-brand-border rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-brand-gold">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-brand-textMuted mb-1">Daftar Sebagai</label>
+          <select id="reg-role" class="w-full bg-brand-surface border border-brand-border rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-gold">
+            <option value="pembaca">Pembaca Umum</option>
+            <option value="pengajar">Pengajar / Kontributor Tilawah</option>
+          </select>
+        </div>
+        <button type="submit" class="w-full py-3 rounded-2xl bg-gradient-to-r from-brand-gold to-brand-goldLight text-brand-dark font-black text-sm shadow-xl shadow-brand-gold/20 hover:opacity-95 transition-all mt-2">
+          Daftarkan Akun
+        </button>
+      </form>
+
+      <!-- Demo Info Notice -->
+      <div class="mt-5 pt-4 border-t border-brand-border text-center">
+        <p class="text-[11px] text-brand-textMuted">
+          Demo Admin: <span class="text-brand-gold font-mono">admin@quran.app</span> | Sandi: <span class="text-brand-gold font-mono">admin123</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== NOTE & TAFSIR MODAL ==================== -->
+  <div id="note-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-brand-surface border border-brand-border rounded-3xl w-full max-w-lg p-6 relative">
+      <button onclick="closeNoteModal()" class="absolute top-5 right-5 text-brand-textMuted hover:text-white">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <h3 class="text-base font-bold text-white mb-1" id="modal-note-title">Catatan & Tafsir Ayat</h3>
+      <p class="text-xs text-brand-textMuted mb-4" id="modal-note-subtitle">Simpan catatan refleksi pribadi untuk ayat ini</p>
+      
+      <textarea id="modal-note-content" rows="4" placeholder="Tulis catatan, asbabun nuzul singkat, atau refleksi pribadi..." 
+                class="w-full bg-brand-card border border-brand-border rounded-xl p-3.5 text-xs text-white focus:outline-none focus:border-brand-gold"></textarea>
+
+      <div class="mt-4 flex justify-end gap-2">
+        <button onclick="closeNoteModal()" class="px-4 py-2 rounded-xl text-xs text-brand-textMuted hover:text-white">Batal</button>
+        <button onclick="saveCurrentAyahNote()" class="px-5 py-2 rounded-xl bg-brand-gold text-brand-dark font-bold text-xs">Simpan Catatan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== READER SETTINGS MODAL ==================== -->
+  <div id="settings-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-brand-surface border border-brand-border rounded-3xl w-full max-w-md p-6 relative">
+      <button onclick="document.getElementById('settings-modal').classList.add('hidden')" class="absolute top-5 right-5 text-brand-textMuted hover:text-white">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <h3 class="text-base font-bold text-white mb-4">Pengaturan Tampilan Baca</h3>
+      
+      <div class="space-y-4 text-xs">
+        <div>
+          <label class="block text-brand-textMuted mb-2">Ukuran Huruf Arab</label>
+          <div class="flex items-center gap-3">
+            <span class="text-xs text-brand-textMuted">Kecil</span>
+            <input type="range" id="font-size-slider" min="22" max="44" value="30" onchange="applyReaderSettings()" class="flex-1 accent-brand-gold">
+            <span class="text-xs text-brand-textMuted">Besar</span>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between py-2 border-t border-brand-border">
+          <span class="text-white">Tampilkan Teks Latin</span>
+          <input type="checkbox" id="toggle-latin" checked onchange="applyReaderSettings()" class="w-4 h-4 accent-brand-gold rounded">
+        </div>
+
+        <div class="flex items-center justify-between py-2 border-t border-brand-border">
+          <span class="text-white">Tampilkan Terjemahan Indonesia</span>
+          <input type="checkbox" id="toggle-translation" checked onchange="applyReaderSettings()" class="w-4 h-4 accent-brand-gold rounded">
+        </div>
+
+        <!-- Preferred Qori in Settings -->
+        <div class="py-2 border-t border-brand-border">
+          <label class="block text-brand-textMuted mb-2">Qori Utama Pilihan</label>
+          <select id="settings-qori-select" onchange="changeQoriFromSelect(this.value)" class="w-full bg-brand-card border border-brand-border rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-gold">
+            <option value="05">🎙️ Syekh Misyari Rasyid Al-Afasi (Tartil & Merdu)</option>
+            <option value="01">🕋 Syekh Abdullah Al-Juhany (Imam Masjidil Haram)</option>
+            <option value="02">🕌 Syekh Abdul Muhsin Al-Qasim (Imam Masjid Nabawi)</option>
+            <option value="03">✨ Syekh Abdurrahman As-Sudais (Imam Besar Masjidil Haram)</option>
+            <option value="04">📖 Syekh Ibrahim Al-Dossari (Ahli Qiraat Murattal)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== QORI SELECTION MODAL ==================== -->
+  <div id="qori-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-brand-surface border border-brand-gold/30 rounded-3xl w-full max-w-lg p-6 relative shadow-2xl">
+      <button onclick="closeQoriModal()" class="absolute top-5 right-5 text-brand-textMuted hover:text-white">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-brand-gold flex items-center justify-center font-bold">
+          <i data-lucide="mic" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-white">Pilih Qori Murattal</h3>
+          <p class="text-xs text-brand-textMuted">Audio tilawah surah penuh & per ayat akan menyesuaikan</p>
+        </div>
+      </div>
+
+      <!-- Qori Cards List Container -->
+      <div id="qori-list-container" class="space-y-2.5 max-h-[60vh] overflow-y-auto pr-1">
+        <!-- Rendered via JS -->
+      </div>
+
+      <div class="mt-4 pt-3 border-t border-brand-border flex items-center justify-between text-xs text-brand-textMuted">
+        <span>Sumber Audio: equran.id v2 (HQ MP3)</span>
+        <button onclick="closeQoriModal()" class="px-4 py-2 rounded-xl bg-brand-gold text-brand-dark font-bold text-xs">Selesai</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT APP LOGIC ==================== -->
+  <script>
+    // Daftar Qori Resmi (Sumber: equran.id v2)
+    const QORI_LIST = [
+      { id: '05', name: 'Syekh Misyari Rasyid Al-Afasi', shortName: 'Misyari Rasyid', origin: 'Kuwait', style: 'Tartil Merdu & Populer', icon: '🎙️' },
+      { id: '01', name: 'Syekh Abdullah Al-Juhany', shortName: 'Al-Juhany', origin: 'Imam Masjidil Haram, Makkah', style: 'Irama Khas Hijazi', icon: '🕋' },
+      { id: '02', name: 'Syekh Abdul Muhsin Al-Qasim', shortName: 'Al-Qasim', origin: 'Imam Masjid Nabawi, Madinah', style: 'Tenang & Khusyuk', icon: '🕌' },
+      { id: '03', name: 'Syekh Abdurrahman As-Sudais', shortName: 'As-Sudais', origin: 'Imam Besar Masjidil Haram', style: 'Cepat & Berwibawa', icon: '✨' },
+      { id: '04', name: 'Syekh Ibrahim Al-Dossari', shortName: 'Al-Dossari', origin: 'Arab Saudi', style: 'Murattal Ahli Qiraat', icon: '📖' }
+    ];
+
+    // State Aplikasi
+    const AppState = {
+      currentUser: null,
+      authToken: localStorage.getItem('quran_app_token') || null,
+      selectedQori: localStorage.getItem('quran_selected_qori') || '05',
+      autoNextAyah: localStorage.getItem('quran_auto_next') === 'true',
+      activePlayingAyah: null,
+      surahs: [],
+      currentSurah: null,
+      currentAyahs: [],
+      currentAudio: null,
+      isPlayingAudio: false,
+      bookmarks: [],
+      notes: [],
+      settings: {
+        fontSize: 30,
+        showLatin: true,
+        showTranslation: true
+      },
+      activeNoteAyah: null,
+      readingStartTime: null
+    };
+
+    // Inisialisasi Aplikasi Saat Memuat Halaman
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      initClock();
+      restoreSavedSession();
+      initQoriSystem();
+      loadSurahList();
+      initMonthlyChart();
+    });
+
+    // Realtime Clock Updater
+    function initClock() {
+      setInterval(() => {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WIB';
+        const el = document.getElementById('realtime-clock');
+        if (el) el.textContent = timeStr;
+      }, 1000);
+    }
+
+    // ==================== NAVIGASI HALAMAN ====================
+    function navigateTo(pageId) {
+      const pages = ['home', 'surah-list', 'surah-detail', 'monitoring', 'bookmarks', 'donation', 'admin'];
+      pages.forEach(p => {
+        const el = document.getElementById(`page-${p}`);
+        if (el) el.classList.add('hidden');
+      });
+
+      const target = document.getElementById(`page-${pageId}`);
+      if (target) target.classList.remove('hidden');
+
+      // Update Desktop Nav Active
+      document.querySelectorAll('#desktop-nav .nav-link').forEach(btn => {
+        btn.classList.remove('active', 'text-brand-gold', 'bg-brand-surfaceHover');
+      });
+
+      // Update Page Title
+      const titleEl = document.getElementById('page-title');
+      if (titleEl) {
+        const titleMap = {
+          'home': 'Beranda Utama',
+          'surah-list': 'Daftar 114 Surah',
+          'surah-detail': 'Membaca Surah',
+          'monitoring': 'Monitoring & Statistik Tilawah',
+          'bookmarks': 'Bookmark & Catatan Ayat',
+          'donation': 'Infaq & Dukungan QRIS',
+          'admin': 'Admin Control Panel'
+        };
+        titleEl.textContent = titleMap[pageId] || 'Al-Qur\'an Simple';
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      lucide.createIcons();
+    }
+
+    // ==================== SURAH & API DATA (EQURAN.ID) ====================
+    async function loadSurahList() {
+      try {
+        const res = await fetch('https://equran.id/api/v2/surat');
+        const json = await res.json();
+        if (json.code === 200) {
+          AppState.surahs = json.data;
+          renderSurahList(AppState.surahs);
+          renderQuickSurahs(AppState.surahs.slice(0, 4));
+        }
+      } catch (err) {
+        console.error('Gagal memuat surah:', err);
+        // Fallback jika API bermasalah
+        document.getElementById('surah-items-list').innerHTML = `
+          <div class="col-span-full text-center py-12 text-rose-400">
+            Gagal menghubungkan ke sumber Qur'an. Periksa jaringan Anda.
+          </div>
+        `;
+      }
+    }
+
+    function renderSurahList(list) {
+      const container = document.getElementById('surah-items-list');
+      if (!container) return;
+
+      if (list.length === 0) {
+        container.innerHTML = `<div class="col-span-full text-center py-12 text-brand-textMuted">Surah tidak ditemukan.</div>`;
+        return;
+      }
+
+      container.innerHTML = list.map(s => `
+        <div onclick="openSurahDetail(${s.nomor})" class="bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-gold/40 rounded-2xl p-4 transition-all duration-200 cursor-pointer flex items-center justify-between group shadow-sm">
+          <div class="flex items-center gap-3.5">
+            <!-- Octagonal Badge Sesuai Referensi UI Screen 3 -->
+            <div class="islamic-badge shrink-0">
+              <span>${s.nomor}</span>
+            </div>
+            <div>
+              <h4 class="font-bold text-sm text-white group-hover:text-brand-gold transition-colors">${s.namaLatin}</h4>
+              <p class="text-[11px] text-brand-textMuted">${s.tempatTurun} • ${s.jumlahAyat} Ayat</p>
+            </div>
+          </div>
+          <div class="text-right flex items-center gap-3">
+            <span class="arabic-text text-lg text-brand-gold font-bold">${s.nama}</span>
+            <!-- Round Play Button Icon Sesuai Referensi UI Screen 3 -->
+            <div class="w-7 h-7 rounded-full bg-brand-card group-hover:bg-brand-gold text-brand-gold group-hover:text-brand-dark flex items-center justify-center transition-all">
+              <i data-lucide="play" class="w-3.5 h-3.5 ml-0.5"></i>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      lucide.createIcons();
+    }
+
+    function renderQuickSurahs(list) {
+      const container = document.getElementById('quick-surah-cards');
+      if (!container) return;
+      container.innerHTML = list.map(s => `
+        <div onclick="openSurahDetail(${s.nomor})" class="bg-brand-card hover:bg-brand-surfaceHover border border-brand-border rounded-2xl p-3.5 cursor-pointer transition-all">
+          <div class="flex justify-between items-center mb-1.5">
+            <span class="text-xs font-bold text-brand-gold">#${s.nomor}</span>
+            <span class="arabic-text text-base text-white">${s.nama}</span>
+          </div>
+          <h5 class="text-xs font-bold text-white truncate">${s.namaLatin}</h5>
+          <p class="text-[10px] text-brand-textMuted">${s.arti}</p>
+        </div>
+      `).join('');
+    }
+
+    function filterSurahList() {
+      const q = document.getElementById('surah-filter-input').value.toLowerCase();
+      const filtered = AppState.surahs.filter(s => 
+        s.namaLatin.toLowerCase().includes(q) || 
+        s.arti.toLowerCase().includes(q) ||
+        s.nomor.toString() === q
+      );
+      renderSurahList(filtered);
+    }
+
+    function handleGlobalSearch(e) {
+      if (e.key === 'Enter') {
+        const val = e.target.value.trim();
+        if (val) {
+          navigateTo('surah-list');
+          document.getElementById('surah-filter-input').value = val;
+          filterSurahList();
+        }
+      }
+    }
+
+    // ==================== DETAIL SURAH (READER) ====================
+    async function openSurahDetail(surahNumber) {
+      navigateTo('surah-detail');
+      const container = document.getElementById('ayah-list-container');
+      container.innerHTML = `
+        <div class="text-center py-16">
+          <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-brand-gold mb-3"></div>
+          <p class="text-xs text-brand-textMuted">Memuat ayat-ayat surah...</p>
+        </div>
+      `;
+
+      try {
+        const res = await fetch(`https://equran.id/api/v2/surat/${surahNumber}`);
+        const json = await res.json();
+        if (json.code === 200) {
+          AppState.currentSurah = json.data;
+          AppState.currentAyahs = json.data.ayat;
+          AppState.readingStartTime = Date.now(); // Rekam waktu mulai tilawah
+
+          // Update Info Surah
+          document.getElementById('detail-surah-name').textContent = json.data.namaLatin;
+          document.getElementById('detail-surah-arabic').textContent = json.data.nama;
+          document.getElementById('detail-surah-info').textContent = 
+            `Surah ke-${json.data.nomor} • ${json.data.jumlahAyat} Ayat • ${json.data.tempatTurun} • Artinya: ${json.data.arti}`;
+
+          // Sembunyikan bismillah jika surah At-Taubah (9)
+          const bismillahEl = document.getElementById('bismillah-container');
+          if (bismillahEl) {
+            bismillahEl.style.display = (surahNumber === 9 || surahNumber === 1) ? 'none' : 'block';
+          }
+
+          // Setup audio player sesuai Qori aktif
+          updateAudioSourcesForSelectedQori();
+
+          // Update Last Read Banner
+          updateLastReadCard(json.data.namaLatin, `Ayat 1 - ${json.data.jumlahAyat} • ${json.data.arti}`, json.data.nomor);
+
+          renderAyahs(AppState.currentAyahs);
+        }
+      } catch (err) {
+        console.error('Gagal mengambil ayat:', err);
+        container.innerHTML = `<div class="text-center py-12 text-rose-400">Gagal memuat ayat surah ini.</div>`;
+      }
+    }
+
+    // ==================== SISTEM PILIHAN QORI' ====================
+    function getQoriById(id) {
+      return QORI_LIST.find(q => q.id === id) || QORI_LIST[0];
+    }
+
+    function initQoriSystem() {
+      // Set saved auto next checkbox
+      const autoNextCb = document.getElementById('toggle-auto-next');
+      if (autoNextCb) autoNextCb.checked = AppState.autoNextAyah;
+
+      // Update Qori Pill & Select
+      updateQoriUIElements();
+      renderQoriModalCards();
+    }
+
+    function updateQoriUIElements() {
+      const q = getQoriById(AppState.selectedQori);
+      const nameEl = document.getElementById('current-qori-name');
+      const iconEl = document.getElementById('current-qori-icon');
+      const selectEl = document.getElementById('settings-qori-select');
+
+      if (nameEl) nameEl.textContent = q.shortName;
+      if (iconEl) iconEl.textContent = q.icon;
+      if (selectEl) selectEl.value = q.id;
+
+      // Update status text di tombol audio penuh
+      const audioText = document.getElementById('audio-status-text');
+      if (audioText && !AppState.isPlayingAudio) {
+        audioText.textContent = `Putar: ${q.shortName}`;
+      }
+    }
+
+    function renderQoriModalCards() {
+      const container = document.getElementById('qori-list-container');
+      if (!container) return;
+
+      container.innerHTML = QORI_LIST.map(q => {
+        const isSelected = q.id === AppState.selectedQori;
+        return `
+          <div onclick="selectQori('${q.id}')" class="p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between group ${
+            isSelected 
+              ? 'bg-brand-card border-brand-gold shadow-lg shadow-brand-gold/10' 
+              : 'bg-brand-surface border-brand-border hover:border-brand-gold/40 hover:bg-brand-surfaceHover'
+          }">
+            <div class="flex items-center gap-3.5">
+              <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl shrink-0 ${
+                isSelected ? 'bg-brand-gold text-brand-dark font-black' : 'bg-brand-card border border-brand-border text-white'
+              }">
+                ${q.icon}
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h4 class="font-bold text-xs sm:text-sm text-white group-hover:text-brand-gold transition-colors">${q.name}</h4>
+                  ${isSelected ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-brand-gold text-brand-dark">Aktif</span>` : ''}
+                </div>
+                <p class="text-[11px] text-brand-textMuted mt-0.5">${q.origin} • <span class="text-brand-gold/80">${q.style}</span></p>
+              </div>
+            </div>
+            <div class="text-right shrink-0">
+              <button class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                isSelected ? 'bg-brand-gold text-brand-dark' : 'bg-brand-card text-brand-textMuted group-hover:text-white group-hover:bg-brand-surfaceHover'
+              }">
+                ${isSelected ? 'Dipilih' : 'Pilih'}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openQoriModal() {
+      renderQoriModalCards();
+      document.getElementById('qori-modal').classList.remove('hidden');
+    }
+
+    function closeQoriModal() {
+      document.getElementById('qori-modal').classList.add('hidden');
+    }
+
+    function selectQori(qoriId) {
+      AppState.selectedQori = qoriId;
+      localStorage.setItem('quran_selected_qori', qoriId);
+      updateQoriUIElements();
+      updateAudioSourcesForSelectedQori();
+      closeQoriModal();
+
+      // Render ulang ayat jika sedang melihat surah agar audio URL per ayat menyesuaikan
+      if (AppState.currentAyahs && AppState.currentAyahs.length > 0) {
+        renderAyahs(AppState.currentAyahs);
+      }
+    }
+
+    function changeQoriFromSelect(qoriId) {
+      selectQori(qoriId);
+    }
+
+    function toggleAutoNextAyah(enabled) {
+      AppState.autoNextAyah = enabled;
+      localStorage.setItem('quran_auto_next', enabled);
+    }
+
+    function updateAudioSourcesForSelectedQori() {
+      if (!AppState.currentSurah || !AppState.currentSurah.audioFull) return;
+
+      const audioPlayer = document.getElementById('main-audio-player');
+      const qori = getQoriById(AppState.selectedQori);
+
+      // Cek audio full sesuai qori, atau fallback ke key pertama
+      const audioUrl = AppState.currentSurah.audioFull[AppState.selectedQori] || Object.values(AppState.currentSurah.audioFull)[0];
+
+      const wasPlaying = AppState.isPlayingAudio;
+      if (wasPlaying && audioPlayer) {
+        audioPlayer.pause();
+      }
+
+      if (audioPlayer) {
+        audioPlayer.src = audioUrl;
+        if (wasPlaying) {
+          audioPlayer.play();
+        }
+      }
+
+      const audioText = document.getElementById('audio-status-text');
+      if (audioText) {
+        audioText.textContent = wasPlaying ? `Memutar: ${qori.shortName}` : `Putar: ${qori.shortName}`;
+      }
+    }
+
+    // ==================== RENDER AYAT DENGAN QORI AKTIF ====================
+    function renderAyahs(ayahs) {
+      const container = document.getElementById('ayah-list-container');
+      const qori = getQoriById(AppState.selectedQori);
+
+      container.innerHTML = ayahs.map(a => {
+        // Ambil audio ayat sesuai qori yang aktif
+        const ayahAudioUrl = (a.audio && (a.audio[AppState.selectedQori] || a.audio['05'] || Object.values(a.audio)[0])) || '';
+        const isCurrentlyPlaying = AppState.activePlayingAyah === a.nomorAyat;
+
+        return `
+          <div class="bg-brand-surface rounded-2xl p-5 md:p-6 border transition-all duration-300 space-y-4 ${
+            isCurrentlyPlaying ? 'border-brand-gold bg-brand-gold/5 shadow-lg shadow-brand-gold/10 ring-1 ring-brand-gold/50' : 'border-brand-border hover:border-brand-border/80'
+          }" id="ayah-${a.nomorAyat}">
+            <!-- Top Ayah Action Bar -->
+            <div class="flex items-center justify-between pb-3 border-b border-brand-border/60">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-1 rounded-lg bg-brand-card border border-brand-border text-xs font-bold text-brand-gold">
+                  ${AppState.currentSurah.nomor}:${a.nomorAyat}
+                </span>
+                ${isCurrentlyPlaying ? `
+                  <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-brand-gold animate-pulse">
+                    <span class="w-2 h-2 rounded-full bg-brand-gold"></span>
+                    <span>Memutar (${qori.shortName})</span>
+                  </span>
+                ` : ''}
+              </div>
+              <!-- Quick Actions: Bookmark, Notes, Audio -->
+              <div class="flex items-center gap-2">
+                <button onclick="toggleBookmarkAyah(${AppState.currentSurah.nomor}, ${a.nomorAyat})" title="Tandai Bookmark" class="p-2 rounded-lg bg-brand-card hover:bg-brand-surfaceHover text-brand-textMuted hover:text-brand-gold">
+                  <i data-lucide="bookmark" class="w-4 h-4"></i>
+                </button>
+                <button onclick="openNoteModal(${AppState.currentSurah.nomor}, ${a.nomorAyat})" title="Tambah Catatan" class="p-2 rounded-lg bg-brand-card hover:bg-brand-surfaceHover text-brand-textMuted hover:text-white">
+                  <i data-lucide="file-text" class="w-4 h-4"></i>
+                </button>
+                <button onclick="playAyahAudio(${a.nomorAyat}, '${ayahAudioUrl}', this)" title="Putar Ayat (${qori.shortName})" class="p-2 rounded-lg bg-brand-card hover:bg-brand-surfaceHover text-brand-gold transition-colors">
+                  <i data-lucide="${isCurrentlyPlaying ? 'square' : 'volume-2'}" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Arabic Text -->
+            <div class="text-right py-2">
+              <p class="arabic-text text-white" style="font-size: ${AppState.settings.fontSize}px;">
+                ${a.teksArab}
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full border border-brand-gold/40 text-brand-gold text-xs mr-2 font-mono">
+                  ${a.nomorAyat}
+                </span>
+              </p>
+            </div>
+
+            <!-- Latin Transliteration -->
+            ${AppState.settings.showLatin ? `
+              <p class="text-xs text-brand-gold/90 font-medium italic leading-relaxed">
+                ${a.teksLatin}
+              </p>
+            ` : ''}
+
+            <!-- Indonesian Translation -->
+            ${AppState.settings.showTranslation ? `
+              <p class="text-xs md:text-sm text-brand-textMuted leading-relaxed pt-2 border-t border-brand-border/40">
+                ${a.teksIndonesia}
+              </p>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    // Play Individual Ayah Audio & Continuous Playback
+    let currentAyahAudioEl = null;
+
+    function playAyahAudio(nomorAyat, url, btn) {
+      // Hentikan full surah audio jika sedang aktif
+      const mainAudio = document.getElementById('main-audio-player');
+      if (AppState.isPlayingAudio && mainAudio) {
+        mainAudio.pause();
+        AppState.isPlayingAudio = false;
+        document.getElementById('audio-play-btn').innerHTML = `<i data-lucide="play" class="w-3.5 h-3.5 ml-0.5"></i>`;
+      }
+
+      // Jika klik ayat yang sama yang sedang berputar -> Hentikan
+      if (AppState.activePlayingAyah === nomorAyat && currentAyahAudioEl && !currentAyahAudioEl.paused) {
+        currentAyahAudioEl.pause();
+        AppState.activePlayingAyah = null;
+        renderAyahs(AppState.currentAyahs);
+        return;
+      }
+
+      if (currentAyahAudioEl) {
+        currentAyahAudioEl.pause();
+      }
+
+      AppState.activePlayingAyah = nomorAyat;
+      renderAyahs(AppState.currentAyahs);
+
+      currentAyahAudioEl = new Audio(url);
+      currentAyahAudioEl.play().catch(e => console.log('Audio autoplay prevented:', e));
+
+      // Auto scroll ke ayat
+      const targetAyahEl = document.getElementById(`ayah-${nomorAyat}`);
+      if (targetAyahEl) {
+        targetAyahEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      // Handler ketika ayat selesai diputar
+      currentAyahAudioEl.onended = () => {
+        AppState.activePlayingAyah = null;
+        if (AppState.autoNextAyah && AppState.currentAyahs) {
+          const nextAyahNum = nomorAyat + 1;
+          const nextAyah = AppState.currentAyahs.find(a => a.nomorAyat === nextAyahNum);
+          if (nextAyah) {
+            const nextAudioUrl = (nextAyah.audio && (nextAyah.audio[AppState.selectedQori] || nextAyah.audio['05'] || Object.values(nextAyah.audio)[0])) || '';
+            playAyahAudio(nextAyahNum, nextAudioUrl, null);
+          } else {
+            renderAyahs(AppState.currentAyahs);
+          }
+        } else {
+          renderAyahs(AppState.currentAyahs);
+        }
+      };
+    }
+
+    // Toggle Surah Full Audio
+    function toggleAudio() {
+      const audio = document.getElementById('main-audio-player');
+      const btn = document.getElementById('audio-play-btn');
+      const text = document.getElementById('audio-status-text');
+      const qori = getQoriById(AppState.selectedQori);
+
+      // Hentikan audio individual ayat jika ada
+      if (currentAyahAudioEl) {
+        currentAyahAudioEl.pause();
+        AppState.activePlayingAyah = null;
+        renderAyahs(AppState.currentAyahs);
+      }
+
+      if (AppState.isPlayingAudio) {
+        audio.pause();
+        AppState.isPlayingAudio = false;
+        btn.innerHTML = `<i data-lucide="play" class="w-3.5 h-3.5 ml-0.5"></i>`;
+        text.textContent = `Putar: ${qori.shortName}`;
+      } else {
+        audio.play().catch(e => console.log('Audio error:', e));
+        AppState.isPlayingAudio = true;
+        btn.innerHTML = `<i data-lucide="pause" class="w-3.5 h-3.5"></i>`;
+        text.textContent = `Memutar: ${qori.shortName}`;
+      }
+      lucide.createIcons();
+    }
+
+    // Record finish reading current surah (Feature 3)
+    function recordFinishReadingCurrentSurah() {
+      if (!AppState.currentSurah) return;
+      const durationMin = AppState.readingStartTime ? Math.round((Date.now() - AppState.readingStartTime) / 60000) || 1 : 5;
+
+      alert(`Alhamdulillah! Tilawah Surah ${AppState.currentSurah.namaLatin} (1 - ${AppState.currentSurah.jumlahAyat} ayat) telah dicatat.`);
+
+      // Update Local Stats
+      updateReadingHistoryUI(AppState.currentSurah.namaLatin, `1 - ${AppState.currentSurah.jumlahAyat}`, durationMin);
+    }
+
+    function updateLastReadCard(surahName, detail, number) {
+      document.getElementById('last-read-surah').textContent = surahName;
+      document.getElementById('last-read-detail').textContent = detail;
+      localStorage.setItem('last_read_surah_num', number);
+    }
+
+    function resumeLastReading() {
+      const lastNum = localStorage.getItem('last_read_surah_num') || 1;
+      openSurahDetail(lastNum);
+    }
+
+    // ==================== BOOKMARK & NOTES (Feature 2) ====================
+    function toggleBookmarkAyah(surahNum, ayahNum) {
+      const item = { surah: surahNum, ayah: ayahNum, timestamp: new Date().toLocaleDateString('id-ID') };
+      AppState.bookmarks.push(item);
+      alert(`Bookmark disimpan untuk Surah ${surahNum} Ayat ${ayahNum}`);
+      renderBookmarksUI();
+    }
+
+    function openNoteModal(surahNum, ayahNum) {
+      AppState.activeNoteAyah = { surah: surahNum, ayah: ayahNum };
+      document.getElementById('modal-note-title').textContent = `Catatan Surah ${surahNum} : Ayat ${ayahNum}`;
+      document.getElementById('modal-note-content').value = '';
+      document.getElementById('note-modal').classList.remove('hidden');
+    }
+
+    function closeNoteModal() {
+      document.getElementById('note-modal').classList.add('hidden');
+    }
+
+    function saveCurrentAyahNote() {
+      const content = document.getElementById('modal-note-content').value.trim();
+      if (!content) return alert('Silakan tulis catatan terlebih dahulu.');
+
+      AppState.notes.push({
+        surah: AppState.activeNoteAyah.surah,
+        ayah: AppState.activeNoteAyah.ayah,
+        content: content,
+        date: new Date().toLocaleDateString('id-ID')
+      });
+
+      closeNoteModal();
+      alert('Catatan tafsir berhasil disimpan!');
+      renderNotesUI();
+    }
+
+    function renderBookmarksUI() {
+      const box = document.getElementById('bookmarks-list-box');
+      if (AppState.bookmarks.length === 0) {
+        box.innerHTML = `<div class="col-span-full py-8 text-center text-brand-textMuted">Belum ada penanda ayat.</div>`;
+        return;
+      }
+      box.innerHTML = AppState.bookmarks.map(b => `
+        <div class="bg-brand-surface p-4 rounded-2xl border border-brand-border flex items-center justify-between">
+          <div>
+            <h5 class="text-sm font-bold text-white">Surah #${b.surah} : Ayat ${b.ayah}</h5>
+            <span class="text-[10px] text-brand-textMuted">Ditandai pada ${b.timestamp}</span>
+          </div>
+          <button onclick="openSurahDetail(${b.surah})" class="px-3 py-1.5 rounded-xl bg-brand-gold text-brand-dark font-bold text-xs">Buka</button>
+        </div>
+      `).join('');
+    }
+
+    function renderNotesUI() {
+      const box = document.getElementById('notes-list-box');
+      if (AppState.notes.length === 0) {
+        box.innerHTML = `<div class="col-span-full py-8 text-center text-brand-textMuted">Belum ada catatan tafsir tersimpan.</div>`;
+        return;
+      }
+      box.innerHTML = AppState.notes.map(n => `
+        <div class="bg-brand-surface p-4 rounded-2xl border border-brand-border space-y-2">
+          <div class="flex justify-between items-center">
+            <h5 class="text-xs font-bold text-brand-gold">Surah ${n.surah} : Ayat ${n.ayah}</h5>
+            <span class="text-[10px] text-brand-textMuted">${n.date}</span>
+          </div>
+          <p class="text-xs text-white leading-relaxed">${n.content}</p>
+        </div>
+      `).join('');
+    }
+
+    // ==================== STATISTIK & MONITORING (Feature 3) ====================
+    let readingChartInstance = null;
+    function initMonthlyChart() {
+      const ctx = document.getElementById('monthlyReadingChart');
+      if (!ctx) return;
+
+      readingChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+          datasets: [{
+            label: 'Durasi Tilawah (Menit)',
+            data: [45, 60, 90, 120, 180, 150, 210, 190, 240, 310, 0, 0],
+            backgroundColor: '#EAB338',
+            borderRadius: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            x: { grid: { color: '#2A3044' }, ticks: { color: '#8E95A8' } },
+            y: { grid: { color: '#2A3044' }, ticks: { color: '#8E95A8' } }
+          }
+        }
+      });
+    }
+
+    function updateReadingHistoryUI(surah, range, duration) {
+      const tbody = document.getElementById('history-table-body');
+      const nowStr = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ', ' + new Date().toLocaleDateString('id-ID');
+      
+      const tr = document.createElement('tr');
+      tr.className = "hover:bg-brand-surfaceHover transition-colors";
+      tr.innerHTML = `
+        <td class="px-5 py-3 text-brand-textMuted">${nowStr}</td>
+        <td class="px-5 py-3 font-bold text-white">${surah}</td>
+        <td class="px-5 py-3 text-brand-gold">${range}</td>
+        <td class="px-5 py-3">${duration} Menit</td>
+      `;
+      tbody.prepend(tr);
+
+      // Increment Quick Khatam Progress
+      const curAyahs = parseInt(document.getElementById('stat-ayahs-read').textContent) + 7;
+      document.getElementById('stat-ayahs-read').textContent = curAyahs;
+      const pct = ((curAyahs / 6236) * 100).toFixed(1);
+      document.getElementById('stat-khatam-pct').textContent = pct + '%';
+      document.getElementById('quick-khatam-pct').textContent = `${pct}% (${curAyahs} / 6236 Ayat)`;
+      document.getElementById('quick-khatam-bar').style.width = Math.max(pct, 3) + '%';
+    }
+
+    function refreshUserStats() {
+      alert('Statistik tilawah terbaru berhasil disinkronkan dengan server.');
+    }
+
+    // ==================== AUTHENTIKASI & USER (Feature 1 & 6) ====================
+    function showAuthModal(show) {
+      const modal = document.getElementById('auth-modal');
+      if (show) modal.classList.remove('hidden');
+      else modal.classList.add('hidden');
+    }
+
+    function switchAuthMode(mode) {
+      const isLogin = mode === 'login';
+      document.getElementById('form-login').classList.toggle('hidden', !isLogin);
+      document.getElementById('form-register').classList.toggle('hidden', isLogin);
+      
+      document.getElementById('auth-tab-login').className = isLogin 
+        ? 'flex-1 py-1.5 rounded-lg text-xs font-bold bg-brand-gold text-brand-dark' 
+        : 'flex-1 py-1.5 rounded-lg text-xs font-bold text-brand-textMuted hover:text-white';
+      
+      document.getElementById('auth-tab-register').className = !isLogin 
+        ? 'flex-1 py-1.5 rounded-lg text-xs font-bold bg-brand-gold text-brand-dark' 
+        : 'flex-1 py-1.5 rounded-lg text-xs font-bold text-brand-textMuted hover:text-white';
+    }
+
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const pass = document.getElementById('login-password').value;
+
+      // Check Admin Demo
+      if (email === 'admin@quran.app' && pass === 'admin123') {
+        setLoggedInUser({
+          nama: 'Administrator',
+          email: email,
+          role: 'admin'
+        });
+      } else {
+        setLoggedInUser({
+          nama: email.split('@')[0],
+          email: email,
+          role: 'pembaca'
+        });
+      }
+      showAuthModal(false);
+    }
+
+    function handleRegisterSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('reg-name').value;
+      const email = document.getElementById('reg-email').value;
+      const role = document.getElementById('reg-role').value;
+
+      setLoggedInUser({
+        nama: name,
+        email: email,
+        role: role
+      });
+      showAuthModal(false);
+      alert(`Pendaftaran berhasil! Selamat datang di Al-Qur'an Simple, ${name}`);
+    }
+
+    function setLoggedInUser(user) {
+      AppState.currentUser = user;
+      document.getElementById('user-name').textContent = user.nama;
+      document.getElementById('user-role-badge').textContent = `Peran: ${user.role}`;
+      document.getElementById('home-greeting-name').textContent = `Assalamu'alaikum, ${user.nama}`;
+      document.getElementById('auth-action-btn').innerHTML = `<i data-lucide="log-out" class="w-4 h-4"></i>`;
+
+      // Show Admin Menu if Admin
+      const adminMenu = document.getElementById('admin-menu-item');
+      if (adminMenu) {
+        if (user.role === 'admin') adminMenu.classList.remove('hidden');
+        else adminMenu.classList.add('hidden');
+      }
+
+      lucide.createIcons();
+    }
+
+    function handleAuthAction() {
+      if (AppState.currentUser) {
+        if (confirm('Apakah Anda yakin ingin keluar dari akun?')) {
+          AppState.currentUser = null;
+          document.getElementById('user-name').textContent = 'Tamu (Belum Masuk)';
+          document.getElementById('user-role-badge').textContent = 'Klik untuk Masuk';
+          document.getElementById('admin-menu-item').classList.add('hidden');
+          document.getElementById('auth-action-btn').innerHTML = `<i data-lucide="log-in" class="w-4 h-4"></i>`;
+          lucide.createIcons();
+        }
+      } else {
+        showAuthModal(true);
+      }
+    }
+
+    function restoreSavedSession() {
+      // Set default demo state
+    }
+
+    // ==================== DONATION & ADMIN (Feature 5 & 8) ====================
+    function handleDonationSubmit(e) {
+      e.preventDefault();
+      const amount = document.getElementById('donation-amount').value || '10000';
+      const donor = document.getElementById('donation-donor').value || 'Hamba Allah';
+      alert(`Jazakallahu Khairan! Konfirmasi infaq sebesar Rp ${parseInt(amount).toLocaleString('id-ID')} atas nama ${donor} telah tercatat.`);
+      e.target.reset();
+    }
+
+    function handleUpdateQrisUrl(e) {
+      e.preventDefault();
+      const url = document.getElementById('admin-qris-url').value;
+      document.getElementById('qris-display-img').src = url;
+      alert('Foto QRIS donasi berhasil diperbarui.');
+    }
+
+    function handleCreateAnnouncement(e) {
+      e.preventDefault();
+      const title = document.getElementById('admin-ann-title').value;
+      const content = document.getElementById('admin-ann-content').value;
+      document.getElementById('banner-title').textContent = `"${title}"`;
+      document.getElementById('banner-desc').textContent = content;
+      alert('Banner pengumuman beranda berhasil diperbarui.');
+      navigateTo('home');
+    }
+
+    // ==================== READER SETTINGS MODAL ====================
+    function openReaderSettingsModal() {
+      document.getElementById('settings-modal').classList.remove('hidden');
+    }
+
+    function applyReaderSettings() {
+      const size = document.getElementById('font-size-slider').value;
+      const latin = document.getElementById('toggle-latin').checked;
+      const trans = document.getElementById('toggle-translation').checked;
+
+      AppState.settings.fontSize = size;
+      AppState.settings.showLatin = latin;
+      AppState.settings.showTranslation = trans;
+
+      if (AppState.currentAyahs && AppState.currentAyahs.length > 0) {
+        renderAyahs(AppState.currentAyahs);
+      }
+    }
+
+    function switchSurahTab(tab) {
+      const isSurah = tab === 'surah';
+      document.getElementById('tab-surah').className = isSurah ? 'px-4 py-2 text-sm font-bold border-b-2 border-brand-gold text-brand-gold' : 'px-4 py-2 text-sm font-bold border-b-2 border-transparent text-brand-textMuted hover:text-white';
+      document.getElementById('tab-juz').className = !isSurah ? 'px-4 py-2 text-sm font-bold border-b-2 border-brand-gold text-brand-gold' : 'px-4 py-2 text-sm font-bold border-b-2 border-transparent text-brand-textMuted hover:text-white';
+
+      document.getElementById('surah-items-list').classList.toggle('hidden', !isSurah);
+      document.getElementById('juz-items-list').classList.toggle('hidden', isSurah);
+
+      if (!isSurah && document.getElementById('juz-items-list').children.length === 0) {
+        renderJuzList();
+      }
+    }
+
+    function renderJuzList() {
+      const container = document.getElementById('juz-items-list');
+      const juzs = Array.from({ length: 30 }, (_, i) => i + 1);
+      container.innerHTML = juzs.map(j => `
+        <div onclick="navigateTo('surah-list'); filterSurahList();" class="bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border rounded-2xl p-4 text-center cursor-pointer transition-all">
+          <div class="islamic-badge mx-auto mb-3">
+            <span>${j}</span>
+          </div>
+          <h5 class="text-sm font-bold text-white">Juz ${j}</h5>
+          <p class="text-[10px] text-brand-textMuted mt-1">Tilawah Juz ${j}</p>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function switchBookmarkSubTab(tab) {
+      const isBm = tab === 'bookmarks';
+      document.getElementById('subtab-bookmarks').className = isBm ? 'px-4 py-2 text-sm font-bold border-b-2 border-brand-gold text-brand-gold' : 'px-4 py-2 text-sm font-bold border-b-2 border-transparent text-brand-textMuted hover:text-white';
+      document.getElementById('subtab-notes').className = !isBm ? 'px-4 py-2 text-sm font-bold border-b-2 border-brand-gold text-brand-gold' : 'px-4 py-2 text-sm font-bold border-b-2 border-transparent text-brand-textMuted hover:text-white';
+
+      document.getElementById('bookmarks-list-box').classList.toggle('hidden', !isBm);
+      document.getElementById('notes-list-box').classList.toggle('hidden', isBm);
+    }
+
+    function showDzikirModal() {
+      alert("Fitur Dzikir Pagi & Petang: Membaca Ayat Kursi, Al-Ikhlas, Al-Falaq, dan An-Nas.");
+      openSurahDetail(112);
+    }
+
+    function openQuickSearchModal() {
+      navigateTo('surah-list');
+      const inp = document.getElementById('surah-filter-input');
+      if (inp) {
+        inp.focus();
+      }
+    }
+  </script>
+</body>
+</html>
+
