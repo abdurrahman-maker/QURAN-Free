@@ -213,6 +213,10 @@
             <i data-lucide="book-open" class="w-5 h-5"></i>
             <span>Daftar Surah</span>
           </button>
+          <button onclick="openMurottalModal()" class="nav-link flex items-center gap-3.5 w-full px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 text-brand-cyan hover:text-white hover:bg-brand-surfaceHover group">
+            <i data-lucide="disc-3" class="w-5 h-5 text-brand-cyan group-hover:scale-110 transition-transform"></i>
+            <span>Murottal Player</span>
+          </button>
           <button onclick="navigateTo('monitoring')" class="nav-link flex items-center gap-3.5 w-full px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 text-brand-textMuted hover:text-white hover:bg-brand-surfaceHover">
             <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
             <span>Monitoring Khatam</span>
@@ -985,26 +989,29 @@
   </div>
 
   <!-- ==================== MUROTTAL FULL PLAYER MODAL (Sesuai Layar 2 Gambar) ==================== -->
-  <div id="murottal-modal" class="fixed inset-0 bg-black/90 backdrop-blur-2xl z-50 hidden flex flex-col justify-between p-6 sm:p-8 max-w-lg mx-auto relative overflow-hidden">
+  <div id="murottal-modal" class="fixed inset-0 bg-black/95 backdrop-blur-3xl z-[100] hidden flex flex-col justify-between p-5 sm:p-8 overflow-y-auto">
     <!-- Ambient Blurred Reciter Cover Backdrop (Layar 2 Blur Effect) -->
-    <div class="absolute inset-0 pointer-events-none overflow-hidden -z-10">
+    <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
       <img id="murottal-modal-blur-bg" src="https://images.unsplash.com/photo-1544717305-2782549b5136?fit=crop&w=300&h=300&q=80" 
-           alt="Cover Blur" class="w-full h-full object-cover scale-150 filter blur-[90px] opacity-30 transition-all duration-1000">
+           alt="Cover Blur" class="w-full h-full object-cover scale-150 filter blur-[100px] opacity-35 transition-all duration-1000">
       <div class="absolute inset-0 bg-black/60 backdrop-blur-2xl"></div>
     </div>
-    <!-- Top Navigation Bar -->
-    <div class="flex items-center justify-between">
-      <button onclick="closeMurottalModal()" class="w-10 h-10 rounded-full bg-brand-surface border border-brand-border flex items-center justify-center text-white hover:text-brand-cyan transition-colors">
-        <i data-lucide="chevron-left" class="w-6 h-6"></i>
-      </button>
-      <div class="flex items-center gap-2">
-        <h3 class="font-extrabold text-sm tracking-widest text-brand-cyan uppercase">MUROTTAL</h3>
-        <span id="murottal-timer-indicator" class="hidden px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/40">⏱️ 30m</span>
+
+    <!-- Centered Full Player Container (Full Screen on Mobile, Proportional Card on Desktop) -->
+    <div class="w-full max-w-md mx-auto min-h-full flex flex-col justify-between relative z-10 py-1">
+      <!-- Top Navigation Bar -->
+      <div class="flex items-center justify-between">
+        <button onclick="closeMurottalModal()" class="w-10 h-10 rounded-full bg-brand-surface border border-brand-border flex items-center justify-center text-white hover:text-brand-cyan transition-colors" title="Kecilkan / Minimize">
+          <i data-lucide="chevron-left" class="w-6 h-6"></i>
+        </button>
+        <div class="flex items-center gap-2">
+          <h3 class="font-extrabold text-sm tracking-widest text-brand-cyan uppercase">MUROTTAL</h3>
+          <span id="murottal-timer-indicator" class="hidden px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/40">⏱️ 30m</span>
+        </div>
+        <button onclick="bookmarkCurrentAudioSurah()" class="w-10 h-10 rounded-full bg-brand-surface border border-brand-border flex items-center justify-center text-white hover:text-brand-cyan transition-colors" title="Bookmark Surah">
+          <i data-lucide="bookmark" class="w-5 h-5"></i>
+        </button>
       </div>
-      <button onclick="bookmarkCurrentAudioSurah()" class="w-10 h-10 rounded-full bg-brand-surface border border-brand-border flex items-center justify-center text-white hover:text-brand-cyan transition-colors" title="Bookmark Surah">
-        <i data-lucide="bookmark" class="w-5 h-5"></i>
-      </button>
-    </div>
 
     <!-- Center Graphic: Circular Reciter Portrait with Radial Cyan Soundwave Lines (Layar 2) -->
     <div class="relative my-auto flex flex-col items-center justify-center py-6">
@@ -1131,6 +1138,8 @@
           <span>Baca Teks Ayat</span>
         </button>
       </div>
+    </div>
+    <!-- End Centered Full Player Container -->
     </div>
   </div>
 
@@ -2156,16 +2165,19 @@
     }
 
     // Quick Play Surah Audio from Surah List or Widget
-    async function quickPlaySurahAudio(surahNumber, event) {
+    async function quickPlaySurahAudio(surahNumber, event, autoOpenModal = true) {
       if (event) event.stopPropagation();
 
       const audio = document.getElementById('main-audio-player');
       const qori = getQoriById(AppState.selectedQori);
       const audioKey = qori.equranKey || '05';
 
-      // Jika sudah surah ini dan sedang memutar, pause
+      // Jika sudah surah ini dan sedang memutar, toggle
       if (AppState.currentSurah && AppState.currentSurah.nomor === surahNumber) {
         toggleAudio();
+        if (autoOpenModal && AppState.isPlayingAudio) {
+          openMurottalModal();
+        }
         return;
       }
 
@@ -2185,6 +2197,11 @@
           updateMurottalModalUI();
           updateLastReadCard(json.data.namaLatin, `Ayat 1 - ${json.data.jumlahAyat} • ${json.data.arti}`, json.data.nomor);
           renderSurahList(AppState.surahs);
+
+          // Buka Murottal Full Player Modal otomatis agar langsung tampil full screen
+          if (autoOpenModal) {
+            openMurottalModal();
+          }
         }
       } catch (err) {
         console.error('Gagal memutar audio surah:', err);
@@ -2224,12 +2241,20 @@
 
     function openMurottalModal() {
       updateMurottalModalUI();
-      document.getElementById('murottal-modal').classList.remove('hidden');
+      const modal = document.getElementById('murottal-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+      }
       lucide.createIcons();
     }
 
     function closeMurottalModal() {
-      document.getElementById('murottal-modal').classList.add('hidden');
+      const modal = document.getElementById('murottal-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
     }
 
     function seekAudio(val) {
