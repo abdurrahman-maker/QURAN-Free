@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Al-Qur'an Simple - Platform Pembaca & Monitoring Tilawah</title>
   
+  <!-- Favicon / Logo Web -->
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link rel="apple-touch-icon" href="logo.svg">
+  
   <!-- Fonts: Plus Jakarta Sans & Amiri (Arabic) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -155,16 +159,11 @@
     <aside id="desktop-sidebar" class="hidden md:flex flex-col w-72 bg-brand-surface border-r border-brand-border shrink-0 p-5 sticky top-0 h-screen justify-between z-30">
       <div>
         <!-- Brand / Logo -->
-        <div class="flex items-center gap-3.5 px-2 py-3 mb-8 cursor-pointer" onclick="navigateTo('home')">
-          <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-brand-goldDark to-brand-gold flex items-center justify-center shadow-lg shadow-brand-gold/20">
-            <svg class="w-6 h-6 text-brand-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-            </svg>
-          </div>
+        <div class="flex items-center gap-3.5 px-2 py-3 mb-8 cursor-pointer group" onclick="navigateTo('home')">
+          <img src="logo.svg" alt="Logo Al-Qur'an Simple" class="w-12 h-12 object-contain drop-shadow-[0_0_12px_rgba(0,210,238,0.5)] group-hover:scale-105 transition-transform shrink-0">
           <div>
             <h1 class="font-bold text-lg tracking-wide text-brand-text flex items-center gap-1.5">
-              Al-Qur'an <span class="text-brand-gold text-xs px-2 py-0.5 rounded bg-brand-goldMuted font-mono">Simple</span>
+              Al-Qur'an <span class="text-brand-cyan text-xs px-2 py-0.5 rounded bg-brand-cyan/15 font-mono border border-brand-cyan/25">Simple</span>
             </h1>
             <p class="text-xs text-brand-textMuted">Tilawah & Monitoring</p>
           </div>
@@ -226,11 +225,9 @@
       <!-- Top Bar (Mobile & Desktop Header) -->
       <header class="flex items-center justify-between px-4 py-3.5 md:px-8 border-b border-brand-border bg-brand-dark/95 backdrop-blur-md sticky top-0 z-20">
         <!-- Mobile Logo -->
-        <div class="flex items-center gap-2.5 md:hidden" onclick="navigateTo('home')">
-          <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-brand-goldDark to-brand-gold flex items-center justify-center text-brand-dark font-black">
-            <i data-lucide="book" class="w-5 h-5"></i>
-          </div>
-          <span class="font-bold text-base tracking-wide text-brand-text">Al-Qur'an <span class="text-brand-gold">Simple</span></span>
+        <div class="flex items-center gap-2.5 md:hidden cursor-pointer" onclick="navigateTo('home')">
+          <img src="logo.svg" alt="Logo Al-Qur'an Simple" class="w-9 h-9 object-contain drop-shadow-[0_0_10px_rgba(0,210,238,0.5)] shrink-0">
+          <span class="font-bold text-base tracking-wide text-brand-text">Al-Qur'an <span class="text-brand-cyan">Simple</span></span>
         </div>
 
         <!-- Desktop Title Breadcrumb -->
@@ -1030,8 +1027,8 @@
 
       <!-- Logo & Title -->
       <div class="text-center mb-6">
-        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-cyanDark to-brand-cyan text-brand-dark flex items-center justify-center mx-auto mb-3 shadow-lg shadow-brand-cyan/25 cyan-glow">
-          <i data-lucide="book-marked" class="w-7 h-7"></i>
+        <div class="w-16 h-16 mx-auto mb-3 flex items-center justify-center">
+          <img src="logo.svg" alt="Logo Al-Qur'an Simple" class="w-16 h-16 object-contain drop-shadow-[0_0_15px_rgba(0,210,238,0.5)]">
         </div>
         <h3 id="auth-modal-title" class="text-2xl font-black text-white">Masuk ke Akun</h3>
         <p class="text-xs text-brand-textMuted mt-1">Simpan bookmark, histori tilawah, dan pantau progres khatam Anda</p>
