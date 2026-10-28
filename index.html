@@ -61,19 +61,22 @@
   <style>
     /* Custom Scrollbar - Deep Midnight Cyan */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #000000; }
-    ::-webkit-scrollbar-thumb { background: #151F2E; border-radius: 999px; }
+    ::-webkit-scrollbar-track { background: #02060B; }
+    ::-webkit-scrollbar-thumb { background: #121F2F; border-radius: 999px; }
     ::-webkit-scrollbar-thumb:hover { background: #00D2EE; }
 
-    /* Pure Solid Black Background secara default */
+    /* Deep Midnight Obsidian Atmosphere with Subtle Islamic Arabesque Star Pattern */
     body {
-      background-color: #000000 !important;
+      background-color: #02060B !important;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(0, 210, 238, 0.08) 0%, transparent 60%),
+        url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2300D2EE' stroke-width='0.75' stroke-opacity='0.04'%3E%3Cpath d='M40 0l10 30 30 10-30 10-10 30-10-30L0 40l30-10z'/%3E%3Ccircle cx='40' cy='40' r='14'/%3E%3C/g%3E%3C/svg%3E");
       color: #F8FAFC;
       transition: background-color 0.8s ease;
     }
 
     #app {
-      background-color: #000000;
+      background-color: transparent;
       position: relative;
     }
 
@@ -83,8 +86,8 @@
     }
 
     @keyframes ambientGlowPulse {
-      0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.28; }
-      50% { transform: scale(1.15) translate(20px, -15px); opacity: 0.42; }
+      0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.32; }
+      50% { transform: scale(1.15) translate(20px, -15px); opacity: 0.48; }
     }
 
     .ambient-blur-orb {
@@ -117,7 +120,7 @@
       border: 1px solid #00D2EE;
       border-radius: 8px;
       transform: rotate(45deg);
-      box-shadow: 0 0 10px rgba(0, 210, 238, 0.2);
+      box-shadow: 0 0 12px rgba(0, 210, 238, 0.3);
     }
     .islamic-badge span {
       transform: rotate(-45deg);
@@ -128,22 +131,29 @@
 
     /* Mosque Siluet / Soft Cyan Glow Background */
     .mosque-bg {
-      background-image: radial-gradient(circle at top right, rgba(0, 210, 238, 0.12) 0%, transparent 70%);
+      background-image: radial-gradient(circle at top right, rgba(0, 210, 238, 0.15) 0%, transparent 70%);
     }
 
     /* Glass Effect with Cyan Accent */
     .glass-card {
-      background: rgba(10, 14, 23, 0.85);
+      background: rgba(10, 18, 28, 0.85);
       backdrop-filter: blur(16px);
       border: 1px solid rgba(0, 210, 238, 0.18);
     }
 
     .cyan-glow {
-      box-shadow: 0 0 20px rgba(0, 210, 238, 0.35);
+      box-shadow: 0 0 20px rgba(0, 210, 238, 0.4);
     }
 
     .cyan-glow-lg {
-      box-shadow: 0 0 35px rgba(0, 210, 238, 0.45);
+      box-shadow: 0 0 35px rgba(0, 210, 238, 0.55);
+    }
+
+    /* Active Ayah Glowing Box (Sesuai Layar 4 Gambar) */
+    .active-ayah-card {
+      border: 1.5px solid #00D2EE !important;
+      background: linear-gradient(135deg, rgba(0, 210, 238, 0.15) 0%, rgba(6, 25, 38, 0.85) 100%) !important;
+      box-shadow: 0 0 30px rgba(0, 210, 238, 0.35) !important;
     }
 
     /* Soundwave Equalizer Animation */
@@ -421,94 +431,68 @@
             </div>
           </div>
 
-          <!-- ================= CURATED INTENT & MOOD COLLECTIONS (ALA QURANIFY) ================= -->
+          <!-- ================= KOLEKSI / LIBRARY (Sesuai Layar 6 Gambar) ================= -->
           <div class="bg-brand-surface rounded-3xl p-5 md:p-6 border border-brand-border shadow-xl">
-            <div class="flex items-center justify-between mb-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
               <div>
-                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-brand-cyan/15 text-brand-cyan border border-brand-cyan/20 mb-1.5">
-                  <i data-lucide="sparkles" class="w-3 h-3"></i>
-                  <span>Quranify Curated Vibes</span>
-                </div>
-                <h3 class="text-base font-bold text-white tracking-wide">Koleksi Tilawah & Suasana Hati</h3>
-                <p class="text-xs text-brand-textMuted">Pilihan lantunan murattal sesuai momen ibadah, fokus kerja, atau istirahat Anda</p>
+                <h3 class="text-lg font-black text-white tracking-wide">Koleksi</h3>
+                <p class="text-xs text-brand-textMuted font-medium">Library</p>
+              </div>
+              <!-- Tabs matching Screen 6: Playlist, Offline, Favorites -->
+              <div class="flex items-center gap-2 border-b border-brand-border sm:border-0 pb-1 sm:pb-0">
+                <button class="px-3.5 py-1 text-xs font-bold text-brand-cyan border-b-2 border-brand-cyan">Playlist</button>
+                <button class="px-3.5 py-1 text-xs font-semibold text-brand-textMuted hover:text-white">Offline</button>
+                <button class="px-3.5 py-1 text-xs font-semibold text-brand-textMuted hover:text-white">Favorites</button>
               </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <!-- Card 1: Deep Focus & Study -->
-              <div onclick="playMoodCollection('focus')" class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#091F2C] to-[#040C14] border border-cyan-500/20 hover:border-brand-cyan/60 p-4 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(0,210,238,0.2)]">
-                <div class="flex items-start justify-between mb-3">
-                  <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-brand-cyan flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <i data-lucide="headphones" class="w-5 h-5"></i>
+            <div class="space-y-3.5">
+              <!-- Card 1: Sleep & Relaxation (Sesuai Layar 6) -->
+              <div onclick="playMoodCollection('sleep')" class="group relative overflow-hidden rounded-2xl bg-[#071320] hover:bg-[#0B1D30] border border-brand-border hover:border-brand-cyan/60 p-4 cursor-pointer transition-all duration-300 flex items-center justify-between shadow-lg">
+                <div class="flex items-center gap-4">
+                  <div class="w-14 h-14 rounded-2xl bg-[#0D2236] border border-brand-cyan/30 flex items-center justify-center text-cyan-300 shrink-0 shadow-inner group-hover:scale-105 transition-transform">
+                    <i data-lucide="moon-star" class="w-7 h-7 stroke-[1.8] text-brand-cyan"></i>
                   </div>
-                  <span class="px-2 py-0.5 rounded-md text-[9px] font-extrabold uppercase bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/30">Focus</span>
+                  <div>
+                    <h4 class="text-sm font-bold text-white group-hover:text-brand-cyan transition-colors">Sleep & Relaxation</h4>
+                    <p class="text-[11px] text-brand-textMuted mt-0.5">12 Tracks</p>
+                  </div>
                 </div>
-                <h4 class="text-sm font-bold text-white group-hover:text-brand-cyan transition-colors">Deep Focus & Study</h4>
-                <p class="text-[11px] text-brand-textMuted mt-1 leading-snug">Lantunan ritmis teratur surah Ar-Rahman & Al-Mulk penenang pikiran saat bekerja.</p>
-                <div class="mt-4 flex items-center justify-between pt-2 border-t border-white/[0.06] text-[11px]">
-                  <span class="text-brand-textMuted font-mono">Ar-Rahman (55)</span>
-                  <span class="inline-flex items-center gap-1 text-brand-cyan font-bold group-hover:underline">
-                    <span>Putar</span>
-                    <i data-lucide="play-circle" class="w-3.5 h-3.5 fill-current"></i>
-                  </span>
-                </div>
+                <button class="w-10 h-10 rounded-full bg-brand-cyan text-brand-dark flex items-center justify-center font-black shadow-lg cyan-glow shrink-0 hover:scale-110 active:scale-95 transition-all">
+                  <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
+                </button>
               </div>
 
-              <!-- Card 2: Sleep & Night Calm -->
-              <div onclick="playMoodCollection('sleep')" class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#121128] to-[#070611] border border-indigo-500/20 hover:border-indigo-400/60 p-4 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(99,102,241,0.2)]">
-                <div class="flex items-start justify-between mb-3">
-                  <div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <i data-lucide="moon" class="w-5 h-5"></i>
+              <!-- Card 2: Muraja'ah Juz 30 (Sesuai Layar 6) -->
+              <div onclick="playMoodCollection('focus')" class="group relative overflow-hidden rounded-2xl bg-[#071320] hover:bg-[#0B1D30] border border-brand-border hover:border-brand-cyan/60 p-4 cursor-pointer transition-all duration-300 flex items-center justify-between shadow-lg">
+                <div class="flex items-center gap-4">
+                  <div class="w-14 h-14 rounded-2xl bg-[#0D2236] border border-brand-cyan/30 flex items-center justify-center text-cyan-300 shrink-0 shadow-inner group-hover:scale-105 transition-transform">
+                    <i data-lucide="book-open-check" class="w-7 h-7 stroke-[1.8] text-brand-cyan"></i>
                   </div>
-                  <span class="px-2 py-0.5 rounded-md text-[9px] font-extrabold uppercase bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Sleep</span>
+                  <div>
+                    <h4 class="text-sm font-bold text-white group-hover:text-brand-cyan transition-colors">Muraja'ah Juz 30</h4>
+                    <p class="text-[11px] text-brand-textMuted mt-0.5">37 Tracks</p>
+                  </div>
                 </div>
-                <h4 class="text-sm font-bold text-white group-hover:text-indigo-400 transition-colors">Tidur & Relaksasi Malam</h4>
-                <p class="text-[11px] text-brand-textMuted mt-1 leading-snug">Murattal tempo lambat surah Yasin & Al-Insan yang menyejukkan kalbu menjelang lelap.</p>
-                <div class="mt-4 flex items-center justify-between pt-2 border-t border-white/[0.06] text-[11px]">
-                  <span class="text-brand-textMuted font-mono">Yasin (36)</span>
-                  <span class="inline-flex items-center gap-1 text-indigo-400 font-bold group-hover:underline">
-                    <span>Putar</span>
-                    <i data-lucide="play-circle" class="w-3.5 h-3.5 fill-current"></i>
-                  </span>
-                </div>
+                <button class="w-10 h-10 rounded-full bg-brand-cyan text-brand-dark flex items-center justify-center font-black shadow-lg cyan-glow shrink-0 hover:scale-110 active:scale-95 transition-all">
+                  <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
+                </button>
               </div>
 
-              <!-- Card 3: Protection & Ruqyah -->
-              <div onclick="playMoodCollection('ruqyah')" class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#09221C] to-[#040E0B] border border-emerald-500/20 hover:border-emerald-400/60 p-4 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(16,185,129,0.2)]">
-                <div class="flex items-start justify-between mb-3">
-                  <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <i data-lucide="shield-check" class="w-5 h-5"></i>
+              <!-- Card 3: Al-Kahfi Friday (Sesuai Layar 6) -->
+              <div onclick="playMoodCollection('ruqyah')" class="group relative overflow-hidden rounded-2xl bg-[#071320] hover:bg-[#0B1D30] border border-brand-border hover:border-brand-cyan/60 p-4 cursor-pointer transition-all duration-300 flex items-center justify-between shadow-lg">
+                <div class="flex items-center gap-4">
+                  <div class="w-14 h-14 rounded-2xl bg-[#0D2236] border border-brand-cyan/30 flex items-center justify-center text-cyan-300 shrink-0 shadow-inner group-hover:scale-105 transition-transform">
+                    <i data-lucide="alarm-clock" class="w-7 h-7 stroke-[1.8] text-brand-cyan"></i>
                   </div>
-                  <span class="px-2 py-0.5 rounded-md text-[9px] font-extrabold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Ruqyah</span>
-                </div>
-                <h4 class="text-sm font-bold text-white group-hover:text-emerald-400 transition-colors">Perlindungan & Ruqyah</h4>
-                <p class="text-[11px] text-brand-textMuted mt-1 leading-snug">Ayat pembenteng diri: Al-Baqarah, Ayat Kursi, dan Al-Mu'awwidzatain penolak was-was.</p>
-                <div class="mt-4 flex items-center justify-between pt-2 border-t border-white/[0.06] text-[11px]">
-                  <span class="text-brand-textMuted font-mono">Al-Baqarah (2)</span>
-                  <span class="inline-flex items-center gap-1 text-emerald-400 font-bold group-hover:underline">
-                    <span>Putar</span>
-                    <i data-lucide="play-circle" class="w-3.5 h-3.5 fill-current"></i>
-                  </span>
-                </div>
-              </div>
-
-              <!-- Card 4: Emotional & Heart Touching -->
-              <div onclick="playMoodCollection('heart')" class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#27150A] to-[#0E0703] border border-amber-500/20 hover:border-amber-400/60 p-4 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(245,158,11,0.2)]">
-                <div class="flex items-start justify-between mb-3">
-                  <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <i data-lucide="heart" class="w-5 h-5"></i>
+                  <div>
+                    <h4 class="text-sm font-bold text-white group-hover:text-brand-cyan transition-colors">Al-Kahfi Friday</h4>
+                    <p class="text-[11px] text-brand-textMuted mt-0.5">3 Tracks</p>
                   </div>
-                  <span class="px-2 py-0.5 rounded-md text-[9px] font-extrabold uppercase bg-amber-500/20 text-amber-300 border border-amber-500/30">Peace</span>
                 </div>
-                <h4 class="text-sm font-bold text-white group-hover:text-amber-400 transition-colors">Penyejuk Kalbu & Haru</h4>
-                <p class="text-[11px] text-brand-textMuted mt-1 leading-snug">Kisah ketabahan Maryam & Yusuf yang menghadirkan keharuan mendalam dan ketenangan jiwa.</p>
-                <div class="mt-4 flex items-center justify-between pt-2 border-t border-white/[0.06] text-[11px]">
-                  <span class="text-brand-textMuted font-mono">Maryam (19)</span>
-                  <span class="inline-flex items-center gap-1 text-amber-400 font-bold group-hover:underline">
-                    <span>Putar</span>
-                    <i data-lucide="play-circle" class="w-3.5 h-3.5 fill-current"></i>
-                  </span>
-                </div>
+                <button class="w-10 h-10 rounded-full bg-brand-cyan text-brand-dark flex items-center justify-center font-black shadow-lg cyan-glow shrink-0 hover:scale-110 active:scale-95 transition-all">
+                  <i data-lucide="play" class="w-4 h-4 ml-0.5 fill-current"></i>
+                </button>
               </div>
             </div>
           </div>
@@ -1143,71 +1127,107 @@
     </div>
   </div>
 
-  <!-- ==================== AUTH MODAL (LOGIN & DAFTAR - Sesuai Tema Midnight Cyan) ==================== -->
-  <div id="auth-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-[#0D1520] border border-brand-cyan/30 rounded-3xl w-full max-w-md p-6 sm:p-8 relative shadow-2xl mosque-bg">
-      <button onclick="showAuthModal(false)" class="absolute top-5 right-5 text-brand-textMuted hover:text-white">
-        <i data-lucide="x" class="w-5 h-5"></i>
+  <!-- ==================== AUTH MODAL (LOGIN & DAFTAR - Sesuai Layar 1 Gambar) ==================== -->
+  <div id="auth-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#070E18] border border-brand-cyan/30 rounded-3xl w-full max-w-sm relative shadow-2xl overflow-hidden">
+      <!-- Close button -->
+      <button onclick="showAuthModal(false)" class="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white/80 hover:text-white flex items-center justify-center border border-white/10">
+        <i data-lucide="x" class="w-4 h-4"></i>
       </button>
 
-      <!-- Logo & Title -->
-      <div class="text-center mb-6">
-        <div class="w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-          <img src="logo.svg" alt="Logo Al-Qur'an Simple" class="w-16 h-16 object-contain drop-shadow-[0_0_15px_rgba(0,210,238,0.5)]">
-        </div>
-        <h3 id="auth-modal-title" class="text-2xl font-black text-white">Masuk ke Akun</h3>
-        <p class="text-xs text-brand-textMuted mt-1">Simpan bookmark, histori tilawah, dan pantau progres khatam Anda</p>
+      <!-- Screen 1 Header: Night Illuminated Mosque with Lake Reflection -->
+      <div class="relative h-44 w-full overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1542816417-0983c9c9ad53?fit=crop&w=800&h=420&q=80" 
+             alt="Mosque Night Reflection" class="w-full h-full object-cover">
+        <!-- Dark gradient overlay into card body -->
+        <div class="absolute inset-0 bg-gradient-to-t from-[#070E18] via-[#070E18]/40 to-transparent"></div>
+        <div class="absolute top-3 left-4 text-[10px] font-mono text-cyan-300/80 tracking-widest uppercase">9:41</div>
       </div>
 
-      <!-- Tab Switcher (Masuk vs Daftar) -->
-      <div class="flex bg-brand-surface p-1 rounded-xl mb-5 border border-brand-border">
-        <button id="auth-tab-login" onclick="switchAuthMode('login')" class="flex-1 py-1.5 rounded-lg text-xs font-bold bg-brand-cyan text-brand-dark transition-all">Masuk</button>
-        <button id="auth-tab-register" onclick="switchAuthMode('register')" class="flex-1 py-1.5 rounded-lg text-xs font-bold text-brand-textMuted hover:text-white transition-all">Daftar Akun</button>
+      <!-- Center Glowing Cyan Islamic Logo Badge (Sesuai Layar 1) -->
+      <div class="relative -mt-9 mx-auto w-16 h-16 rounded-2xl bg-[#06121C] border-2 border-brand-cyan shadow-[0_0_25px_rgba(0,210,238,0.55)] flex items-center justify-center cyan-glow z-10">
+        <img src="logo.svg" alt="Logo Al-Qur'an Simple" class="w-9 h-9 object-contain drop-shadow-[0_0_10px_rgba(0,210,238,0.7)]">
       </div>
 
-      <!-- Login Form -->
-      <form id="form-login" onsubmit="handleLoginSubmit(event)" class="space-y-4">
-        <div>
-          <label class="block text-xs font-medium text-brand-textMuted mb-1">Email</label>
-          <input type="email" id="login-email" required placeholder="nama@email.com" class="w-full bg-brand-surface border border-brand-border rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-brand-gold">
+      <div class="p-6 pt-3">
+        <!-- Title & Subtitle -->
+        <div class="text-center mb-5">
+          <h3 id="auth-modal-title" class="text-xl font-black text-white tracking-wide">Al-Qur'an Simple</h3>
+          <p class="text-[11px] text-brand-textMuted mt-0.5">Platform Tilawah & Monitoring Khatam</p>
         </div>
-        <div>
-          <div class="flex justify-between items-center mb-1">
-            <label class="text-xs font-medium text-brand-textMuted">Kata Sandi</label>
-            <a href="#" class="text-[11px] text-brand-gold hover:underline">Lupa Sandi?</a>
+
+        <!-- Login Form (Sesuai Layar 1) -->
+        <form id="form-login" onsubmit="handleLoginSubmit(event)" class="space-y-3.5">
+          <div>
+            <div class="relative">
+              <input type="email" id="login-email" required placeholder="Email" 
+                     class="w-full bg-[#0D1826] border border-brand-border/80 focus:border-brand-cyan rounded-2xl px-4 py-3 text-xs text-white placeholder-brand-textMuted focus:outline-none transition-colors">
+            </div>
           </div>
-          <input type="password" id="login-password" required placeholder="••••••••" class="w-full bg-brand-surface border border-brand-border rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-brand-gold">
-        </div>
-        <button type="submit" class="w-full py-3 rounded-2xl bg-gradient-to-r from-brand-gold to-brand-goldLight text-brand-dark font-black text-sm shadow-xl shadow-brand-gold/20 hover:opacity-95 transition-all mt-2">
-          Masuk Sekarang
-        </button>
-      </form>
+          <div>
+            <div class="relative">
+              <input type="password" id="login-password" required placeholder="Password" 
+                     class="w-full bg-[#0D1826] border border-brand-border/80 focus:border-brand-cyan rounded-2xl px-4 py-3 text-xs text-white placeholder-brand-textMuted focus:outline-none pr-10 transition-colors">
+              <button type="button" onclick="togglePasswordVisibility('login-password')" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-brand-textMuted hover:text-white">
+                <i data-lucide="eye" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
 
-      <!-- Register Form (Hidden by default) -->
-      <form id="form-register" onsubmit="handleRegisterSubmit(event)" class="hidden space-y-3.5">
-        <div>
-          <label class="block text-xs font-medium text-brand-textMuted mb-1">Nama Lengkap</label>
-          <input type="text" id="reg-name" required placeholder="Contoh: Ahmad Fauzi" class="w-full bg-brand-surface border border-brand-border rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-brand-gold">
-        </div>
-        <div>
-          <label class="block text-xs font-medium text-brand-textMuted mb-1">Email</label>
-          <input type="email" id="reg-email" required placeholder="nama@email.com" class="w-full bg-brand-surface border border-brand-border rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-brand-gold">
-        </div>
-        <div>
-          <label class="block text-xs font-medium text-brand-textMuted mb-1">Kata Sandi</label>
-          <input type="password" id="reg-password" required placeholder="Minimal 6 karakter" class="w-full bg-brand-surface border border-brand-border rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-brand-gold">
-        </div>
-        <div>
-          <label class="block text-xs font-medium text-brand-textMuted mb-1">Daftar Sebagai</label>
-          <select id="reg-role" class="w-full bg-brand-surface border border-brand-border rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-gold">
-            <option value="pembaca">Pembaca Umum</option>
-            <option value="pengajar">Pengajar / Kontributor Tilawah</option>
-          </select>
-        </div>
-        <button type="submit" class="w-full py-3 rounded-2xl bg-gradient-to-r from-brand-gold to-brand-goldLight text-brand-dark font-black text-sm shadow-xl shadow-brand-gold/20 hover:opacity-95 transition-all mt-2">
-          Daftarkan Akun
-        </button>
-      </form>
+          <!-- Big Glowing Cyan Sign In Button (Sesuai Layar 1) -->
+          <button type="submit" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-brand-cyan to-brand-cyanLight text-brand-dark font-black text-sm shadow-[0_0_25px_rgba(0,210,238,0.4)] hover:brightness-110 active:scale-[0.98] transition-all mt-1">
+            Sign In
+          </button>
+
+          <!-- Continue with Google Button (Sesuai Layar 1) -->
+          <button type="button" onclick="alert('Fitur masuk dengan Google akan segera tersedia.');" class="w-full py-3 rounded-2xl bg-[#0D1826] hover:bg-[#122236] border border-brand-border flex items-center justify-center gap-2.5 text-xs font-semibold text-white transition-colors">
+            <svg class="w-4 h-4" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <span>Continue with Google</span>
+          </button>
+
+          <!-- Create Account Switch Link (Sesuai Layar 1) -->
+          <div class="text-center pt-2">
+            <button type="button" onclick="switchAuthMode('register')" class="text-xs text-brand-textMuted hover:text-brand-cyan transition-colors">
+              Create an account
+            </button>
+          </div>
+        </form>
+
+        <!-- Register Form (Sesuai Layar 1) -->
+        <form id="form-register" onsubmit="handleRegisterSubmit(event)" class="hidden space-y-3">
+          <div>
+            <input type="text" id="reg-name" required placeholder="Nama Lengkap" 
+                   class="w-full bg-[#0D1826] border border-brand-border/80 focus:border-brand-cyan rounded-2xl px-4 py-2.5 text-xs text-white placeholder-brand-textMuted focus:outline-none transition-colors">
+          </div>
+          <div>
+            <input type="email" id="reg-email" required placeholder="Email" 
+                   class="w-full bg-[#0D1826] border border-brand-border/80 focus:border-brand-cyan rounded-2xl px-4 py-2.5 text-xs text-white placeholder-brand-textMuted focus:outline-none transition-colors">
+          </div>
+          <div>
+            <input type="password" id="reg-password" required placeholder="Password (Minimal 6 karakter)" 
+                   class="w-full bg-[#0D1826] border border-brand-border/80 focus:border-brand-cyan rounded-2xl px-4 py-2.5 text-xs text-white placeholder-brand-textMuted focus:outline-none transition-colors">
+          </div>
+          <div>
+            <select id="reg-role" class="w-full bg-[#0D1826] border border-brand-border/80 focus:border-brand-cyan rounded-2xl px-3 py-2.5 text-xs text-white focus:outline-none transition-colors">
+              <option value="pembaca">Pembaca Umum</option>
+              <option value="pengajar">Pengajar / Kontributor Tilawah</option>
+            </select>
+          </div>
+          <button type="submit" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-brand-cyan to-brand-cyanLight text-brand-dark font-black text-sm shadow-[0_0_25px_rgba(0,210,238,0.4)] hover:brightness-110 active:scale-[0.98] transition-all mt-1">
+            Create Account
+          </button>
+          <div class="text-center pt-1">
+            <button type="button" onclick="switchAuthMode('login')" class="text-xs text-brand-textMuted hover:text-brand-cyan transition-colors">
+              Sudah punya akun? Sign In
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 
@@ -1273,31 +1293,52 @@
     </div>
   </div>
 
-  <!-- ==================== QORI SELECTION MODAL ==================== -->
-  <div id="qori-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-brand-surface border border-brand-gold/30 rounded-3xl w-full max-w-lg p-6 relative shadow-2xl">
-      <button onclick="closeQoriModal()" class="absolute top-5 right-5 text-brand-textMuted hover:text-white">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-
-      <div class="flex items-center gap-3 mb-4">
-        <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-brand-gold flex items-center justify-center font-bold">
-          <i data-lucide="mic" class="w-5 h-5"></i>
-        </div>
-        <div>
-          <h3 class="text-base font-bold text-white">Pilih Qori Murattal</h3>
-          <p class="text-xs text-brand-textMuted">Audio tilawah surah penuh & per ayat akan menyesuaikan</p>
-        </div>
+  <!-- ==================== RECITER PROFILE & QORI SELECTION MODAL (Sesuai Layar 5 Gambar) ==================== -->
+  <div id="qori-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="bg-[#070E18] border border-brand-cyan/30 rounded-3xl w-full max-w-md p-6 relative shadow-2xl overflow-hidden">
+      <!-- Top Navigation: <  RECITER PROFILE  bookmark -->
+      <div class="flex items-center justify-between pb-4 border-b border-brand-border/60">
+        <button onclick="closeQoriModal()" class="w-9 h-9 rounded-full bg-brand-surface border border-brand-border flex items-center justify-center text-white hover:text-brand-cyan transition-colors">
+          <i data-lucide="chevron-left" class="w-5 h-5"></i>
+        </button>
+        <h3 class="font-extrabold text-xs tracking-widest text-brand-cyan uppercase">RECITER PROFILE</h3>
+        <button onclick="bookmarkCurrentAudioSurah()" class="w-9 h-9 rounded-full bg-brand-surface border border-brand-border flex items-center justify-center text-white hover:text-brand-cyan transition-colors">
+          <i data-lucide="bookmark" class="w-4 h-4"></i>
+        </button>
       </div>
 
-      <!-- Qori Cards List Container -->
-      <div id="qori-list-container" class="space-y-2.5 max-h-[60vh] overflow-y-auto pr-1">
-        <!-- Rendered via JS -->
+      <!-- Reciter Profile Header Card (Sesuai Layar 5 Gambar) -->
+      <div class="text-center py-5">
+        <div class="relative w-24 h-24 mx-auto rounded-full overflow-hidden border-2 border-brand-cyan shadow-2xl cyan-glow-lg mb-3">
+          <img id="reciter-profile-avatar" src="https://images.unsplash.com/photo-1544717305-2782549b5136?fit=crop&w=250&h=250&q=80" class="w-full h-full object-cover">
+        </div>
+        <h4 id="reciter-profile-name" class="text-lg font-black text-white">Syekh Yasser Al-Dosari</h4>
+        <div class="flex items-center justify-center gap-2 mt-1.5 text-[10px] font-semibold text-brand-textMuted">
+          <span class="px-2.5 py-0.5 rounded-full bg-brand-cyan/15 text-brand-cyan border border-brand-cyan/30">30 Juz Complete</span>
+          <span class="px-2.5 py-0.5 rounded-full bg-[#0F2236] text-cyan-200 border border-brand-border">HQ Audio</span>
+        </div>
+
+        <!-- Big Cyan Play All Button (Sesuai Layar 5) -->
+        <button onclick="closeQoriModal(); quickPlaySurahAudio(1, null, true);" class="mt-4 px-8 py-2.5 rounded-2xl bg-gradient-to-r from-brand-cyan to-brand-cyanLight text-brand-dark font-extrabold text-xs inline-flex items-center gap-2 shadow-lg cyan-glow hover:brightness-110 active:scale-95 transition-all">
+          <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+          <span>Play All</span>
+        </button>
+      </div>
+
+      <!-- Qori Switcher & Audio Selection -->
+      <div class="pt-2">
+        <div class="flex items-center justify-between mb-2.5">
+          <span class="text-xs font-bold text-white">Pilih Lantunan Qori Lain</span>
+          <span class="text-[11px] text-brand-cyan font-mono">Daftar Qori</span>
+        </div>
+        <div id="qori-list-container" class="space-y-2 max-h-[30vh] overflow-y-auto pr-1">
+          <!-- Rendered via JS -->
+        </div>
       </div>
 
       <div class="mt-4 pt-3 border-t border-brand-border flex items-center justify-between text-xs text-brand-textMuted">
         <span>Sumber Audio: equran.id v2 (HQ MP3)</span>
-        <button onclick="closeQoriModal()" class="px-4 py-2 rounded-xl bg-brand-gold text-brand-dark font-bold text-xs">Selesai</button>
+        <button onclick="closeQoriModal()" class="px-4 py-1.5 rounded-xl bg-brand-cyan text-brand-dark font-bold text-xs">Selesai</button>
       </div>
     </div>
   </div>
@@ -1945,6 +1986,18 @@
       if (modalAvatar) modalAvatar.src = q.avatar;
       const modalReciter = document.getElementById('murottal-modal-reciter');
       if (modalReciter) modalReciter.textContent = q.name;
+
+      // Update Reciter Profile Header (Sesuai Layar 5)
+      const reciterAvatar = document.getElementById('reciter-profile-avatar');
+      if (reciterAvatar) reciterAvatar.src = q.avatar;
+      const reciterName = document.getElementById('reciter-profile-name');
+      if (reciterName) reciterName.textContent = q.name;
+    }
+
+    function togglePasswordVisibility(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.type = el.type === 'password' ? 'text' : 'password';
     }
 
     function renderQoriModalCards() {
@@ -1984,8 +2037,10 @@
     }
 
     function openQoriModal() {
+      updateQoriUIElements();
       renderQoriModalCards();
       document.getElementById('qori-modal').classList.remove('hidden');
+      lucide.createIcons();
     }
 
     function closeQoriModal() {
@@ -2479,31 +2534,31 @@
         const isCurrentlyPlaying = AppState.activePlayingAyah === a.nomorAyat;
 
         return `
-          <div class="bg-brand-surface rounded-2xl p-5 md:p-6 border transition-all duration-300 space-y-4 ${
-            isCurrentlyPlaying ? 'border-brand-gold bg-brand-gold/5 shadow-lg shadow-brand-gold/10 ring-1 ring-brand-gold/50' : 'border-brand-border hover:border-brand-border/80'
+          <div class="rounded-2xl p-5 md:p-6 border transition-all duration-300 space-y-4 ${
+            isCurrentlyPlaying ? 'active-ayah-card ring-1 ring-brand-cyan/60' : 'bg-[#07111C]/90 border-brand-border hover:border-brand-border/80'
           }" id="ayah-${a.nomorAyat}">
             <!-- Top Ayah Action Bar -->
             <div class="flex items-center justify-between pb-3 border-b border-brand-border/60">
               <div class="flex items-center gap-2">
-                <span class="px-2.5 py-1 rounded-lg bg-brand-card border border-brand-border text-xs font-bold text-brand-gold">
+                <span class="px-2.5 py-1 rounded-lg ${isCurrentlyPlaying ? 'bg-brand-cyan/20 border border-brand-cyan/40 text-brand-cyan' : 'bg-brand-card border border-brand-border text-brand-cyan'} text-xs font-bold font-mono">
                   ${AppState.currentSurah.nomor}:${a.nomorAyat}
                 </span>
                 ${isCurrentlyPlaying ? `
-                  <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-brand-gold animate-pulse">
-                    <span class="w-2 h-2 rounded-full bg-brand-gold"></span>
+                  <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-brand-cyan animate-pulse">
+                    <span class="w-2 h-2 rounded-full bg-brand-cyan"></span>
                     <span>Memutar (${qori.shortName})</span>
                   </span>
                 ` : ''}
               </div>
               <!-- Quick Actions: Bookmark, Notes, Audio -->
               <div class="flex items-center gap-2">
-                <button onclick="toggleBookmarkAyah(${AppState.currentSurah.nomor}, ${a.nomorAyat})" title="Tandai Bookmark" class="p-2 rounded-lg bg-brand-card hover:bg-brand-surfaceHover text-brand-textMuted hover:text-brand-gold">
+                <button onclick="toggleBookmarkAyah(${AppState.currentSurah.nomor}, ${a.nomorAyat})" title="Tandai Bookmark" class="p-2 rounded-lg bg-brand-card hover:bg-brand-surfaceHover text-brand-textMuted hover:text-brand-cyan">
                   <i data-lucide="bookmark" class="w-4 h-4"></i>
                 </button>
                 <button onclick="openNoteModal(${AppState.currentSurah.nomor}, ${a.nomorAyat})" title="Tambah Catatan" class="p-2 rounded-lg bg-brand-card hover:bg-brand-surfaceHover text-brand-textMuted hover:text-white">
                   <i data-lucide="file-text" class="w-4 h-4"></i>
                 </button>
-                <button onclick="playAyahAudio(${a.nomorAyat}, '${ayahAudioUrl}', this)" title="Putar Ayat (${qori.shortName})" class="p-2 rounded-lg bg-brand-card hover:bg-brand-surfaceHover text-brand-gold transition-colors">
+                <button onclick="playAyahAudio(${a.nomorAyat}, '${ayahAudioUrl}', this)" title="Putar Ayat (${qori.shortName})" class="p-2 rounded-lg bg-brand-card hover:bg-brand-surfaceHover text-brand-cyan transition-colors">
                   <i data-lucide="${isCurrentlyPlaying ? 'square' : 'volume-2'}" class="w-4 h-4"></i>
                 </button>
               </div>
@@ -2513,7 +2568,7 @@
             <div class="text-right py-2">
               <p class="arabic-text text-white" style="font-size: ${AppState.settings.fontSize}px;">
                 ${a.teksArab}
-                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full border border-brand-gold/40 text-brand-gold text-xs mr-2 font-mono">
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full border border-brand-cyan/40 text-brand-cyan text-xs mr-2 font-mono">
                   ${a.nomorAyat}
                 </span>
               </p>
@@ -2521,7 +2576,7 @@
 
             <!-- Latin Transliteration -->
             ${AppState.settings.showLatin ? `
-              <p class="text-xs text-brand-gold/90 font-medium italic leading-relaxed">
+              <p class="text-xs text-brand-cyan/90 font-medium italic leading-relaxed">
                 ${a.teksLatin}
               </p>
             ` : ''}
