@@ -28,12 +28,12 @@
         extend: {
           colors: {
             brand: {
-              dark: '#070B11',
-              darker: '#04070B',
-              surface: '#0F1722',
-              surfaceHover: '#162334',
-              card: '#131D2A',
-              border: '#1B2A3D',
+              dark: '#000000',
+              darker: '#000000',
+              surface: '#0A0E17',
+              surfaceHover: '#121A28',
+              card: '#0D131F',
+              border: '#151F2E',
               cyan: '#00D2EE',
               cyanLight: '#67E8F9',
               cyanDark: '#0891B2',
@@ -61,18 +61,42 @@
   <style>
     /* Custom Scrollbar - Deep Midnight Cyan */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #070B11; }
-    ::-webkit-scrollbar-thumb { background: #1B2A3D; border-radius: 999px; }
+    ::-webkit-scrollbar-track { background: #000000; }
+    ::-webkit-scrollbar-thumb { background: #151F2E; border-radius: 999px; }
     ::-webkit-scrollbar-thumb:hover { background: #00D2EE; }
 
-    /* Geometric Islamic Watermark Background */
+    /* Pure Solid Black Background secara default */
     body {
-      background-color: #070B11;
-      background-image: 
-        radial-gradient(circle at 50% 0%, rgba(0, 210, 238, 0.08) 0%, transparent 60%),
-        radial-gradient(circle at 100% 100%, rgba(8, 145, 178, 0.05) 0%, transparent 50%),
-        radial-gradient(rgba(0, 210, 238, 0.04) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 28px 28px;
+      background-color: #000000 !important;
+      color: #F8FAFC;
+      transition: background-color 0.8s ease;
+    }
+
+    #app {
+      background-color: #000000;
+      position: relative;
+    }
+
+    /* Ambient Blur Effect saat Murottal Aktif */
+    .murottal-active body {
+      background-color: #010408 !important;
+    }
+
+    @keyframes ambientGlowPulse {
+      0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.28; }
+      50% { transform: scale(1.15) translate(20px, -15px); opacity: 0.42; }
+    }
+
+    .ambient-blur-orb {
+      animation: ambientGlowPulse 8s ease-in-out infinite;
+      filter: blur(120px);
+      will-change: transform, opacity;
+    }
+
+    .ambient-blur-orb-2 {
+      animation: ambientGlowPulse 10s ease-in-out infinite reverse;
+      filter: blur(140px);
+      will-change: transform, opacity;
     }
 
     .arabic-text {
@@ -109,7 +133,7 @@
 
     /* Glass Effect with Cyan Accent */
     .glass-card {
-      background: rgba(15, 23, 34, 0.85);
+      background: rgba(10, 14, 23, 0.85);
       backdrop-filter: blur(16px);
       border: 1px solid rgba(0, 210, 238, 0.18);
     }
@@ -150,10 +174,20 @@
     }
   </style>
 </head>
-<body class="bg-brand-dark text-brand-text font-sans antialiased min-h-screen selection:bg-brand-gold selection:text-brand-dark">
+<body class="bg-black text-brand-text font-sans antialiased min-h-screen selection:bg-brand-cyan selection:text-brand-dark">
+
+  <!-- ==================== AMBIENT GLOWING BLUR BACKGROUND (Aktif Saat Murottal Diputar) ==================== -->
+  <div id="murottal-ambient-blur" class="fixed inset-0 pointer-events-none transition-opacity duration-1000 opacity-0 z-0 overflow-hidden">
+    <!-- Ambient Blur Glowing Orbs -->
+    <div class="absolute -top-32 left-1/4 w-[600px] h-[600px] rounded-full bg-cyan-500/25 ambient-blur-orb"></div>
+    <div class="absolute top-1/3 -right-24 w-[500px] h-[500px] rounded-full bg-sky-600/20 ambient-blur-orb-2" style="animation-delay: 2s;"></div>
+    <div class="absolute -bottom-32 left-1/3 w-[650px] h-[650px] rounded-full bg-teal-500/20 ambient-blur-orb" style="animation-delay: 4s;"></div>
+    <!-- Soft Mist Frosted Overlay -->
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-3xl"></div>
+  </div>
 
   <!-- ==================== APP CONTAINER ==================== -->
-  <div id="app" class="flex flex-col md:flex-row min-h-screen max-w-[1600px] mx-auto relative overflow-x-hidden">
+  <div id="app" class="flex flex-col md:flex-row min-h-screen max-w-[1600px] mx-auto relative overflow-x-hidden z-10">
 
     <!-- ==================== DESKTOP SIDEBAR ==================== -->
     <aside id="desktop-sidebar" class="hidden md:flex flex-col w-72 bg-brand-surface border-r border-brand-border shrink-0 p-5 sticky top-0 h-screen justify-between z-30">
@@ -883,7 +917,13 @@
   </div>
 
   <!-- ==================== MUROTTAL FULL PLAYER MODAL (Sesuai Layar 2 Gambar) ==================== -->
-  <div id="murottal-modal" class="fixed inset-0 bg-black/90 backdrop-blur-xl z-50 hidden flex flex-col justify-between p-6 sm:p-8 max-w-lg mx-auto">
+  <div id="murottal-modal" class="fixed inset-0 bg-black/90 backdrop-blur-2xl z-50 hidden flex flex-col justify-between p-6 sm:p-8 max-w-lg mx-auto relative overflow-hidden">
+    <!-- Ambient Blurred Reciter Cover Backdrop (Layar 2 Blur Effect) -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden -z-10">
+      <img id="murottal-modal-blur-bg" src="https://images.unsplash.com/photo-1544717305-2782549b5136?fit=crop&w=300&h=300&q=80" 
+           alt="Cover Blur" class="w-full h-full object-cover scale-150 filter blur-[90px] opacity-30 transition-all duration-1000">
+      <div class="absolute inset-0 bg-black/60 backdrop-blur-2xl"></div>
+    </div>
     <!-- Top Navigation Bar -->
     <div class="flex items-center justify-between">
       <button onclick="closeMurottalModal()" class="w-10 h-10 rounded-full bg-brand-surface border border-brand-border flex items-center justify-center text-white hover:text-brand-cyan transition-colors">
@@ -1905,6 +1945,21 @@
       return `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
     }
 
+    function setAmbientMurottalBlur(active) {
+      const ambient = document.getElementById('murottal-ambient-blur');
+      if (ambient) {
+        if (active) {
+          ambient.classList.remove('opacity-0');
+          ambient.classList.add('opacity-100');
+          document.body.classList.add('murottal-active');
+        } else {
+          ambient.classList.add('opacity-0');
+          ambient.classList.remove('opacity-100');
+          document.body.classList.remove('murottal-active');
+        }
+      }
+    }
+
     function updateAllPlayButtons(isPlaying) {
       const iconName = isPlaying ? 'pause' : 'play';
       
@@ -1921,6 +1976,9 @@
       if (miniBars) {
         miniBars.style.opacity = isPlaying ? '1' : '0.4';
       }
+
+      // Aktifkan Efek Ambient Glowing Blur saat Murottal diputar
+      setAmbientMurottalBlur(isPlaying);
 
       if (AppState.surahs && AppState.surahs.length > 0) {
         renderSurahList(AppState.surahs);
@@ -2014,6 +2072,9 @@
 
       const avatarEl = document.getElementById('murottal-modal-avatar');
       if (avatarEl) avatarEl.src = qori.avatar;
+
+      const blurBg = document.getElementById('murottal-modal-blur-bg');
+      if (blurBg) blurBg.src = qori.avatar;
     }
 
     function openMurottalModal() {
@@ -2161,6 +2222,7 @@
       if (AppState.activePlayingAyah === nomorAyat && currentAyahAudioEl && !currentAyahAudioEl.paused) {
         currentAyahAudioEl.pause();
         AppState.activePlayingAyah = null;
+        setAmbientMurottalBlur(false);
         renderAyahs(AppState.currentAyahs);
         return;
       }
@@ -2170,6 +2232,7 @@
       }
 
       AppState.activePlayingAyah = nomorAyat;
+      setAmbientMurottalBlur(true);
       renderAyahs(AppState.currentAyahs);
 
       currentAyahAudioEl = new Audio(url);
@@ -2191,9 +2254,11 @@
             const nextAudioUrl = (nextAyah.audio && (nextAyah.audio[AppState.selectedQori] || nextAyah.audio['05'] || Object.values(nextAyah.audio)[0])) || '';
             playAyahAudio(nextAyahNum, nextAudioUrl, null);
           } else {
+            setAmbientMurottalBlur(false);
             renderAyahs(AppState.currentAyahs);
           }
         } else {
+          setAmbientMurottalBlur(false);
           renderAyahs(AppState.currentAyahs);
         }
       };
