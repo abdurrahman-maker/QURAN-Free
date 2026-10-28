@@ -290,34 +290,8 @@
 
         <!-- ================= PAGE 1: BERANDA (HOME) ================= -->
         <section id="page-home" class="space-y-6">
-          
-          <!-- Top Interactive Announcement / Hadits Banner -->
-          <div id="top-announcement-banner" class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#091824] via-[#0F263A] to-[#07131F] border border-brand-cyan/30 p-5 md:p-6 shadow-2xl">
-            <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div class="max-w-2xl">
-                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-cyan/15 text-brand-cyan text-xs font-semibold mb-3 border border-brand-cyan/25">
-                  <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-                  <span>Pengingat & Kutipan Hari Ini</span>
-                </div>
-                <h3 id="banner-title" class="text-lg md:text-xl font-bold text-white mb-1.5 leading-snug">
-                  "Sebaik-baik kalian adalah yang mempelajari Al-Qur'an dan mengajarkannya."
-                </h3>
-                <p id="banner-desc" class="text-xs md:text-sm text-brand-textMuted">
-                  HR. Bukhari No. 5027. Luangkan waktu minimal 15 menit hari ini untuk bertilawah.
-                </p>
-              </div>
-              <button onclick="navigateTo('surah-list')" class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-brand-cyan to-brand-cyanLight text-brand-dark font-extrabold text-sm shadow-lg shadow-brand-cyan/25 hover:opacity-95 transition-all self-start md:self-auto shrink-0 cyan-glow">
-                <i data-lucide="book-open" class="w-4 h-4"></i>
-                <span>Mulai Membaca</span>
-              </button>
-            </div>
-            <!-- Subtle Mosque Background Decor -->
-            <div class="absolute -right-6 -bottom-8 opacity-10 pointer-events-none">
-              <i data-lucide="moon" class="w-48 h-48 text-brand-cyan"></i>
-            </div>
-          </div>
 
-          <!-- Referensi UI Layar 1: Greeting & Prayer Times Card -->
+          <!-- Referensi UI Layar 1: Greeting & Prayer Times Card (Langsung dari Ahlan Wa Sahlan) -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
             <!-- Greeting & Quick Stats -->
             <div class="md:col-span-2 bg-brand-surface rounded-3xl p-5 md:p-6 border border-brand-border flex flex-col justify-between relative overflow-hidden shadow-xl">
@@ -2702,8 +2676,10 @@
         const annRes = await callGasApi('getActiveAnnouncements');
         if (annRes && annRes.success && Array.isArray(annRes.data) && annRes.data.length > 0) {
           const first = annRes.data[0];
-          document.getElementById('banner-title').textContent = `"${first.title}"`;
-          document.getElementById('banner-desc').textContent = first.content;
+          const bTitle = document.getElementById('banner-title');
+          if (bTitle) bTitle.textContent = `"${first.title}"`;
+          const bDesc = document.getElementById('banner-desc');
+          if (bDesc) bDesc.textContent = first.content;
         }
 
         const qrisRes = await callGasApi('getQrisImage');
@@ -2810,8 +2786,10 @@
       e.preventDefault();
       const title = document.getElementById('admin-ann-title').value;
       const content = document.getElementById('admin-ann-content').value;
-      document.getElementById('banner-title').textContent = `"${title}"`;
-      document.getElementById('banner-desc').textContent = content;
+      const bTitle = document.getElementById('banner-title');
+      if (bTitle) bTitle.textContent = `"${title}"`;
+      const bDesc = document.getElementById('banner-desc');
+      if (bDesc) bDesc.textContent = content;
 
       // Catat ke Sheet Announcements
       await callGasApi('createAnnouncement', { title, content });
