@@ -407,13 +407,15 @@
                     class="text-xs px-2.5 py-0.5 rounded-md bg-brand-cyan/15 text-brand-cyan font-mono font-bold border border-brand-cyan/30">12
                     : 16 PM</span>
                 </div>
-                <p class="text-[11px] md:text-xs text-brand-textMuted mt-1" id="prayer-countdown">Menyesuaikan jadwal sholat...
+                <p class="text-[11px] md:text-xs text-brand-textMuted mt-1" id="prayer-countdown">Menyesuaikan jadwal
+                  sholat...
                 </p>
               </div>
 
               <!-- 3D Crescent Moon & Clouds Vector Sesuai Layar 1 -->
               <div class="relative w-16 h-16 md:w-20 md:h-20 flex items-center justify-center shrink-0">
-                <svg viewBox="0 0 100 100" class="w-16 h-16 md:w-20 md:h-20 filter drop-shadow-[0_0_12px_rgba(0,210,238,0.4)]">
+                <svg viewBox="0 0 100 100"
+                  class="w-16 h-16 md:w-20 md:h-20 filter drop-shadow-[0_0_12px_rgba(0,210,238,0.4)]">
                   <!-- Clouds Base -->
                   <ellipse cx="50" cy="70" rx="35" ry="14" fill="#17293D" opacity="0.9" />
                   <ellipse cx="65" cy="65" rx="20" ry="12" fill="#1C354E" opacity="0.95" />
@@ -1057,7 +1059,8 @@
       <div class="flex items-center gap-3 min-w-0" onclick="openMurottalModal()">
         <div class="relative w-11 h-11 rounded-full overflow-hidden border-2 border-brand-cyan shrink-0">
           <img id="mini-player-avatar"
-            src="https://images.unsplash.com/photo-1544717305-2782549b5136?fit=crop&w=150&h=150&q=80" alt="Qori"
+            src="https://artwork.qurancentral.com/yasser-al-dossari.jpg" alt="Syekh Yasser Al-Dosari"
+            onerror="this.onerror=null; this.src='https://media.way2quran.com/imgs/yasser-al-dosary.jpg';"
             class="w-full h-full object-cover">
           <!-- Live Playing Dot -->
           <span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-brand-cyan border-2 border-brand-dark"></span>
@@ -1142,7 +1145,8 @@
     <!-- Ambient Blurred Reciter Cover Backdrop (Layar 2 Blur Effect) -->
     <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
       <img id="murottal-modal-blur-bg"
-        src="https://images.unsplash.com/photo-1544717305-2782549b5136?fit=crop&w=300&h=300&q=80" alt="Cover Blur"
+        src="https://artwork.qurancentral.com/yasser-al-dossari.jpg" alt="Cover Blur"
+        onerror="this.onerror=null; this.src='https://media.way2quran.com/imgs/yasser-al-dosary.jpg';"
         class="w-full h-full object-cover scale-150 filter blur-[100px] opacity-35 transition-all duration-1000">
       <div class="absolute inset-0 bg-black/60 backdrop-blur-2xl"></div>
     </div>
@@ -1224,7 +1228,8 @@
           <div
             class="w-44 h-44 sm:w-48 sm:h-48 rounded-full overflow-hidden border-4 border-brand-cyan shadow-2xl z-10 cyan-glow-lg">
             <img id="murottal-modal-avatar"
-              src="https://images.unsplash.com/photo-1544717305-2782549b5136?fit=crop&w=300&h=300&q=80" alt="Qori"
+              src="https://artwork.qurancentral.com/yasser-al-dossari.jpg" alt="Syekh Yasser Al-Dosari"
+              onerror="this.onerror=null; this.src='https://media.way2quran.com/imgs/yasser-al-dosary.jpg';"
               class="w-full h-full object-cover">
           </div>
         </div>
@@ -1495,6 +1500,7 @@
           <label class="block text-brand-textMuted mb-2">Qori Utama Pilihan</label>
           <select id="settings-qori-select" onchange="changeQoriFromSelect(this.value)"
             class="w-full bg-brand-card border border-brand-border rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-gold">
+            <option value="06">🎙️ Syekh Yasser Al-Dosari (Imam Masjidil Haram, Tartil Khusyuk)</option>
             <option value="05">🎙️ Syekh Misyari Rasyid Al-Afasi (Tartil & Merdu)</option>
             <option value="01">🕋 Syekh Abdullah Al-Juhany (Imam Masjidil Haram)</option>
             <option value="02">🕌 Syekh Abdul Muhsin Al-Qasim (Imam Masjid Nabawi)</option>
@@ -1529,7 +1535,8 @@
         <div
           class="relative w-24 h-24 mx-auto rounded-full overflow-hidden border-2 border-brand-cyan shadow-2xl cyan-glow-lg mb-3">
           <img id="reciter-profile-avatar"
-            src="https://images.unsplash.com/photo-1544717305-2782549b5136?fit=crop&w=250&h=250&q=80"
+            src="https://artwork.qurancentral.com/yasser-al-dossari.jpg" alt="Syekh Yasser Al-Dosari"
+            onerror="this.onerror=null; this.src='https://media.way2quran.com/imgs/yasser-al-dosary.jpg';"
             class="w-full h-full object-cover">
         </div>
         <h4 id="reciter-profile-name" class="text-lg font-black text-white">Syekh Yasser Al-Dosari</h4>
@@ -1678,21 +1685,22 @@
       }
     }
 
-    // ==================== DAFTAR QORI RESMI (Sesuai Layar 1 & 2 Gambar) ====================
+    // ==================== DAFTAR QORI RESMI (Foto Asli Syekh & Qori Internasional) ====================
     const QORI_LIST = [
       {
-        id: '05',
-        equranKey: '05',
+        id: '06',
+        equranKey: '06',
         name: 'Syekh Yasser Al-Dosari',
         shortName: 'Yasser Al-Dosari',
         origin: 'Imam Masjidil Haram, Makkah',
         originShort: 'Makkah',
         style: 'Tartil Khusyuk & Populer',
         icon: '🎙️',
-        avatar: 'https://images.unsplash.com/photo-1544717305-2782549b5136?fit=crop&w=250&h=250&q=80'
+        avatar: 'https://artwork.qurancentral.com/yasser-al-dossari.jpg',
+        fallbackAvatar: 'https://media.way2quran.com/imgs/yasser-al-dosary.jpg'
       },
       {
-        id: '06',
+        id: '05',
         equranKey: '05',
         name: 'Syekh Misyari Rasyid Al-Afasi',
         shortName: 'Misyari Rasyid',
@@ -1700,7 +1708,8 @@
         originShort: 'Kuwait',
         style: 'Tartil Syahdu & Merdu',
         icon: '🎙️',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=250&h=250&q=80'
+        avatar: 'https://artwork.qurancentral.com/mishary-rashid-alafasy.jpg',
+        fallbackAvatar: 'https://media.way2quran.com/imgs/mishary-al-afasy.jpg'
       },
       {
         id: '01',
@@ -1711,7 +1720,8 @@
         originShort: 'Makkah',
         style: 'Irama Khas Hijazi',
         icon: '🕋',
-        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?fit=crop&w=250&h=250&q=80'
+        avatar: 'https://artwork.qurancentral.com/abdullah-awad-al-juhani.jpg',
+        fallbackAvatar: 'https://media.way2quran.com/imgs/abdullah-al-juhani.jpg'
       },
       {
         id: '02',
@@ -1722,7 +1732,8 @@
         originShort: 'Madinah',
         style: 'Tenang & Mendalam',
         icon: '🕌',
-        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?fit=crop&w=250&h=250&q=80'
+        avatar: 'https://artwork.qurancentral.com/abdul-muhsin-al-qasim.jpg',
+        fallbackAvatar: 'https://media.way2quran.com/imgs/abdul-mohsen-al-qasim.jpeg'
       },
       {
         id: '03',
@@ -1733,7 +1744,8 @@
         originShort: 'Makkah',
         style: 'Cepat & Berwibawa',
         icon: '✨',
-        avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?fit=crop&w=250&h=250&q=80'
+        avatar: 'https://artwork.qurancentral.com/abdur-rahman-as-sudais.jpg',
+        fallbackAvatar: 'https://media.way2quran.com/imgs/abdul-rahman-al-sudais.jpg'
       },
       {
         id: '04',
@@ -1744,7 +1756,8 @@
         originShort: 'Saudi',
         style: 'Murattal Ahli Qiraat',
         icon: '📖',
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?fit=crop&w=250&h=250&q=80'
+        avatar: 'https://artwork.qurancentral.com/ibrahim-al-dossari.jpg',
+        fallbackAvatar: 'https://media.way2quran.com/imgs/ibrahim-al-dosari.png'
       }
     ];
 
@@ -1752,7 +1765,7 @@
     const AppState = {
       currentUser: null,
       authToken: localStorage.getItem('quran_app_token') || null,
-      selectedQori: localStorage.getItem('quran_selected_qori') || '05',
+      selectedQori: localStorage.getItem('quran_selected_qori') || '06',
       autoNextAyah: localStorage.getItem('quran_auto_next') === 'true',
       isRepeat: false,
       isShuffle: false,
@@ -2184,7 +2197,7 @@
             ? 'ring-2 ring-brand-cyan ring-offset-2 ring-offset-[#070B11] cyan-glow shadow-lg'
             : 'opacity-70 group-hover:opacity-100 border border-brand-border'
           }">
-              <img src="${q.avatar}" alt="${q.shortName}" class="w-full h-full object-cover rounded-full">
+              <img src="${q.avatar}" alt="${q.shortName}" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.src='${q.fallbackAvatar || q.avatar}';">
               ${isSelected ? `<span class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-brand-cyan border-2 border-brand-dark flex items-center justify-center text-[8px] text-brand-dark font-black">✓</span>` : ''}
             </div>
             <span class="text-xs font-bold text-white mt-2 group-hover:text-brand-cyan transition-colors text-center w-24 truncate">${q.shortName}</span>
@@ -2215,15 +2228,24 @@
 
       // Update Mini Player & Murottal Modal Avatar
       const miniAvatar = document.getElementById('mini-player-avatar');
-      if (miniAvatar) miniAvatar.src = q.avatar;
+      if (miniAvatar) {
+        miniAvatar.src = q.avatar;
+        miniAvatar.onerror = function () { this.onerror = null; this.src = q.fallbackAvatar || q.avatar; };
+      }
       const modalAvatar = document.getElementById('murottal-modal-avatar');
-      if (modalAvatar) modalAvatar.src = q.avatar;
+      if (modalAvatar) {
+        modalAvatar.src = q.avatar;
+        modalAvatar.onerror = function () { this.onerror = null; this.src = q.fallbackAvatar || q.avatar; };
+      }
       const modalReciter = document.getElementById('murottal-modal-reciter');
       if (modalReciter) modalReciter.textContent = q.name;
 
       // Update Reciter Profile Header (Sesuai Layar 5)
       const reciterAvatar = document.getElementById('reciter-profile-avatar');
-      if (reciterAvatar) reciterAvatar.src = q.avatar;
+      if (reciterAvatar) {
+        reciterAvatar.src = q.avatar;
+        reciterAvatar.onerror = function () { this.onerror = null; this.src = q.fallbackAvatar || q.avatar; };
+      }
       const reciterName = document.getElementById('reciter-profile-name');
       if (reciterName) reciterName.textContent = q.name;
     }
@@ -2247,7 +2269,7 @@
           }">
             <div class="flex items-center gap-3.5">
               <div class="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 border ${isSelected ? 'border-brand-cyan' : 'border-brand-border'}">
-                <img src="${q.avatar}" class="w-full h-full object-cover">
+                <img src="${q.avatar}" alt="${q.name}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='${q.fallbackAvatar || q.avatar}';">
               </div>
               <div>
                 <div class="flex items-center gap-2">
@@ -2506,7 +2528,10 @@
       if (reciterEl) reciterEl.textContent = qori.name;
 
       const avatarEl = document.getElementById('mini-player-avatar');
-      if (avatarEl) avatarEl.src = qori.avatar;
+      if (avatarEl) {
+        avatarEl.src = qori.avatar;
+        avatarEl.onerror = function() { this.onerror = null; this.src = qori.fallbackAvatar || qori.avatar; };
+      }
     }
 
     function updateMurottalModalUI() {
@@ -2520,10 +2545,16 @@
       if (reciterEl) reciterEl.textContent = qori.name;
 
       const avatarEl = document.getElementById('murottal-modal-avatar');
-      if (avatarEl) avatarEl.src = qori.avatar;
+      if (avatarEl) {
+        avatarEl.src = qori.avatar;
+        avatarEl.onerror = function() { this.onerror = null; this.src = qori.fallbackAvatar || qori.avatar; };
+      }
 
       const blurBg = document.getElementById('murottal-modal-blur-bg');
-      if (blurBg) blurBg.src = qori.avatar;
+      if (blurBg) {
+        blurBg.src = qori.avatar;
+        blurBg.onerror = function() { this.onerror = null; this.src = qori.fallbackAvatar || qori.avatar; };
+      }
     }
 
     function openMurottalModal() {
