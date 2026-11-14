@@ -28,6 +28,15 @@
     tailwind.config = {
       darkMode: 'class',
       theme: {
+        screens: {
+          'xs': '375px',
+          'sm': '640px',   // Mobile standard (up to 767px)
+          'md': '768px',   // Tablet (768px–1023px)
+          'lg': '1024px',  // Laptop (1024px–1279px)
+          'xl': '1280px',  // Laptop wide (1280px–1439px)
+          '2xl': '1440px', // Desktop (1440px ke atas)
+          '3xl': '1600px'  // Ultra-wide
+        },
         extend: {
           colors: {
             brand: {
@@ -35,10 +44,10 @@
               darker: '#030509',
               navy: '#0B132B',
               midnight: '#080D1A',
-              surface: '#0E1726',
-              surfaceHover: '#152238',
-              card: '#111C2E',
-              border: '#1B293E',
+              surface: 'var(--color-surface, #0E1726)',
+              surfaceHover: 'var(--color-surface-hover, #152238)',
+              card: 'var(--color-card, #111C2E)',
+              border: 'var(--color-border, #1B293E)',
               // Warm Orange & Soft Gold Accent System
               orange: '#FF7A1A',
               orangeHover: '#EA580C',
@@ -51,8 +60,8 @@
               goldDark: '#B45309',
               goldMuted: 'rgba(212, 175, 55, 0.15)',
               goldGlow: 'rgba(212, 175, 55, 0.35)',
-              text: '#F8FAFC',
-              textMuted: '#94A3B8',
+              text: 'var(--color-text-primary, #F8FAFC)',
+              textMuted: 'var(--color-text-secondary, #94A3B8)',
               accent: '#1E293B',
               success: '#10B981',
               // Backward compatibility aliases mapped to Warm Orange
@@ -73,6 +82,56 @@
   </script>
 
   <style>
+    /* ==================== 11. CENTRALIZED DESIGN TOKENS (CSS VARIABLES) ==================== */
+    :root {
+      /* Colors (Light Theme) */
+      --color-primary: #0F172A;
+      --color-bg: #F8FAFC;
+      --color-surface: #FFFFFF;
+      --color-surface-hover: #F1F5F9;
+      --color-card: #FFFFFF;
+      --color-border: #E2E8F0;
+      --color-text-primary: #0F172A;
+      --color-text-secondary: #64748B;
+      --color-accent-orange: #FF7A1A;
+      --color-accent-orange-hover: #EA580C;
+      --color-accent-gold: #D4AF37;
+      --color-accent-glow: rgba(255, 122, 26, 0.25);
+      
+      /* Typography */
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-arabic: 'Amiri', 'Scheherazade New', serif;
+      
+      /* Radii */
+      --radius-sm: 0.5rem;
+      --radius-md: 0.75rem;
+      --radius-lg: 1rem;
+      --radius-xl: 1.25rem;
+      --radius-2xl: 1.5rem;
+      --radius-full: 9999px;
+      
+      /* Spacing & Transitions */
+      --transition-fast: 180ms cubic-bezier(0.2, 0, 0, 1);
+      --transition-normal: 280ms cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-slow: 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html.dark {
+      /* Colors (Dark Theme) */
+      --color-primary: #F8FAFC;
+      --color-bg: #060A12;
+      --color-surface: #0E1726;
+      --color-surface-hover: #152238;
+      --color-card: #111C2E;
+      --color-border: #1B293E;
+      --color-text-primary: #F8FAFC;
+      --color-text-secondary: #94A3B8;
+      --color-accent-orange: #FF7A1A;
+      --color-accent-orange-hover: #EA580C;
+      --color-accent-gold: #D4AF37;
+      --color-accent-glow: rgba(255, 122, 26, 0.35);
+    }
+
     /* Custom Scrollbar - Deep Midnight Warm Accent */
     ::-webkit-scrollbar {
       width: 6px;
@@ -1406,6 +1465,7 @@
         <div class="relative w-11 h-11 rounded-full overflow-hidden border-2 border-brand-orange shrink-0">
           <img id="mini-player-avatar"
             src="https://artwork.qurancentral.com/yasser-al-dossari.jpg" alt="Syekh Yasser Al-Dosari"
+            loading="lazy" decoding="async" width="44" height="44"
             onerror="this.onerror=null; this.src='https://media.way2quran.com/imgs/yasser-al-dosary.jpg';"
             class="w-full h-full object-cover">
           <!-- Live Playing Dot -->
@@ -1499,6 +1559,7 @@
     <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
       <img id="murottal-modal-blur-bg"
         src="https://artwork.qurancentral.com/yasser-al-dossari.jpg" alt="Cover Blur"
+        loading="lazy" decoding="async"
         onerror="this.onerror=null; this.src='https://media.way2quran.com/imgs/yasser-al-dosary.jpg';"
         class="w-full h-full object-cover scale-150 filter blur-[100px] opacity-30 transition-all duration-1000">
       <div class="absolute inset-0 bg-black/65 backdrop-blur-2xl"></div>
@@ -1589,6 +1650,7 @@
             class="w-44 h-44 sm:w-48 sm:h-48 rounded-full overflow-hidden border-4 border-brand-orange shadow-2xl z-10 warm-glow-lg">
             <img id="murottal-modal-avatar"
               src="https://artwork.qurancentral.com/yasser-al-dossari.jpg" alt="Syekh Yasser Al-Dosari"
+              loading="lazy" decoding="async" width="192" height="192"
               onerror="this.onerror=null; this.src='https://media.way2quran.com/imgs/yasser-al-dosary.jpg';"
               class="w-full h-full object-cover">
           </div>
@@ -2129,34 +2191,85 @@
       }
     ];
 
-    // State Aplikasi
+    // ==================== STATE MANAGEMENT & TYPE DEFINITIONS (TypeScript / JSDoc) ====================
+    /**
+     * @typedef {Object} UserSession
+     * @property {string} email
+     * @property {string} name
+     * @property {string} role - 'admin' | 'user'
+     * @property {string} [token]
+     */
+
+    /**
+     * @typedef {Object} SurahMeta
+     * @property {number} nomor
+     * @property {string} nama
+     * @property {string} namaLatin
+     * @property {number} jumlahAyat
+     * @property {string} tempatTurun
+     * @property {string} arti
+     * @property {string} deskripsi
+     * @property {Object.<string, string>} audioFull
+     */
+
+    /**
+     * @typedef {Object} AyahMeta
+     * @property {number} nomorAyat
+     * @property {string} teksArab
+     * @property {string} teksLatin
+     * @property {string} teksIndonesia
+     * @property {Object.<string, string>} audio
+     */
+
+    /**
+     * Centralized Application State Store
+     */
     const AppState = {
+      /** @type {UserSession|null} */
       currentUser: null,
+      /** @type {string|null} */
       authToken: localStorage.getItem('quran_app_token') || null,
+      /** @type {string} */
       selectedQori: localStorage.getItem('quran_selected_qori') || '06',
+      /** @type {boolean} */
       autoNextAyah: localStorage.getItem('quran_auto_next') === 'true',
+      /** @type {boolean} */
       isRepeat: false,
+      /** @type {boolean} */
       isShuffle: false,
+      /** @type {number} */
       playbackSpeed: 1.0,
+      /** @type {{ type: string|null, endTime: number|null, intervalId: number|null }} */
       sleepTimer: {
         type: null,
         endTime: null,
         intervalId: null
       },
+      /** @type {number|null} */
       activePlayingAyah: null,
+      /** @type {SurahMeta[]} */
       surahs: [],
+      /** @type {SurahMeta|null} */
       currentSurah: null,
+      /** @type {AyahMeta[]} */
       currentAyahs: [],
+      /** @type {HTMLAudioElement|null} */
       currentAudio: null,
+      /** @type {boolean} */
       isPlayingAudio: false,
+      /** @type {any[]} */
       bookmarks: [],
+      /** @type {any[]} */
       notes: [],
+      /** @type {{ fontSize: number, showLatin: boolean, showTranslation: boolean }} */
       settings: {
         fontSize: 30,
         showLatin: true,
         showTranslation: true
       },
+      /** @type {AyahMeta|null} */
       activeNoteAyah: null,
+      /** @type {number|null} */
       readingStartTime: null
     };
 
@@ -2722,7 +2835,7 @@
             ? 'ring-2 ring-brand-orange ring-offset-2 ring-offset-brand-surface warm-glow shadow-lg'
             : 'opacity-70 group-hover:opacity-100 border border-brand-border'
           }">
-              <img src="${q.avatar}" alt="${q.shortName}" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.src='${q.fallbackAvatar || q.avatar}';">
+              <img src="${q.avatar}" alt="${q.shortName}" loading="lazy" decoding="async" width="64" height="64" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.src='${q.fallbackAvatar || q.avatar}';">
               ${isSelected ? `<span class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-brand-orange border-2 border-brand-dark flex items-center justify-center text-[8px] text-white font-black">✓</span>` : ''}
             </div>
             <span class="text-xs font-bold text-brand-text mt-2 group-hover:text-brand-orange transition-colors text-center w-24 truncate">${q.shortName}</span>
@@ -2794,7 +2907,7 @@
           }">
             <div class="flex items-center gap-3.5">
               <div class="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 border ${isSelected ? 'border-brand-orange' : 'border-brand-border'}">
-                <img src="${q.avatar}" alt="${q.name}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='${q.fallbackAvatar || q.avatar}';">
+                <img src="${q.avatar}" alt="${q.name}" loading="lazy" decoding="async" width="48" height="48" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='${q.fallbackAvatar || q.avatar}';">
               </div>
               <div>
                 <div class="flex items-center gap-2">
