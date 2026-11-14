@@ -101,12 +101,27 @@
       background: #FF7A1A;
     }
 
-    /* Atmosphere with Subtle Islamic Arabesque Star Pattern */
+    /* Atmosphere with Subtle Islamic Arabesque Star Pattern & Animated Gradient Background */
+    @keyframes subtleGradientFlow {
+      0% {
+        background-position: 0% 0%, 0% 0%, 0% 0%;
+      }
+      50% {
+        background-position: 100% 50%, 50% 100%, 0% 0%;
+      }
+      100% {
+        background-position: 0% 0%, 0% 0%, 0% 0%;
+      }
+    }
+
     html.dark body {
       background-color: #060A12 !important;
       background-image:
-        radial-gradient(circle at 50% 0%, rgba(255, 122, 26, 0.05) 0%, transparent 60%),
+        radial-gradient(circle at 70% 15%, rgba(255, 122, 26, 0.08) 0%, transparent 55%),
+        radial-gradient(circle at 20% 85%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
         url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23FF7A1A' stroke-width='0.75' stroke-opacity='0.025'%3E%3Cpath d='M40 0l10 30 30 10-30 10-10 30-10-30L0 40l30-10z'/%3E%3Ccircle cx='40' cy='40' r='14'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: 160% 160%, 160% 160%, 80px 80px;
+      animation: subtleGradientFlow 28s ease-in-out infinite;
       color: #F8FAFC;
       transition: background-color 0.4s ease, color 0.4s ease;
     }
@@ -114,8 +129,11 @@
     html:not(.dark) body {
       background-color: #F8FAFC !important;
       background-image:
-        radial-gradient(circle at 50% 0%, rgba(249, 115, 22, 0.04) 0%, transparent 60%),
+        radial-gradient(circle at 70% 15%, rgba(249, 115, 22, 0.05) 0%, transparent 55%),
+        radial-gradient(circle at 20% 85%, rgba(245, 158, 11, 0.04) 0%, transparent 50%),
         url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23EA580C' stroke-width='0.75' stroke-opacity='0.03'%3E%3Cpath d='M40 0l10 30 30 10-30 10-10 30-10-30L0 40l30-10z'/%3E%3Ccircle cx='40' cy='40' r='14'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: 160% 160%, 160% 160%, 80px 80px;
+      animation: subtleGradientFlow 28s ease-in-out infinite;
       color: #0F172A;
       transition: background-color 0.4s ease, color 0.4s ease;
     }
@@ -232,16 +250,19 @@
       color: #FF7A1A;
     }
 
-    /* Glass Effect with Warm Accent */
-    .glass-card {
-      background: rgba(14, 23, 38, 0.85);
-      backdrop-filter: blur(16px);
+    /* Glass Effect & Glassmorphism Components */
+    .glass-card, .glassmorphism {
+      background: rgba(14, 23, 38, 0.82);
+      backdrop-filter: blur(18px) saturate(160%);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
       border: 1px solid rgba(255, 122, 26, 0.18);
     }
 
-    html:not(.dark) .glass-card {
-      background: rgba(255, 255, 255, 0.92);
-      border: 1px solid rgba(255, 122, 26, 0.2);
+    html:not(.dark) .glass-card, html:not(.dark) .glassmorphism {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(18px) saturate(160%);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
+      border: 1px solid rgba(255, 122, 26, 0.18);
     }
 
     .warm-glow, .cyan-glow {
@@ -318,20 +339,230 @@
     .pulse-ring {
       animation: pulseRing 3s ease-in-out infinite;
     }
+
+    /* ==================== 10. ADVANCED MOTION & VISUAL EFFECTS ==================== */
+
+    /* Smooth Page Transitions: Fade-in & Slide-up */
+    @keyframes pageEnterSlide {
+      0% {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .page-enter {
+      animation: pageEnterSlide 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      will-change: opacity, transform;
+    }
+
+    /* Scroll Reveal Animation */
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.52s cubic-bezier(0.16, 1, 0.3, 1), transform 0.52s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal-on-scroll.is-revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Hero Section Subtle Floating Element */
+    @keyframes heroFloat {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-7px) rotate(1.2deg);
+      }
+    }
+
+    .hero-floating {
+      animation: heroFloat 5.8s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    /* Star Twinkle Micro-animation */
+    @keyframes starPulse {
+      0%, 100% {
+        opacity: 0.35;
+        transform: scale(0.9);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.3);
+      }
+    }
+
+    .star-twinkle-1 {
+      animation: starPulse 2.6s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    .star-twinkle-2 {
+      animation: starPulse 3.4s ease-in-out infinite 0.8s;
+      transform-origin: center;
+    }
+
+    .star-twinkle-3 {
+      animation: starPulse 4.2s ease-in-out infinite 1.6s;
+      transform-origin: center;
+    }
+
+    /* Interactive Card Hover Elevation & Glow */
+    .interactive-card {
+      transition: transform 0.28s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.28s cubic-bezier(0.2, 0, 0, 1), border-color 0.28s ease !important;
+      will-change: transform, box-shadow;
+    }
+
+    .interactive-card:hover {
+      transform: translateY(-4px) !important;
+      box-shadow: 0 16px 32px -6px rgba(255, 122, 26, 0.22), 0 0 0 1px rgba(255, 122, 26, 0.35) !important;
+    }
+
+    html:not(.dark) .interactive-card:hover {
+      box-shadow: 0 16px 28px -6px rgba(234, 88, 12, 0.16), 0 0 0 1px rgba(234, 88, 12, 0.25) !important;
+    }
+
+    /* Smooth Button Press & Micro-Interactions */
+    button, .btn-interactive, .nav-link, [role="button"] {
+      transition: transform 0.18s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+    }
+
+    button:active, .btn-interactive:active, [role="button"]:active {
+      transform: scale(0.96) !important;
+    }
+
+    /* Animated Progress Indicator with Continuous Shimmer Sheen */
+    .animated-progress-bar {
+      position: relative;
+      overflow: hidden;
+      transition: width 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .animated-progress-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+      animation: progressShimmer 2.4s infinite;
+    }
+
+    @keyframes progressShimmer {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(200%);
+      }
+    }
+
+    /* Skeleton Loading Animation */
+    .skeleton-box {
+      position: relative;
+      overflow: hidden;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 0.75rem;
+    }
+
+    html:not(.dark) .skeleton-box {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .skeleton-box::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      transform: translateX(-100%);
+      background-image: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0,
+        rgba(255, 122, 26, 0.08) 35%,
+        rgba(255, 255, 255, 0.12) 50%,
+        rgba(255, 122, 26, 0.08) 65%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      animation: skeletonShimmer 1.8s infinite;
+    }
+
+    html:not(.dark) .skeleton-box::after {
+      background-image: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0) 0,
+        rgba(255, 122, 26, 0.08) 35%,
+        rgba(0, 0, 0, 0.06) 50%,
+        rgba(255, 122, 26, 0.08) 65%,
+        rgba(0, 0, 0, 0) 100%
+      );
+    }
+
+    @keyframes skeletonShimmer {
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    /* Special Quran Reader Rules: Calm, Serene, No Distracting Animations */
+    #page-surah-detail .arabic-text {
+      animation: none !important;
+      filter: none !important;
+      text-shadow: none !important;
+    }
+
+    /* Accessibility: Respect Reduced Motion Preferences */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+      .ambient-blur-orb,
+      .ambient-blur-orb-2,
+      .hero-floating,
+      .star-twinkle-1,
+      .star-twinkle-2,
+      .star-twinkle-3,
+      .reveal-on-scroll {
+        animation: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+      }
+    }
   </style>
 </head>
 
 <body
   class="bg-[#060A12] text-brand-text font-sans antialiased min-h-screen selection:bg-brand-orange selection:text-white">
 
+  <!-- ==================== PERMANENT AMBIENT LIGHTING BACKGROUND (Cinematic Warm Glow) ==================== -->
+  <div id="ambient-lighting-layer" class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="absolute -top-32 right-1/4 w-[650px] h-[650px] rounded-full bg-amber-500/[0.07] ambient-blur-orb"></div>
+    <div class="absolute top-1/2 -left-28 w-[550px] h-[550px] rounded-full bg-orange-500/[0.05] ambient-blur-orb-2"
+      style="animation-delay: 3s;"></div>
+    <div class="absolute -bottom-40 right-10 w-[600px] h-[600px] rounded-full bg-yellow-500/[0.04] ambient-blur-orb"
+      style="animation-delay: 6s;"></div>
+  </div>
+
   <!-- ==================== AMBIENT GLOWING BLUR BACKGROUND (Aktif Saat Murottal Diputar) ==================== -->
   <div id="murottal-ambient-blur"
     class="fixed inset-0 pointer-events-none transition-opacity duration-1000 opacity-0 z-0 overflow-hidden">
     <!-- Ambient Blur Glowing Orbs (Warm Amber & Gold) -->
-    <div class="absolute -top-32 left-1/4 w-[600px] h-[600px] rounded-full bg-amber-600/18 ambient-blur-orb"></div>
-    <div class="absolute top-1/3 -right-24 w-[500px] h-[500px] rounded-full bg-orange-600/15 ambient-blur-orb-2"
+    <div class="absolute -top-32 left-1/4 w-[600px] h-[600px] rounded-full bg-amber-600/22 ambient-blur-orb"></div>
+    <div class="absolute top-1/3 -right-24 w-[500px] h-[500px] rounded-full bg-orange-600/20 ambient-blur-orb-2"
       style="animation-delay: 2s;"></div>
-    <div class="absolute -bottom-32 left-1/3 w-[650px] h-[650px] rounded-full bg-yellow-600/12 ambient-blur-orb"
+    <div class="absolute -bottom-32 left-1/3 w-[650px] h-[650px] rounded-full bg-yellow-600/16 ambient-blur-orb"
       style="animation-delay: 4s;"></div>
     <!-- Soft Mist Frosted Overlay -->
     <div class="absolute inset-0 bg-black/40 backdrop-blur-3xl"></div>
@@ -483,9 +714,12 @@
         <section id="page-home" class="space-y-6">
 
           <!-- Jadwal Sholat Widget Hero (Langsung di Teratas Halaman) -->
-          <div
-            class="w-full bg-gradient-to-br from-[#0B1526] via-[#08101E] to-[#040812] rounded-3xl p-5 md:p-6 border border-brand-orange/25 flex flex-col justify-between shadow-2xl relative overflow-hidden text-white">
-            <div class="flex items-center justify-between">
+          <div id="hero-prayer-widget"
+            class="reveal-on-scroll w-full bg-gradient-to-br from-[#0B1526] via-[#08101E] to-[#040812] rounded-3xl p-5 md:p-6 border border-brand-orange/25 flex flex-col justify-between shadow-2xl relative overflow-hidden text-white transition-all duration-300">
+            <!-- Subtle Ambient Radial Glow inside Hero -->
+            <div class="absolute -top-16 -right-16 w-52 h-52 rounded-full bg-brand-orange/15 blur-3xl pointer-events-none"></div>
+
+            <div class="flex items-center justify-between relative z-10">
               <div class="flex items-center gap-1.5 text-xs font-bold text-brand-orange uppercase tracking-wider">
                 <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
                 <span id="prayer-location-city">Mendeteksi Lokasi...</span>
@@ -495,7 +729,7 @@
                 id="realtime-clock">--:-- WIB</span>
             </div>
 
-            <div class="my-4 md:my-5 flex items-center justify-between">
+            <div class="my-4 md:my-5 flex items-center justify-between relative z-10">
               <div>
                 <div class="flex items-center gap-2.5">
                   <h4 class="text-2xl md:text-3xl font-black text-white tracking-wider" id="prayer-name">DZUHUR</h4>
@@ -508,20 +742,20 @@
                 </p>
               </div>
 
-              <!-- 3D Crescent Moon & Clouds Vector (Warm Gold & Amber Accent) -->
-              <div class="relative w-16 h-16 md:w-20 md:h-20 flex items-center justify-center shrink-0">
+              <!-- 3D Crescent Moon & Clouds Vector (Warm Gold & Amber Accent with Floating & Twinkling Stars) -->
+              <div id="hero-moon-graphic" class="hero-floating relative w-16 h-16 md:w-20 md:h-20 flex items-center justify-center shrink-0 transition-transform duration-300 ease-out">
                 <svg viewBox="0 0 100 100"
-                  class="w-16 h-16 md:w-20 md:h-20 filter drop-shadow-[0_0_14px_rgba(255,122,26,0.45)]">
+                  class="w-16 h-16 md:w-20 md:h-20 filter drop-shadow-[0_0_16px_rgba(255,122,26,0.5)]">
                   <!-- Clouds Base -->
                   <ellipse cx="50" cy="70" rx="35" ry="14" fill="#1C2738" opacity="0.9" />
                   <ellipse cx="65" cy="65" rx="20" ry="12" fill="#24334A" opacity="0.95" />
                   <ellipse cx="35" cy="67" rx="18" ry="10" fill="#202D42" opacity="0.9" />
                   <!-- Crescent Moon (Warm Gold / Amber) -->
                   <path d="M 46 22 A 28 28 0 1 0 74 65 A 24 24 0 1 1 46 22 Z" fill="url(#prayerMoonGrad)" />
-                  <!-- Warm Stars -->
-                  <circle cx="28" cy="30" r="1.5" fill="#FDE68A" />
-                  <circle cx="78" cy="35" r="1.2" fill="#FFA751" />
-                  <circle cx="68" cy="22" r="1.8" fill="#FFFFFF" />
+                  <!-- Warm Floating Stars -->
+                  <circle cx="28" cy="30" r="1.6" fill="#FDE68A" class="star-twinkle-1" />
+                  <circle cx="78" cy="35" r="1.4" fill="#FFA751" class="star-twinkle-2" />
+                  <circle cx="68" cy="22" r="2.0" fill="#FFFFFF" class="star-twinkle-3" />
                   <defs>
                     <linearGradient id="prayerMoonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                       <stop offset="0%" stop-color="#FFF7ED" />
@@ -534,7 +768,7 @@
             </div>
 
             <!-- List 5 Waktu Sholat Lengkap -->
-            <div class="grid grid-cols-5 gap-1.5 text-center text-slate-400 pt-3 border-t border-slate-700/50"
+            <div class="grid grid-cols-5 gap-1.5 text-center text-slate-400 pt-3 border-t border-slate-700/50 relative z-10"
               id="prayer-timings-grid">
               <div><span class="block text-[10px] text-slate-400">Subuh</span><span
                   class="font-bold text-white font-mono text-[11px] sm:text-xs" id="time-subuh">04:30</span></div>
@@ -550,9 +784,9 @@
           </div>
 
           <!-- Quick Navigation Hub (Qur'an, Zakat, Dzikir) -->
-          <div class="grid grid-cols-3 gap-3.5">
+          <div class="grid grid-cols-3 gap-3.5 reveal-on-scroll">
             <div onclick="navigateTo('surah-list')"
-              class="bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-orange/40 rounded-2xl p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200 group shadow-sm">
+              class="interactive-card bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-orange/40 rounded-2xl p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200 group shadow-sm">
               <div
                 class="w-12 h-12 p-3 rounded-2xl bg-amber-500/10 text-brand-orange group-hover:scale-110 transition-transform mb-2 border border-brand-orange/20">
                 <i data-lucide="book" class="w-6 h-6 stroke-[2.2]"></i>
@@ -562,7 +796,7 @@
             </div>
 
             <div onclick="navigateTo('donation')"
-              class="bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-orange/40 rounded-2xl p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200 group shadow-sm">
+              class="interactive-card bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-orange/40 rounded-2xl p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200 group shadow-sm">
               <div
                 class="w-12 h-12 p-3 rounded-2xl bg-orange-500/10 text-orange-500 group-hover:scale-110 transition-transform mb-2 border border-orange-500/20">
                 <i data-lucide="hand-heart" class="w-6 h-6 stroke-[2.2]"></i>
@@ -572,7 +806,7 @@
             </div>
 
             <div onclick="showDzikirModal()"
-              class="bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-orange/40 rounded-2xl p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200 group shadow-sm">
+              class="interactive-card bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-orange/40 rounded-2xl p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200 group shadow-sm">
               <div
                 class="w-12 h-12 p-3 rounded-2xl bg-yellow-500/10 text-yellow-500 group-hover:scale-110 transition-transform mb-2 border border-yellow-500/20">
                 <i data-lucide="moon-star" class="w-6 h-6 stroke-[2.2]"></i>
@@ -583,7 +817,7 @@
           </div>
 
           <!-- ================= RECITERS (QORI) CAROUSEL ================= -->
-          <div class="bg-brand-surface rounded-3xl p-5 md:p-6 border border-brand-border shadow-md">
+          <div class="reveal-on-scroll bg-brand-surface rounded-3xl p-5 md:p-6 border border-brand-border shadow-md">
             <div class="flex items-center justify-between mb-4">
               <div>
                 <h3 class="text-base font-bold text-brand-text tracking-wide">Reciters (Qori)</h3>
@@ -600,7 +834,7 @@
           </div>
 
           <!-- ================= KOLEKSI / LIBRARY ================= -->
-          <div class="bg-brand-surface rounded-3xl p-5 md:p-6 border border-brand-border shadow-md">
+          <div class="reveal-on-scroll bg-brand-surface rounded-3xl p-5 md:p-6 border border-brand-border shadow-md">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
               <div>
                 <h3 class="text-lg font-black text-brand-text tracking-wide">Koleksi</h3>
@@ -619,7 +853,7 @@
             <div class="space-y-3.5">
               <!-- Card 1: Sleep & Relaxation -->
               <div onclick="playMoodCollection('sleep')"
-                class="group relative overflow-hidden rounded-2xl bg-brand-surfaceHover border border-brand-border hover:border-brand-orange/60 p-4 cursor-pointer transition-all duration-300 flex items-center justify-between shadow-sm">
+                class="interactive-card group relative overflow-hidden rounded-2xl bg-brand-surfaceHover border border-brand-border hover:border-brand-orange/60 p-4 cursor-pointer transition-all duration-300 flex items-center justify-between shadow-sm">
                 <div class="flex items-center gap-4">
                   <div
                     class="w-13 h-13 rounded-2xl bg-amber-500/10 border border-brand-orange/20 flex items-center justify-center text-brand-orange shrink-0 shadow-inner group-hover:scale-105 transition-transform">
@@ -639,7 +873,7 @@
 
               <!-- Card 2: Muraja'ah Juz 30 -->
               <div onclick="playMoodCollection('focus')"
-                class="group relative overflow-hidden rounded-2xl bg-brand-surfaceHover border border-brand-border hover:border-brand-orange/60 p-4 cursor-pointer transition-all duration-300 flex items-center justify-between shadow-sm">
+                class="interactive-card group relative overflow-hidden rounded-2xl bg-brand-surfaceHover border border-brand-border hover:border-brand-orange/60 p-4 cursor-pointer transition-all duration-300 flex items-center justify-between shadow-sm">
                 <div class="flex items-center gap-4">
                   <div
                     class="w-13 h-13 rounded-2xl bg-orange-500/10 border border-brand-orange/20 flex items-center justify-center text-brand-orange shrink-0 shadow-inner group-hover:scale-105 transition-transform">
@@ -659,7 +893,7 @@
 
               <!-- Card 3: Al-Kahfi Friday -->
               <div onclick="playMoodCollection('ruqyah')"
-                class="group relative overflow-hidden rounded-2xl bg-brand-surfaceHover border border-brand-border hover:border-brand-orange/60 p-4 cursor-pointer transition-all duration-300 flex items-center justify-between shadow-sm">
+                class="interactive-card group relative overflow-hidden rounded-2xl bg-brand-surfaceHover border border-brand-border hover:border-brand-orange/60 p-4 cursor-pointer transition-all duration-300 flex items-center justify-between shadow-sm">
                 <div class="flex items-center gap-4">
                   <div
                     class="w-13 h-13 rounded-2xl bg-yellow-500/10 border border-brand-orange/20 flex items-center justify-center text-brand-orange shrink-0 shadow-inner group-hover:scale-105 transition-transform">
@@ -680,10 +914,10 @@
           </div>
 
           <!-- Featured Section & Last Read Card -->
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 reveal-on-scroll">
             <!-- Featured Card (Daily Dakwah - Ramadan Study) -->
             <div
-              class="bg-gradient-to-br from-[#121E33] via-[#0E1A2C] to-[#08101C] rounded-3xl p-6 border border-brand-orange/25 text-white flex flex-col justify-between shadow-xl relative overflow-hidden">
+              class="interactive-card bg-gradient-to-br from-[#121E33] via-[#0E1A2C] to-[#08101C] rounded-3xl p-6 border border-brand-orange/25 text-white flex flex-col justify-between shadow-xl relative overflow-hidden">
               <div class="relative z-10">
                 <div class="flex items-center justify-between mb-3">
                   <span
@@ -718,7 +952,7 @@
 
             <!-- Last Read Card -->
             <div
-              class="lg:col-span-2 bg-gradient-to-r from-[#111F36] via-[#14233C] to-[#1A2C4B] text-white rounded-3xl p-6 shadow-xl relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-6 border border-brand-orange/25">
+              class="interactive-card lg:col-span-2 bg-gradient-to-r from-[#111F36] via-[#14233C] to-[#1A2C4B] text-white rounded-3xl p-6 shadow-xl relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-6 border border-brand-orange/25">
               <div class="z-10 text-center sm:text-left">
                 <div class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-orange mb-2">
                   <i data-lucide="bookmark-check" class="w-4 h-4"></i>
@@ -922,6 +1156,23 @@
               class="px-4 py-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold text-xs shrink-0 hover:brightness-110 transition-all shadow-md">
               Masuk / Daftar
             </button>
+          </div>
+
+          <!-- Animated Khatam Progress Card -->
+          <div class="reveal-on-scroll bg-brand-surface p-5 rounded-3xl border border-brand-border shadow-sm">
+            <div class="flex items-center justify-between mb-2.5">
+              <div class="flex items-center gap-2">
+                <i data-lucide="award" class="w-4 h-4 text-brand-orange"></i>
+                <span class="text-xs font-bold text-brand-text">Akumulasi Progres Khatam Tilawah</span>
+              </div>
+              <span id="quick-khatam-pct"
+                class="text-xs font-bold font-mono text-brand-orange bg-brand-orange/15 px-2.5 py-0.5 rounded-full border border-brand-orange/30">0.0% (0 / 6236 Ayat)</span>
+            </div>
+            <div class="w-full bg-brand-surfaceHover rounded-full h-3.5 p-0.5 border border-brand-border overflow-hidden">
+              <div id="quick-khatam-bar"
+                class="h-full bg-gradient-to-r from-orange-500 via-amber-500 to-amber-400 rounded-full animated-progress-bar transition-all duration-700"
+                style="width: 2%;"></div>
+            </div>
           </div>
 
           <!-- Monitoring Metric Cards -->
@@ -1193,6 +1444,13 @@
           class="p-1.5 text-slate-400 hover:text-white transition-colors">
           <i data-lucide="skip-forward" class="w-4 h-4"></i>
         </button>
+      </div>
+
+      <!-- Mini Player Bottom Audio Progress Line -->
+      <div class="absolute bottom-0 left-3 right-3 h-[2.5px] bg-slate-700/40 rounded-full overflow-hidden">
+        <div id="mini-player-progress-bar"
+          class="h-full bg-gradient-to-r from-orange-500 via-amber-500 to-amber-400 rounded-full animated-progress-bar transition-all duration-300"
+          style="width: 0%;"></div>
       </div>
     </div>
 
@@ -1914,6 +2172,8 @@
       loadSurahList();
       initMonthlyChart();
       loadInitialCloudData();
+      initScrollReveal();
+      initParallax();
     });
 
     // ==================== THEME SYSTEM (DARK & LIGHT MODE) ====================
@@ -1962,6 +2222,55 @@
       readingChartInstance.options.scales.y.grid.color = gridColor;
       readingChartInstance.options.scales.y.ticks.color = textColor;
       readingChartInstance.update();
+    }
+
+    // ==================== ADVANCED MOTION & SCROLL REVEAL ====================
+    let scrollRevealObserver = null;
+    function initScrollReveal() {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => el.classList.add('is-revealed'));
+        return;
+      }
+      if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => el.classList.add('is-revealed'));
+        return;
+      }
+      if (!scrollRevealObserver) {
+        scrollRevealObserver = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-revealed');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.1,
+          rootMargin: '0px 0px -20px 0px'
+        });
+      }
+
+      document.querySelectorAll('.reveal-on-scroll:not(.is-revealed)').forEach(el => {
+        scrollRevealObserver.observe(el);
+      });
+    }
+
+    // Subtle Hero Parallax Interaction
+    function initParallax() {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const hero = document.getElementById('hero-prayer-widget');
+      const moon = document.getElementById('hero-moon-graphic');
+      if (!hero || !moon) return;
+
+      hero.addEventListener('mousemove', (e) => {
+        const rect = hero.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        moon.style.transform = `translate3d(${x * 14}px, ${y * 14}px, 0)`;
+      });
+
+      hero.addEventListener('mouseleave', () => {
+        moon.style.transform = '';
+      });
     }
 
     // Realtime Clock & Prayer Countdown Updater
@@ -2154,11 +2463,19 @@
       const pages = ['home', 'surah-list', 'surah-detail', 'monitoring', 'bookmarks', 'donation', 'admin'];
       pages.forEach(p => {
         const el = document.getElementById(`page-${p}`);
-        if (el) el.classList.add('hidden');
+        if (el) {
+          el.classList.add('hidden');
+          el.classList.remove('page-enter');
+        }
       });
 
       const target = document.getElementById(`page-${pageId}`);
-      if (target) target.classList.remove('hidden');
+      if (target) {
+        target.classList.remove('hidden');
+        // Smooth slide-up & fade-in page transition
+        void target.offsetWidth; // Force reflow
+        target.classList.add('page-enter');
+      }
 
       if (pageId === 'admin') {
         loadAdminUsersTable();
@@ -2186,10 +2503,62 @@
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
       lucide.createIcons();
+      initScrollReveal();
+    }
+
+    // ==================== SKELETON LOADING GENERATORS ====================
+    function getSurahListSkeleton(count = 8) {
+      let html = '';
+      for (let i = 0; i < count; i++) {
+        html += `
+          <div class="bg-brand-surface border border-brand-border rounded-2xl p-4 flex items-center justify-between shadow-sm animate-pulse">
+            <div class="flex items-center gap-3.5 flex-1 min-w-0">
+              <div class="w-8 h-8 rounded-xl skeleton-box shrink-0"></div>
+              <div class="space-y-2 flex-1 max-w-[220px]">
+                <div class="h-4 w-32 skeleton-box"></div>
+                <div class="h-3 w-44 skeleton-box"></div>
+              </div>
+            </div>
+            <div class="w-9 h-9 rounded-full skeleton-box shrink-0 ml-3"></div>
+          </div>
+        `;
+      }
+      return html;
+    }
+
+    function getAyahListSkeleton(count = 5) {
+      let html = '';
+      for (let i = 0; i < count; i++) {
+        html += `
+          <div class="bg-brand-surface border border-brand-border rounded-3xl p-5 md:p-6 shadow-sm space-y-4">
+            <div class="flex items-center justify-between border-b border-brand-border/60 pb-3">
+              <div class="w-9 h-9 rounded-xl skeleton-box"></div>
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-lg skeleton-box"></div>
+                <div class="w-8 h-8 rounded-lg skeleton-box"></div>
+                <div class="w-8 h-8 rounded-lg skeleton-box"></div>
+              </div>
+            </div>
+            <div class="py-4 space-y-3 flex flex-col items-end">
+              <div class="h-8 w-3/4 skeleton-box"></div>
+              <div class="h-8 w-1/2 skeleton-box"></div>
+            </div>
+            <div class="space-y-2 pt-2 border-t border-brand-border/50">
+              <div class="h-3 w-2/3 skeleton-box"></div>
+              <div class="h-3.5 w-5/6 skeleton-box"></div>
+            </div>
+          </div>
+        `;
+      }
+      return html;
     }
 
     // ==================== SURAH & API DATA (EQURAN.ID) ====================
     async function loadSurahList() {
+      const container = document.getElementById('surah-items-list');
+      if (container && (!AppState.surahs || AppState.surahs.length === 0)) {
+        container.innerHTML = getSurahListSkeleton(8);
+      }
       try {
         const res = await fetch('https://equran.id/api/v2/surat');
         const json = await res.json();
@@ -2201,11 +2570,13 @@
       } catch (err) {
         console.error('Gagal memuat surah:', err);
         // Fallback jika API bermasalah
-        document.getElementById('surah-items-list').innerHTML = `
-          <div class="col-span-full text-center py-12 text-rose-400">
-            Gagal menghubungkan ke sumber Qur'an. Periksa jaringan Anda.
-          </div>
-        `;
+        if (container) {
+          container.innerHTML = `
+            <div class="col-span-full text-center py-12 text-rose-400">
+              Gagal menghubungkan ke sumber Qur'an. Periksa jaringan Anda.
+            </div>
+          `;
+        }
       }
     }
 
@@ -2221,7 +2592,7 @@
       container.innerHTML = list.map(s => {
         const isCurrentPlaying = AppState.currentSurah && AppState.currentSurah.nomor === s.nomor && AppState.isPlayingAudio;
         return `
-          <div class="bg-brand-surface hover:bg-brand-surfaceHover border ${isCurrentPlaying ? 'border-brand-orange bg-brand-orange/5 shadow-lg shadow-brand-orange/15 ring-1 ring-brand-orange/40' : 'border-brand-border hover:border-brand-orange/40'} rounded-2xl p-4 transition-all duration-200 flex items-center justify-between group shadow-sm">
+          <div class="interactive-card bg-brand-surface hover:bg-brand-surfaceHover border ${isCurrentPlaying ? 'border-brand-orange bg-brand-orange/5 shadow-lg shadow-brand-orange/15 ring-1 ring-brand-orange/40' : 'border-brand-border hover:border-brand-orange/40'} rounded-2xl p-4 transition-all duration-200 flex items-center justify-between group shadow-sm">
             <div class="flex items-center gap-3.5 cursor-pointer flex-1 min-w-0" onclick="openSurahDetail(${s.nomor})">
               <!-- Numbering Sesuai Layar 3: 1. Al-Fatihah (الفاتحة) -->
               <span class="text-sm font-black text-brand-textMuted font-mono shrink-0">${s.nomor}.</span>
@@ -2248,7 +2619,7 @@
       const container = document.getElementById('quick-surah-cards');
       if (!container) return;
       container.innerHTML = list.map(s => `
-        <div onclick="openSurahDetail(${s.nomor})" class="bg-brand-card hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-orange/40 rounded-2xl p-3.5 cursor-pointer transition-all shadow-sm">
+        <div onclick="openSurahDetail(${s.nomor})" class="interactive-card bg-brand-card hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-orange/40 rounded-2xl p-3.5 cursor-pointer transition-all shadow-sm">
           <div class="flex justify-between items-center mb-1.5">
             <span class="text-xs font-bold text-brand-orange">#${s.nomor}</span>
             <span class="arabic-text text-base text-brand-text">${s.nama}</span>
@@ -2284,12 +2655,7 @@
     async function openSurahDetail(surahNumber) {
       navigateTo('surah-detail');
       const container = document.getElementById('ayah-list-container');
-      container.innerHTML = `
-        <div class="text-center py-16">
-          <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-brand-orange mb-3"></div>
-          <p class="text-xs text-brand-textMuted">Memuat ayat-ayat surah...</p>
-        </div>
-      `;
+      container.innerHTML = getAyahListSkeleton(5);
 
       try {
         const res = await fetch(`https://equran.id/api/v2/surat/${surahNumber}`);
@@ -2520,6 +2886,9 @@
         const pct = (audio.currentTime / audio.duration) * 100;
         const prog = document.getElementById('murottal-progress');
         if (prog) prog.value = pct;
+
+        const miniProg = document.getElementById('mini-player-progress-bar');
+        if (miniProg) miniProg.style.width = pct + '%';
 
         const curEl = document.getElementById('murottal-cur-time');
         if (curEl) curEl.textContent = formatAudioTime(audio.currentTime);
