@@ -572,6 +572,205 @@
       }
     }
 
+    /* ==================== MASTER ANIMATION SYSTEM (23 COMPLETE ANIMATIONS) ==================== */
+
+    /* 2. Staggered Card Entrance */
+    .stagger-1 { animation: pageEnterSlide 0.42s cubic-bezier(0.16, 1, 0.3, 1) 0.04s both; }
+    .stagger-2 { animation: pageEnterSlide 0.42s cubic-bezier(0.16, 1, 0.3, 1) 0.10s both; }
+    .stagger-3 { animation: pageEnterSlide 0.42s cubic-bezier(0.16, 1, 0.3, 1) 0.16s both; }
+    .stagger-4 { animation: pageEnterSlide 0.42s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both; }
+    .stagger-5 { animation: pageEnterSlide 0.42s cubic-bezier(0.16, 1, 0.3, 1) 0.28s both; }
+
+    /* 5. Gradient Button Glow */
+    @keyframes buttonGlowPulse {
+      0%, 100% {
+        box-shadow: 0 0 16px rgba(255, 122, 26, 0.35);
+      }
+      50% {
+        box-shadow: 0 0 28px rgba(255, 122, 26, 0.65), 0 0 42px rgba(245, 158, 11, 0.3);
+      }
+    }
+    .btn-gradient-glow {
+      animation: buttonGlowPulse 3s ease-in-out infinite;
+    }
+
+    /* 7. Bookmark Animation */
+    @keyframes bookmarkPop {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.42) rotate(-10deg); color: #FF7A1A; }
+      100% { transform: scale(1); }
+    }
+    .bookmark-pop {
+      animation: bookmarkPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* 8. Verse Fade Transition */
+    @keyframes verseFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .verse-fade-in {
+      animation: verseFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    /* 9. Typography Adjustment Transition */
+    .arabic-text {
+      transition: font-size 0.22s cubic-bezier(0.16, 1, 0.3, 1), line-height 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* 10. Animated Bottom Navigation Indicator */
+    .nav-pill-active {
+      transform: scale(1.08);
+      color: #FF7A1A;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.2s ease;
+    }
+
+    /* 11. Expanding Search Transition */
+    .expanding-search {
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.2s ease;
+    }
+    .expanding-search:focus {
+      width: 100% !important;
+      box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.25);
+    }
+
+    /* 12. Shared Element Transition Elevation */
+    .shared-element-active {
+      transform: scale(0.98);
+      opacity: 0.85;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+    }
+
+    /* 13. Bottom Sheet Transition */
+    @keyframes bottomSheetUp {
+      from {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    .bottom-sheet-enter {
+      animation: bottomSheetUp 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* 15. Floating Audio Player Entrance */
+    @keyframes floatPlayerEnter {
+      from {
+        transform: translateY(60px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    .floating-player-enter {
+      animation: floatPlayerEnter 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    /* 17. Play/Pause Morph */
+    @keyframes iconMorph {
+      0% {
+        transform: scale(0.65) rotate(-20deg);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
+    }
+    .icon-morph {
+      animation: iconMorph 0.24s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* 18. Rotating Artwork (Murottal Vinyl Rotation) */
+    @keyframes spinVinyl {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    .rotate-artwork-playing {
+      animation: spinVinyl 24s linear infinite;
+    }
+    .rotate-artwork-paused {
+      animation: spinVinyl 24s linear infinite;
+      animation-play-state: paused;
+    }
+
+    /* 20. Daily Reading Streak Badge Bounce */
+    @keyframes streakBounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.18); filter: drop-shadow(0 0 8px rgba(255, 122, 26, 0.6)); }
+    }
+    .streak-badge-bounce {
+      animation: streakBounce 1.8s ease-in-out infinite;
+    }
+
+    /* 22. Achievement Unlock Celebration Animation */
+    @keyframes achievementSlideIn {
+      0% {
+        transform: translateY(-80px) scale(0.85);
+        opacity: 0;
+      }
+      70% {
+        transform: translateY(10px) scale(1.04);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+    .achievement-unlock-card {
+      animation: achievementSlideIn 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    }
+
+    /* 23. Islamic Geometric Loader */
+    @keyframes spinGeometric {
+      0% {
+        transform: rotate(0deg) scale(0.92);
+      }
+      50% {
+        transform: rotate(180deg) scale(1.08);
+      }
+      100% {
+        transform: rotate(360deg) scale(0.92);
+      }
+    }
+    .geometric-loader-spin {
+      animation: spinGeometric 3.2s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    /* Reading Focus Mode (Section 6) */
+    body.reading-focus-mode #desktop-sidebar,
+    body.reading-focus-mode header,
+    body.reading-focus-mode nav.fixed.bottom-0 {
+      display: none !important;
+    }
+    body.reading-focus-mode main {
+      padding-bottom: 2rem !important;
+    }
+    body.reading-focus-mode #floating-mini-player {
+      opacity: 0.35;
+      transition: opacity 0.3s ease;
+    }
+    body.reading-focus-mode #floating-mini-player:hover {
+      opacity: 1;
+    }
+
     /* Special Quran Reader Rules: Calm, Serene, No Distracting Animations */
     #page-surah-detail .arabic-text {
       animation: none !important;
@@ -745,13 +944,21 @@
         </div>
 
         <!-- Quick Top Actions -->
-        <div class="flex items-center gap-2">
-          <!-- Quick Search Trigger -->
-          <div class="relative hidden sm:block w-64 lg:w-72">
+        <div class="flex items-center gap-2.5">
+          <!-- 20. Daily Reading Streak Badge -->
+          <div id="reading-streak-header-badge" title="Daily Reading Streak Tilawah Harian"
+            class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-500/10 border border-brand-orange/30 text-brand-orange text-xs font-bold transition-all shadow-sm">
+            <span class="streak-badge-bounce text-sm">🔥</span>
+            <span id="streak-count-header" class="font-mono">1</span>
+            <span class="text-[10px] text-amber-300 font-semibold uppercase">Hari</span>
+          </div>
+
+          <!-- 11. Expanding Search Trigger -->
+          <div class="relative hidden sm:block w-60 lg:w-72">
             <i data-lucide="search" class="w-4 h-4 text-brand-textMuted absolute left-3 top-1/2 -translate-y-1/2"></i>
             <input type="text" id="global-search-input" onkeyup="handleGlobalSearch(event)"
               placeholder="Cari surah, arti, ayat..."
-              class="w-full bg-brand-surface border border-brand-border rounded-xl pl-9 pr-3 py-1.5 text-xs text-brand-text placeholder-brand-textMuted focus:outline-none focus:border-brand-orange transition-colors">
+              class="expanding-search w-full bg-brand-surface border border-brand-border rounded-xl pl-9 pr-3 py-1.5 text-xs text-brand-text placeholder-brand-textMuted focus:outline-none focus:border-brand-orange transition-all">
           </div>
           <!-- Theme Switcher Header Button -->
           <button onclick="toggleTheme()" title="Ganti Mode Terang / Gelap"
@@ -774,7 +981,7 @@
 
           <!-- Jadwal Sholat Widget Hero (Langsung di Teratas Halaman) -->
           <div id="hero-prayer-widget"
-            class="reveal-on-scroll w-full bg-gradient-to-br from-[#0B1526] via-[#08101E] to-[#040812] rounded-3xl p-5 md:p-6 border border-brand-orange/25 flex flex-col justify-between shadow-2xl relative overflow-hidden text-white transition-all duration-300">
+            class="reveal-on-scroll stagger-1 w-full bg-gradient-to-br from-[#0B1526] via-[#08101E] to-[#040812] rounded-3xl p-5 md:p-6 border border-brand-orange/25 flex flex-col justify-between shadow-2xl relative overflow-hidden text-white transition-all duration-300">
             <!-- Subtle Ambient Radial Glow inside Hero -->
             <div class="absolute -top-16 -right-16 w-52 h-52 rounded-full bg-brand-orange/15 blur-3xl pointer-events-none"></div>
 
@@ -843,7 +1050,7 @@
           </div>
 
           <!-- Quick Navigation Hub (Qur'an, Zakat, Dzikir) -->
-          <div class="grid grid-cols-3 gap-3.5 reveal-on-scroll">
+          <div class="grid grid-cols-3 gap-3.5 reveal-on-scroll stagger-2">
             <div onclick="navigateTo('surah-list')"
               class="interactive-card bg-brand-surface hover:bg-brand-surfaceHover border border-brand-border hover:border-brand-orange/40 rounded-2xl p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200 group shadow-sm">
               <div
@@ -876,7 +1083,7 @@
           </div>
 
           <!-- ================= RECITERS (QORI) CAROUSEL ================= -->
-          <div class="reveal-on-scroll bg-brand-surface rounded-3xl p-5 md:p-6 border border-brand-border shadow-md">
+          <div class="reveal-on-scroll stagger-3 bg-brand-surface rounded-3xl p-5 md:p-6 border border-brand-border shadow-md">
             <div class="flex items-center justify-between mb-4">
               <div>
                 <h3 class="text-base font-bold text-brand-text tracking-wide">Reciters (Qori)</h3>
@@ -893,7 +1100,7 @@
           </div>
 
           <!-- ================= KOLEKSI / LIBRARY ================= -->
-          <div class="reveal-on-scroll bg-brand-surface rounded-3xl p-5 md:p-6 border border-brand-border shadow-md">
+          <div class="reveal-on-scroll stagger-4 bg-brand-surface rounded-3xl p-5 md:p-6 border border-brand-border shadow-md">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
               <div>
                 <h3 class="text-lg font-black text-brand-text tracking-wide">Koleksi</h3>
@@ -973,7 +1180,7 @@
           </div>
 
           <!-- Featured Section & Last Read Card -->
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 reveal-on-scroll">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 reveal-on-scroll stagger-5">
             <!-- Featured Card (Daily Dakwah - Ramadan Study) -->
             <div
               class="interactive-card bg-gradient-to-br from-[#121E33] via-[#0E1A2C] to-[#08101C] rounded-3xl p-6 border border-brand-orange/25 text-white flex flex-col justify-between shadow-xl relative overflow-hidden">
@@ -1022,7 +1229,7 @@
                 <p id="last-read-detail" class="text-xs font-medium text-slate-300 mt-1">Ayat 1 - 7 • Pembukaan
                 </p>
                 <button onclick="resumeLastReading()"
-                  class="mt-4 px-5 py-2.5 rounded-xl bg-gradient-to-r from-orange-500 via-amber-500 to-amber-400 text-slate-950 font-black text-xs inline-flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-lg warm-glow">
+                  class="mt-4 px-5 py-2.5 rounded-xl bg-gradient-to-r from-orange-500 via-amber-500 to-amber-400 text-slate-950 font-black text-xs inline-flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-lg warm-glow btn-gradient-glow">
                   <span>Lanjutkan Tilawah</span>
                   <i data-lucide="chevron-right" class="w-4 h-4"></i>
                 </button>
@@ -1144,12 +1351,21 @@
               </label>
             </div>
 
-            <!-- Reader Settings Button -->
-            <button onclick="openReaderSettingsModal()"
-              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-card hover:bg-brand-surfaceHover text-xs text-brand-orange border border-brand-border hover:border-brand-orange/40 font-bold transition-all shadow-sm">
-              <i data-lucide="sliders" class="w-4 h-4 text-brand-orange"></i>
-              <span>Atur Tampilan</span>
-            </button>
+            <div class="flex items-center gap-2">
+              <!-- Reading Focus Mode Button -->
+              <button onclick="toggleReadingFocusMode()" id="reading-focus-btn"
+                title="Aktifkan Mode Fokus (Khusyuk Tanpa Gangguan)"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-card hover:bg-brand-surfaceHover text-xs text-brand-textMuted hover:text-brand-orange border border-brand-border hover:border-brand-orange/40 font-semibold transition-all shadow-sm">
+                <i data-lucide="maximize-2" class="w-4 h-4"></i>
+                <span class="hidden sm:inline">Mode Fokus</span>
+              </button>
+              <!-- Reader Settings Button -->
+              <button onclick="openReaderSettingsModal()"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-card hover:bg-brand-surfaceHover text-xs text-brand-orange border border-brand-border hover:border-brand-orange/40 font-bold transition-all shadow-sm">
+                <i data-lucide="sliders" class="w-4 h-4 text-brand-orange"></i>
+                <span>Atur Tampilan</span>
+              </button>
+            </div>
           </div>
 
           <!-- Surah Header Card with Islamic Ornament -->
@@ -1459,7 +1675,7 @@
 
     <!-- ==================== FLOATING BOTTOM MINI PLAYER ==================== -->
     <div id="floating-mini-player"
-      class="fixed bottom-20 md:bottom-6 left-3 right-3 md:left-auto md:right-8 md:w-96 bg-[#0B1522]/95 backdrop-blur-xl border border-brand-orange/40 rounded-2xl p-2.5 shadow-2xl z-40 flex items-center justify-between cursor-pointer hover:border-brand-orange transition-all warm-glow">
+      class="floating-player-enter fixed bottom-20 md:bottom-6 left-3 right-3 md:left-auto md:right-8 md:w-96 bg-[#0B1522]/95 backdrop-blur-xl border border-brand-orange/40 rounded-2xl p-2.5 shadow-2xl z-40 flex items-center justify-between cursor-pointer hover:border-brand-orange transition-all warm-glow">
       <!-- Left: Reciter Avatar & Surah Info -->
       <div class="flex items-center gap-3 min-w-0" onclick="openMurottalModal()">
         <div class="relative w-11 h-11 rounded-full overflow-hidden border-2 border-brand-orange shrink-0">
@@ -2063,6 +2279,11 @@
     class="fixed top-5 left-1/2 -translate-x-1/2 z-[110] flex flex-col items-center gap-2 pointer-events-none w-full max-w-sm px-4">
   </div>
 
+  <!-- Achievement Celebration Floating Container -->
+  <div id="achievement-container"
+    class="fixed top-6 left-1/2 -translate-x-1/2 z-[120] pointer-events-none w-full max-w-md px-4 flex flex-col items-center">
+  </div>
+
   <!-- ==================== JAVASCRIPT APP LOGIC ==================== -->
   <script>
     // URL Google Apps Script Web App Terhubung ke Google Spreadsheet Anda
@@ -2280,6 +2501,7 @@
       loadInitialCloudData();
       initScrollReveal();
       initParallax();
+      updateReadingStreakUI();
     });
 
     // ==================== THEME SYSTEM (DARK & LIGHT MODE) ====================
@@ -2592,6 +2814,22 @@
         btn.classList.remove('active', 'text-brand-gold', 'bg-brand-surfaceHover');
       });
 
+      // Update Mobile Bottom Nav Active state (Animated Nav Pill)
+      const navMap = {
+        'home': 0,
+        'surah-list': 1,
+        'monitoring': 2
+      };
+      const mobileBtns = document.querySelectorAll('nav.md\\:hidden .mobile-nav-btn');
+      mobileBtns.forEach(btn => {
+        btn.classList.remove('active', 'text-brand-orange', 'nav-pill-active');
+        btn.classList.add('text-brand-textMuted');
+      });
+      if (navMap[pageId] !== undefined && mobileBtns[navMap[pageId]]) {
+        mobileBtns[navMap[pageId]].classList.add('active', 'text-brand-orange', 'nav-pill-active');
+        mobileBtns[navMap[pageId]].classList.remove('text-brand-textMuted');
+      }
+
       // Update Page Title
       const titleEl = document.getElementById('page-title');
       if (titleEl) {
@@ -2610,6 +2848,20 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
       lucide.createIcons();
       initScrollReveal();
+    }
+
+    // ==================== 23. ISLAMIC GEOMETRIC LOADER ====================
+    function getIslamicGeometricLoader(label = 'Memuat...') {
+      return `
+        <div class="flex flex-col items-center justify-center py-12 px-4 space-y-4">
+          <div class="relative w-14 h-14 flex items-center justify-center">
+            <div class="absolute inset-0 rounded-2xl border-2 border-brand-orange/40 geometric-loader-spin"></div>
+            <div class="absolute inset-1.5 rounded-2xl border-2 border-amber-400/60 geometric-loader-spin" style="animation-direction: reverse; animation-duration: 3.8s;"></div>
+            <div class="w-3.5 h-3.5 rounded-full bg-brand-orange shadow-lg shadow-brand-orange/50"></div>
+          </div>
+          <p class="text-xs font-semibold text-brand-textMuted tracking-wider uppercase">${label}</p>
+        </div>
+      `;
     }
 
     // ==================== SKELETON LOADING GENERATORS ====================
@@ -2761,7 +3013,7 @@
     async function openSurahDetail(surahNumber) {
       navigateTo('surah-detail');
       const container = document.getElementById('ayah-list-container');
-      container.innerHTML = getAyahListSkeleton(5);
+      container.innerHTML = getIslamicGeometricLoader('Memuat Ayat Suci Al-Qur\'an...') + getAyahListSkeleton(3);
 
       try {
         const res = await fetch(`https://equran.id/api/v2/surat/${surahNumber}`);
@@ -3060,14 +3312,27 @@
     function updateAllPlayButtons(isPlaying) {
       const iconName = isPlaying ? 'pause' : 'play';
 
+      // 17. Play/Pause Morph with Icon Morph Keyframes
       const btnReader = document.getElementById('audio-play-btn');
-      if (btnReader) btnReader.innerHTML = `<i data-lucide="${iconName}" class="w-3.5 h-3.5 ${iconName === 'play' ? 'ml-0.5' : ''}"></i>`;
+      if (btnReader) btnReader.innerHTML = `<i data-lucide="${iconName}" class="icon-morph w-3.5 h-3.5 ${iconName === 'play' ? 'ml-0.5' : ''}"></i>`;
 
       const btnMini = document.getElementById('mini-player-play-btn');
-      if (btnMini) btnMini.innerHTML = `<i data-lucide="${iconName}" class="w-4 h-4 ${iconName === 'play' ? 'ml-0.5' : ''} fill-current"></i>`;
+      if (btnMini) btnMini.innerHTML = `<i data-lucide="${iconName}" class="icon-morph w-4 h-4 ${iconName === 'play' ? 'ml-0.5' : ''} fill-current"></i>`;
 
       const btnMurottal = document.getElementById('murottal-big-play-btn');
-      if (btnMurottal) btnMurottal.innerHTML = `<i data-lucide="${iconName}" class="w-7 h-7 fill-current"></i>`;
+      if (btnMurottal) btnMurottal.innerHTML = `<i data-lucide="${iconName}" class="icon-morph w-7 h-7 fill-current"></i>`;
+
+      // 18. Rotating Artwork (Murottal Vinyl Rotation)
+      const avatarContainer = document.getElementById('murottal-modal-avatar-container');
+      if (avatarContainer) {
+        if (isPlaying) {
+          avatarContainer.classList.remove('rotate-artwork-paused');
+          avatarContainer.classList.add('rotate-artwork-playing');
+        } else {
+          avatarContainer.classList.remove('rotate-artwork-playing');
+          avatarContainer.classList.add('rotate-artwork-paused');
+        }
+      }
 
       // Aktifkan Efek Ambient Glowing Blur saat Murottal diputar
       setAmbientMurottalBlur(isPlaying);
@@ -3191,6 +3456,7 @@
       const modal = document.getElementById('murottal-modal');
       if (modal) {
         modal.classList.remove('hidden');
+        modal.classList.add('bottom-sheet-enter');
         document.body.classList.add('overflow-hidden');
       }
       lucide.createIcons();
@@ -3199,6 +3465,7 @@
     function closeMurottalModal() {
       const modal = document.getElementById('murottal-modal');
       if (modal) {
+        modal.classList.remove('bottom-sheet-enter');
         modal.classList.add('hidden');
         document.body.classList.remove('overflow-hidden');
       }
@@ -3285,6 +3552,111 @@
         toast.classList.add('-translate-y-2', 'opacity-0');
         setTimeout(() => toast.remove(), 300);
       }, 4000);
+    }
+
+    // ==================== 22. ACHIEVEMENT UNLOCK CELEBRATION ====================
+    function showAchievementUnlocked(title = 'Pencapaian Terbuka!', desc = 'Selamat atas ketekunan tilawah Anda.', icon = 'award') {
+      const container = document.getElementById('achievement-container');
+      if (!container) return;
+
+      const card = document.createElement('div');
+      card.className = 'achievement-unlock-card pointer-events-auto w-full bg-gradient-to-r from-[#0E1A2D] via-[#14233D] to-[#0A1424] border-2 border-brand-orange/60 rounded-3xl p-4 sm:p-5 shadow-2xl shadow-orange-500/25 flex items-center gap-4 text-white relative overflow-hidden mb-3';
+      card.innerHTML = `
+        <div class="absolute -top-12 -right-12 w-32 h-32 bg-brand-orange/20 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-orange-500 to-amber-400 text-slate-950 flex items-center justify-center shrink-0 shadow-lg shadow-orange-500/40">
+          <i data-lucide="${icon}" class="w-6 h-6 stroke-[2.5]"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] font-black uppercase tracking-widest text-amber-400">Prestasi Tilawah</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+          </div>
+          <h4 class="text-sm font-black text-white truncate mt-0.5">${title}</h4>
+          <p class="text-xs text-slate-300 line-clamp-2 mt-0.5">${desc}</p>
+        </div>
+        <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white p-1">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      `;
+      container.appendChild(card);
+      lucide.createIcons();
+
+      setTimeout(() => {
+        card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(-20px) scale(0.95)';
+        setTimeout(() => card.remove(), 400);
+      }, 5000);
+    }
+
+    // ==================== READING FOCUS MODE ====================
+    function toggleReadingFocusMode() {
+      const isFocus = document.body.classList.toggle('reading-focus-mode');
+      const btn = document.getElementById('reading-focus-btn');
+      if (btn) {
+        if (isFocus) {
+          btn.classList.add('bg-brand-orange', 'text-slate-950', 'border-brand-orange');
+          btn.classList.remove('bg-brand-card', 'text-brand-textMuted');
+          btn.innerHTML = `<i data-lucide="minimize-2" class="w-4 h-4"></i><span class="hidden sm:inline">Keluar Fokus</span>`;
+          showToast('Mode Fokus aktif: Membaca Al-Qur\'an tanpa gangguan', 'success');
+        } else {
+          btn.classList.remove('bg-brand-orange', 'text-slate-950', 'border-brand-orange');
+          btn.classList.add('bg-brand-card', 'text-brand-textMuted');
+          btn.innerHTML = `<i data-lucide="maximize-2" class="w-4 h-4"></i><span class="hidden sm:inline">Mode Fokus</span>`;
+          showToast('Mode Normal aktif kembali');
+        }
+        lucide.createIcons();
+      }
+    }
+
+    // ==================== 20. DAILY READING STREAK TRACKER ====================
+    function updateReadingStreakUI() {
+      try {
+        const todayStr = new Date().toISOString().slice(0, 10);
+        const lastReadDate = localStorage.getItem('quran_last_read_date');
+        let streak = parseInt(localStorage.getItem('quran_reading_streak') || '1', 10);
+
+        if (lastReadDate) {
+          const lastDate = new Date(lastReadDate);
+          const currDate = new Date(todayStr);
+          const diffDays = Math.floor((currDate - lastDate) / (1000 * 60 * 60 * 24));
+          if (diffDays > 1) {
+            streak = 1;
+            localStorage.setItem('quran_reading_streak', '1');
+          }
+        }
+        const streakEl = document.getElementById('streak-count-header');
+        if (streakEl) streakEl.textContent = streak;
+      } catch (e) {
+        console.warn('Streak update error:', e);
+      }
+    }
+
+    function recordReadingActivityForStreak() {
+      try {
+        const todayStr = new Date().toISOString().slice(0, 10);
+        const lastReadDate = localStorage.getItem('quran_last_read_date');
+        let streak = parseInt(localStorage.getItem('quran_reading_streak') || '1', 10);
+
+        if (lastReadDate !== todayStr) {
+          if (lastReadDate) {
+            const lastDate = new Date(lastReadDate);
+            const currDate = new Date(todayStr);
+            const diffDays = Math.floor((currDate - lastDate) / (1000 * 60 * 60 * 24));
+            if (diffDays === 1) {
+              streak += 1;
+            } else if (diffDays > 1) {
+              streak = 1;
+            }
+          }
+          localStorage.setItem('quran_last_read_date', todayStr);
+          localStorage.setItem('quran_reading_streak', streak.toString());
+        }
+        const streakEl = document.getElementById('streak-count-header');
+        if (streakEl) streakEl.textContent = streak;
+      } catch (e) {
+        console.warn('Record streak error:', e);
+      }
     }
 
     // ==================== SLEEP TIMER SYSTEM (ALA QURANIFY) ====================
@@ -3426,7 +3798,7 @@
         const isCurrentlyPlaying = AppState.activePlayingAyah === a.nomorAyat;
 
         return `
-          <div class="rounded-2xl p-5 md:p-6 border transition-all duration-300 space-y-4 shadow-sm ${isCurrentlyPlaying ? 'active-ayah-card ring-1 ring-brand-orange/60' : 'bg-brand-surface border-brand-border hover:border-brand-border/80'
+          <div class="verse-fade-in rounded-2xl p-5 md:p-6 border transition-all duration-300 space-y-4 shadow-sm ${isCurrentlyPlaying ? 'active-ayah-card ring-1 ring-brand-orange/60' : 'bg-brand-surface border-brand-border hover:border-brand-border/80'
           }" id="ayah-${a.nomorAyat}">
             <!-- Top Ayah Action Bar -->
             <div class="flex items-center justify-between pb-3 border-b border-brand-border/60">
@@ -3443,7 +3815,7 @@
               </div>
               <!-- Quick Actions: Bookmark, Notes, Audio -->
               <div class="flex items-center gap-2">
-                <button onclick="toggleBookmarkAyah(${AppState.currentSurah.nomor}, ${a.nomorAyat})" title="Tandai Bookmark" class="p-2 rounded-lg bg-brand-card hover:bg-brand-surfaceHover text-brand-textMuted hover:text-brand-orange transition-colors">
+                <button onclick="toggleBookmarkAyah(${AppState.currentSurah.nomor}, ${a.nomorAyat}, this)" title="Tandai Bookmark" class="p-2 rounded-lg bg-brand-card hover:bg-brand-surfaceHover text-brand-textMuted hover:text-brand-orange transition-colors">
                   <i data-lucide="bookmark" class="w-4 h-4"></i>
                 </button>
                 <button onclick="openNoteModal(${AppState.currentSurah.nomor}, ${a.nomorAyat})" title="Tambah Catatan" class="p-2 rounded-lg bg-brand-card hover:bg-brand-surfaceHover text-brand-textMuted hover:text-brand-orange transition-colors">
@@ -3577,14 +3949,22 @@
 
       // Proteksi Akun: Wajib login untuk mencatat progres tilawah
       if (!AppState.currentUser) {
-        alert("Silakan Masuk atau Buat Akun terlebih dahulu agar riwayat tilawah & progres khatam Anda tercatat di Google Spreadsheet.");
+        showToast("Silakan Masuk atau Buat Akun terlebih dahulu agar riwayat tilawah tercatat di cloud.", "warn");
         showAuthModal(true);
         return;
       }
 
       const durationMin = AppState.readingStartTime ? Math.round((Date.now() - AppState.readingStartTime) / 60000) || 1 : 5;
 
-      alert(`Alhamdulillah! Tilawah Surah ${AppState.currentSurah.namaLatin} (1 - ${AppState.currentSurah.jumlahAyat} ayat) telah dicatat.`);
+      // 20. Update Streak Activity
+      recordReadingActivityForStreak();
+
+      // 22. Achievement Unlock Celebration Trigger
+      showAchievementUnlocked(
+        `Khatam Surah ${AppState.currentSurah.namaLatin}`,
+        `Alhamdulillah! Anda telah menyelesaikan pembacaan ${AppState.currentSurah.jumlahAyat} ayat (durasi ~${durationMin} mnt).`,
+        'award'
+      );
 
       // Update Local Stats
       updateReadingHistoryUI(AppState.currentSurah.namaLatin, `1 - ${AppState.currentSurah.jumlahAyat}`, durationMin);
@@ -3612,17 +3992,25 @@
     }
 
     // ==================== BOOKMARK & NOTES (Feature 2) ====================
-    async function toggleBookmarkAyah(surahNum, ayahNum) {
+    async function toggleBookmarkAyah(surahNum, ayahNum, triggerBtn = null) {
       // Proteksi Akun: Wajib login untuk menyimpan bookmark
       if (!AppState.currentUser) {
-        alert("Silakan Masuk atau Buat Akun terlebih dahulu agar penanda ayat (bookmark) tersimpan permanen di cloud.");
+        showToast("Silakan Masuk atau Buat Akun terlebih dahulu agar penanda ayat (bookmark) tersimpan di cloud.", "warn");
         showAuthModal(true);
         return;
       }
 
+      // 7. Micro-interaction Bookmark Pop Animation
+      if (triggerBtn) {
+        triggerBtn.classList.remove('bookmark-pop');
+        void triggerBtn.offsetWidth;
+        triggerBtn.classList.add('bookmark-pop');
+        triggerBtn.classList.add('text-brand-orange');
+      }
+
       const item = { surah: surahNum, ayah: ayahNum, timestamp: new Date().toLocaleDateString('id-ID') };
       AppState.bookmarks.push(item);
-      alert(`Bookmark disimpan untuk Surah ${surahNum} Ayat ${ayahNum}`);
+      showToast(`Bookmark disimpan untuk Surah ${surahNum} Ayat ${ayahNum}`, 'success');
       renderBookmarksUI();
 
       // Sinkronkan ke Google Spreadsheet
@@ -3637,7 +4025,7 @@
     function openNoteModal(surahNum, ayahNum) {
       // Proteksi Akun: Wajib login untuk menambah catatan tafsir
       if (!AppState.currentUser) {
-        alert("Silakan Masuk atau Buat Akun terlebih dahulu untuk menulis dan menyimpan catatan tafsir pribadi.");
+        showToast("Silakan Masuk atau Buat Akun terlebih dahulu untuk menulis catatan tafsir pribadi.", "warn");
         showAuthModal(true);
         return;
       }
