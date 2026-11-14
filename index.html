@@ -605,16 +605,18 @@
     button, .btn-interactive, .nav-link, [role="button"], input[type="submit"], select {
       transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease !important;
       will-change: transform;
+      cursor: pointer;
     }
 
-    @media (hover: hover) and (pointer: fine) {
-      button:hover:not(:disabled), .btn-interactive:hover:not(:disabled), [role="button"]:hover {
-        transform: translateY(-2px);
-      }
+    button:hover:not(:disabled), .btn-interactive:hover:not(:disabled), [role="button"]:hover {
+      transform: translateY(-2.5px) !important;
+      filter: brightness(1.12);
+      box-shadow: 0 8px 20px -4px rgba(255, 122, 26, 0.4) !important;
+      cursor: pointer;
     }
 
     button:active:not(:disabled), .btn-interactive:active:not(:disabled), [role="button"]:active {
-      transform: scale(0.97) !important;
+      transform: scale(0.96) !important;
     }
 
     button:disabled, .btn-interactive:disabled {
@@ -627,6 +629,7 @@
     /* Navigation Menu Styling & Glowing Active Indicator */
     .nav-link {
       position: relative;
+      cursor: pointer;
     }
     .nav-link::before {
       content: '';
@@ -650,70 +653,79 @@
       color: #FF7A1A !important;
       box-shadow: 0 0 16px -2px rgba(255, 122, 26, 0.2) !important;
     }
-    @media (hover: hover) and (pointer: fine) {
-      .nav-link:hover {
-        color: #F8FAFC !important;
-        transform: translateX(4px) !important;
-      }
-      .nav-link:hover i {
-        transform: scale(1.12);
-        color: #FF7A1A;
-      }
+    .nav-link:hover {
+      color: #FF7A1A !important;
+      transform: translateX(6px) !important;
+      background-color: var(--color-surface-hover, #152238) !important;
+      cursor: pointer;
+    }
+    .nav-link:hover i {
+      transform: scale(1.15);
+      color: #FF7A1A;
     }
 
     /* Interactive Cards & Cursor Spotlight Effect */
     .interactive-card, .spotlight-card {
       position: relative;
       overflow: hidden;
-      transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.26s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.24s ease !important;
+      transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.26s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.24s ease, background-color 0.24s ease !important;
       will-change: transform, box-shadow;
+      cursor: pointer;
     }
 
     .interactive-card::before, .spotlight-card::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(380px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 122, 26, 0.12), transparent 75%);
+      background: radial-gradient(380px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 122, 26, 0.16), transparent 75%);
       opacity: 0;
       transition: opacity 0.3s ease;
       pointer-events: none;
       z-index: 1;
     }
 
-    @media (hover: hover) and (pointer: fine) {
-      .interactive-card:hover::before, .spotlight-card:hover::before {
-        opacity: 1;
-      }
-      .interactive-card:hover, .spotlight-card:hover {
-        transform: translateY(-3px) !important;
-        box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.35), 0 0 20px -2px rgba(255, 122, 26, 0.22) !important;
-      }
+    .interactive-card:hover::before, .spotlight-card:hover::before {
+      opacity: 1 !important;
+    }
+    .interactive-card:hover, .spotlight-card:hover {
+      transform: translateY(-4px) !important;
+      border-color: #FF7A1A !important;
+      box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.4), 0 0 22px rgba(255, 122, 26, 0.28) !important;
+      background-color: var(--color-surface-hover, #152238) !important;
+      cursor: pointer;
     }
 
     html:not(.dark) .interactive-card:hover, html:not(.dark) .spotlight-card:hover {
-      box-shadow: 0 16px 28px -6px rgba(234, 88, 12, 0.16), 0 0 16px -2px rgba(234, 88, 12, 0.18) !important;
+      box-shadow: 0 16px 28px -6px rgba(234, 88, 12, 0.2), 0 0 18px rgba(234, 88, 12, 0.22) !important;
+      background-color: #FFF7ED !important;
+      border-color: #EA580C !important;
     }
 
     /* Surah List Item Hover Highlight */
     .surah-card-row {
       transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
     }
-    @media (hover: hover) and (pointer: fine) {
-      .surah-card-row:hover {
-        background-color: var(--color-surface-hover, #152238) !important;
-        border-color: rgba(255, 122, 26, 0.45) !important;
-        transform: translateY(-2px);
-      }
-      .surah-card-row:hover .surah-number-badge {
-        background-color: rgba(255, 122, 26, 0.2) !important;
-        color: #FF7A1A !important;
-        border-color: rgba(255, 122, 26, 0.5) !important;
-        transform: scale(1.08);
-      }
-      .surah-card-row:hover .surah-play-icon {
-        transform: scale(1.18);
-        color: #FF7A1A !important;
-      }
+    .surah-card-row:hover {
+      background-color: var(--color-surface-hover, #152238) !important;
+      border-color: #FF7A1A !important;
+      transform: translateY(-3px) scale(1.008) !important;
+      box-shadow: 0 12px 28px -4px rgba(255, 122, 26, 0.28) !important;
+      cursor: pointer;
+    }
+    html:not(.dark) .surah-card-row:hover {
+      background-color: #FFF7ED !important;
+      border-color: #EA580C !important;
+    }
+    .surah-card-row:hover .surah-number-badge {
+      background-color: rgba(255, 122, 26, 0.25) !important;
+      color: #FF7A1A !important;
+      border-color: #FF7A1A !important;
+      transform: scale(1.12);
+    }
+    .surah-card-row:hover .surah-play-icon {
+      transform: scale(1.22);
+      color: #FF7A1A !important;
     }
 
     /* Quran Ayah Card Interaction & Contextual Action Toolbar */
@@ -721,24 +733,25 @@
       position: relative;
       transition: background-color 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
     }
-    @media (hover: hover) and (pointer: fine) {
-      .ayah-card-item:hover {
-        border-color: rgba(255, 122, 26, 0.38) !important;
-        box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.2), 0 0 16px -2px rgba(255, 122, 26, 0.12) !important;
-      }
-      .ayah-card-item:hover .ayah-context-toolbar {
-        opacity: 1 !important;
-        transform: translateY(0) !important;
-      }
+    .ayah-card-item:hover {
+      border-color: #FF7A1A !important;
+      background-color: rgba(255, 122, 26, 0.05) !important;
+      box-shadow: 0 12px 30px -4px rgba(255, 122, 26, 0.22), 0 0 16px rgba(255, 122, 26, 0.14) !important;
+    }
+    .ayah-card-item:hover .ayah-context-toolbar {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
     }
     .ayah-context-toolbar {
       transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity: 0.85;
+      transform: translateY(0);
     }
-    @media (hover: hover) and (pointer: fine) {
-      .ayah-context-toolbar {
-        opacity: 0.72;
-        transform: translateY(2px);
-      }
+    .ayah-context-toolbar button:hover {
+      transform: translateY(-2px) scale(1.08) !important;
+      background-color: rgba(255, 122, 26, 0.25) !important;
+      color: #FF7A1A !important;
+      cursor: pointer;
     }
 
     /* Audio Range Scrubber Slider Hover Feedback */
@@ -5458,8 +5471,7 @@
 
     // ==================== ADVANCED CURSOR: MAGNETIC BUTTONS ====================
     function initMagneticButtons() {
-      if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
       const targets = document.querySelectorAll('.btn-magnetic, .btn-gradient-glow, #reading-streak-header-badge, #hero-prayer-widget button');
       targets.forEach(el => {
@@ -5483,8 +5495,6 @@
 
     // ==================== ADVANCED CURSOR: CARD SPOTLIGHT ====================
     function initCursorSpotlight() {
-      if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-
       document.addEventListener('mousemove', (e) => {
         const target = e.target.closest('.interactive-card, .spotlight-card, .ayah-card-item');
         if (target) {
@@ -5502,11 +5512,7 @@
       const follower = document.getElementById('custom-cursor-follower');
       if (!follower) return;
 
-      if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-        follower.remove();
-        return;
-      }
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         follower.remove();
         return;
       }
