@@ -593,28 +593,208 @@
       transform-origin: center;
     }
 
-    /* Interactive Card Hover Elevation & Glow */
-    .interactive-card {
-      transition: transform 0.28s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.28s cubic-bezier(0.2, 0, 0, 1), border-color 0.28s ease !important;
+    /* ==================== GLOBAL INTERACTIVE CURSOR & ACCESSIBILITY ==================== */
+
+    /* Accessible Visible Focus Ring for Keyboard Users */
+    :focus-visible {
+      outline: 2px solid #FF7A1A !important;
+      outline-offset: 2px !important;
+    }
+
+    /* Universal Button & Interactive Element Transitions */
+    button, .btn-interactive, .nav-link, [role="button"], input[type="submit"], select {
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease !important;
+      will-change: transform;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      button:hover:not(:disabled), .btn-interactive:hover:not(:disabled), [role="button"]:hover {
+        transform: translateY(-2px);
+      }
+    }
+
+    button:active:not(:disabled), .btn-interactive:active:not(:disabled), [role="button"]:active {
+      transform: scale(0.97) !important;
+    }
+
+    button:disabled, .btn-interactive:disabled {
+      opacity: 0.45 !important;
+      cursor: not-allowed !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    /* Navigation Menu Styling & Glowing Active Indicator */
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%) scaleY(0);
+      width: 3.5px;
+      height: 22px;
+      background: linear-gradient(to bottom, #FF7A1A, #F59E0B);
+      border-radius: 0 4px 4px 0;
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+      opacity: 0;
+    }
+    .nav-link.active::before, .nav-link:hover::before {
+      transform: translateY(-50%) scaleY(1);
+      opacity: 1;
+    }
+    .nav-link.active {
+      background-color: var(--color-surface-hover, #152238) !important;
+      color: #FF7A1A !important;
+      box-shadow: 0 0 16px -2px rgba(255, 122, 26, 0.2) !important;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .nav-link:hover {
+        color: #F8FAFC !important;
+        transform: translateX(4px) !important;
+      }
+      .nav-link:hover i {
+        transform: scale(1.12);
+        color: #FF7A1A;
+      }
+    }
+
+    /* Interactive Cards & Cursor Spotlight Effect */
+    .interactive-card, .spotlight-card {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.26s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.24s ease !important;
       will-change: transform, box-shadow;
     }
 
-    .interactive-card:hover {
-      transform: translateY(-4px) !important;
-      box-shadow: 0 16px 32px -6px rgba(255, 122, 26, 0.22), 0 0 0 1px rgba(255, 122, 26, 0.35) !important;
+    .interactive-card::before, .spotlight-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(380px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 122, 26, 0.12), transparent 75%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 1;
     }
 
-    html:not(.dark) .interactive-card:hover {
-      box-shadow: 0 16px 28px -6px rgba(234, 88, 12, 0.16), 0 0 0 1px rgba(234, 88, 12, 0.25) !important;
+    @media (hover: hover) and (pointer: fine) {
+      .interactive-card:hover::before, .spotlight-card:hover::before {
+        opacity: 1;
+      }
+      .interactive-card:hover, .spotlight-card:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.35), 0 0 20px -2px rgba(255, 122, 26, 0.22) !important;
+      }
     }
 
-    /* Smooth Button Press & Micro-Interactions */
-    button, .btn-interactive, .nav-link, [role="button"] {
-      transition: transform 0.18s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+    html:not(.dark) .interactive-card:hover, html:not(.dark) .spotlight-card:hover {
+      box-shadow: 0 16px 28px -6px rgba(234, 88, 12, 0.16), 0 0 16px -2px rgba(234, 88, 12, 0.18) !important;
     }
 
-    button:active, .btn-interactive:active, [role="button"]:active {
-      transform: scale(0.96) !important;
+    /* Surah List Item Hover Highlight */
+    .surah-card-row {
+      transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .surah-card-row:hover {
+        background-color: var(--color-surface-hover, #152238) !important;
+        border-color: rgba(255, 122, 26, 0.45) !important;
+        transform: translateY(-2px);
+      }
+      .surah-card-row:hover .surah-number-badge {
+        background-color: rgba(255, 122, 26, 0.2) !important;
+        color: #FF7A1A !important;
+        border-color: rgba(255, 122, 26, 0.5) !important;
+        transform: scale(1.08);
+      }
+      .surah-card-row:hover .surah-play-icon {
+        transform: scale(1.18);
+        color: #FF7A1A !important;
+      }
+    }
+
+    /* Quran Ayah Card Interaction & Contextual Action Toolbar */
+    .ayah-card-item {
+      position: relative;
+      transition: background-color 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .ayah-card-item:hover {
+        border-color: rgba(255, 122, 26, 0.38) !important;
+        box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.2), 0 0 16px -2px rgba(255, 122, 26, 0.12) !important;
+      }
+      .ayah-card-item:hover .ayah-context-toolbar {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+      }
+    }
+    .ayah-context-toolbar {
+      transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .ayah-context-toolbar {
+        opacity: 0.72;
+        transform: translateY(2px);
+      }
+    }
+
+    /* Audio Range Scrubber Slider Hover Feedback */
+    input[type=range] {
+      transition: opacity 0.2s ease, filter 0.2s ease;
+    }
+    input[type=range]:hover {
+      filter: drop-shadow(0 0 6px rgba(255, 122, 26, 0.45));
+    }
+    input[type=range]::-webkit-slider-thumb {
+      transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s ease;
+    }
+    input[type=range]::-webkit-slider-thumb:hover {
+      transform: scale(1.3);
+      box-shadow: 0 0 12px rgba(255, 122, 26, 0.7);
+    }
+
+    /* Ambient Custom Cursor Follower */
+    #custom-cursor-follower {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 26px;
+      height: 26px;
+      border: 1.5px solid rgba(255, 122, 26, 0.55);
+      background: radial-gradient(circle, rgba(255, 122, 26, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%) scale(1);
+      transition: width 0.22s ease, height 0.22s ease, border-color 0.22s ease, transform 0.15s ease, opacity 0.22s ease;
+      opacity: 0;
+    }
+    #custom-cursor-follower.is-active {
+      opacity: 1;
+    }
+    #custom-cursor-follower.is-hovering {
+      width: 42px;
+      height: 42px;
+      border-color: rgba(255, 122, 26, 0.9);
+      background: radial-gradient(circle, rgba(255, 122, 26, 0.25) 0%, transparent 70%);
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+    #custom-cursor-follower.is-hidden {
+      opacity: 0 !important;
+    }
+    @media (hover: none) or (pointer: coarse) or (prefers-reduced-motion: reduce) {
+      #custom-cursor-follower {
+        display: none !important;
+      }
+    }
+
+    /* Magnetic Button Utility */
+    .btn-magnetic {
+      display: inline-flex;
+      transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s ease;
     }
 
     /* Animated Progress Indicator with Continuous Shimmer Sheen */
@@ -2559,6 +2739,9 @@
     class="fixed top-6 left-1/2 -translate-x-1/2 z-[120] pointer-events-none w-full max-w-md px-4 flex flex-col items-center">
   </div>
 
+  <!-- Ambient Custom Cursor Follower (Selective, Non-intrusive) -->
+  <div id="custom-cursor-follower" aria-hidden="true"></div>
+
   <!-- ==================== JAVASCRIPT APP LOGIC ==================== -->
   <script>
     // URL Google Apps Script Web App Terhubung ke Google Spreadsheet Anda
@@ -2784,6 +2967,10 @@
       initScrollReveal();
       initParallax();
       updateReadingStreakUI();
+      initMagneticButtons();
+      initCursorSpotlight();
+      initCustomCursorFollower();
+      initModalOutsideClicks();
     });
 
     // ==================== THEME SYSTEM (DARK & LIGHT MODE) ====================
@@ -3092,9 +3279,23 @@
       }
 
       // Update Desktop Nav Active
-      document.querySelectorAll('#desktop-nav .nav-link').forEach(btn => {
-        btn.classList.remove('active', 'text-brand-gold', 'bg-brand-surfaceHover');
+      const desktopNavMap = {
+        'home': 0,
+        'surah-list': 1,
+        'monitoring': 3,
+        'bookmarks': 4,
+        'donation': 5,
+        'admin': 6
+      };
+      const navLinks = document.querySelectorAll('#desktop-nav .nav-link');
+      navLinks.forEach(btn => {
+        btn.classList.remove('active', 'text-brand-orange');
+        btn.classList.add('text-brand-textMuted');
       });
+      if (desktopNavMap[pageId] !== undefined && navLinks[desktopNavMap[pageId]]) {
+        navLinks[desktopNavMap[pageId]].classList.add('active', 'text-brand-orange');
+        navLinks[desktopNavMap[pageId]].classList.remove('text-brand-textMuted');
+      }
 
       // Update Mobile Bottom Nav Active state (Animated Nav Pill)
       const navMap = {
@@ -3232,10 +3433,10 @@
       container.innerHTML = list.map(s => {
         const isCurrentPlaying = AppState.currentSurah && AppState.currentSurah.nomor === s.nomor && AppState.isPlayingAudio;
         return `
-          <div class="interactive-card bg-brand-surface hover:bg-brand-surfaceHover border ${isCurrentPlaying ? 'border-brand-orange bg-brand-orange/5 shadow-lg shadow-brand-orange/15 ring-1 ring-brand-orange/40' : 'border-brand-border hover:border-brand-orange/40'} rounded-2xl p-4 transition-all duration-200 flex items-center justify-between group shadow-sm">
+          <div class="interactive-card spotlight-card surah-card-row bg-brand-surface hover:bg-brand-surfaceHover border ${isCurrentPlaying ? 'border-brand-orange bg-brand-orange/5 shadow-lg shadow-brand-orange/15 ring-1 ring-brand-orange/40' : 'border-brand-border hover:border-brand-orange/40'} rounded-2xl p-4 transition-all duration-200 flex items-center justify-between group shadow-sm">
             <div class="flex items-center gap-3.5 cursor-pointer flex-1 min-w-0" onclick="openSurahDetail(${s.nomor})">
               <!-- Numbering Sesuai Layar 3: 1. Al-Fatihah (الفاتحة) -->
-              <span class="text-sm font-black text-brand-textMuted font-mono shrink-0">${s.nomor}.</span>
+              <span class="surah-number-badge w-8 h-8 rounded-xl bg-brand-card border border-brand-border text-xs font-black text-brand-textMuted font-mono flex items-center justify-center shrink-0 transition-all">${s.nomor}</span>
               <div class="truncate">
                 <h4 class="font-bold text-sm text-brand-text group-hover:text-brand-orange transition-colors truncate">
                   ${s.namaLatin} <span class="arabic-text text-brand-orange text-sm font-bold">(${s.nama})</span>
@@ -3246,7 +3447,7 @@
             
             <!-- Round Orange Play Button -->
             <button onclick="quickPlaySurahAudio(${s.nomor}, event)" class="w-9 h-9 rounded-full bg-gradient-to-tr from-orange-500 to-amber-500 text-white flex items-center justify-center font-black hover:scale-110 active:scale-95 transition-all shadow-md warm-glow shrink-0 ml-3" title="Putar Murottal Surah">
-              <i data-lucide="${isCurrentPlaying ? 'pause' : 'play'}" class="w-4 h-4 ml-0.5 fill-current"></i>
+              <i data-lucide="${isCurrentPlaying ? 'pause' : 'play'}" class="surah-play-icon w-4 h-4 ml-0.5 fill-current transition-transform"></i>
             </button>
           </div>
         `;
@@ -4101,11 +4302,11 @@
         const isCurrentlyPlaying = AppState.activePlayingAyah === a.nomorAyat;
 
         return `
-          <div class="ayah-card-item verse-fade-in rounded-2xl p-5 md:p-6 border transition-all duration-300 space-y-4 shadow-sm ${
+          <div class="ayah-card-item spotlight-card verse-fade-in rounded-2xl p-5 md:p-6 border transition-all duration-300 space-y-4 shadow-sm ${
             isCurrentlyPlaying ? 'active-ayah-card ring-1 ring-brand-orange/60' : 'bg-brand-surface border-brand-border hover:border-brand-border/80'
           }" id="ayah-${a.nomorAyat}" style="margin-bottom: ${verseSpacing}px;">
-            <!-- Top Ayah Action Bar -->
-            <div class="flex items-center justify-between pb-3 border-b border-brand-border/60">
+            <!-- Top Ayah Action Bar (Contextual Action Toolbar with Smooth Hover/Tap Reveal) -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-brand-border/60">
               <div class="flex items-center gap-2">
                 <span class="px-2.5 py-1 rounded-lg ${isCurrentlyPlaying ? 'bg-brand-orange/20 border border-brand-orange/40 text-brand-orange' : 'bg-brand-card border border-brand-border text-brand-orange'} text-xs font-bold font-mono">
                   ${AppState.currentSurah.nomor}:${a.nomorAyat}
@@ -4117,16 +4318,32 @@
                   </span>
                 ` : ''}
               </div>
-              <!-- Quick Actions: Bookmark, Notes, Audio -->
-              <div class="flex items-center gap-2">
-                <button onclick="toggleBookmarkAyah(${AppState.currentSurah.nomor}, ${a.nomorAyat}, this)" title="Tandai Bookmark" class="p-2 rounded-lg bg-brand-card hover:bg-brand-surfaceHover text-brand-textMuted hover:text-brand-orange transition-colors">
-                  <i data-lucide="bookmark" class="w-4 h-4"></i>
+
+              <!-- Contextual Action Toolbar (Play, Repeat, Bookmark, Copy, Share, Tafsir) -->
+              <div class="ayah-context-toolbar flex items-center gap-1 sm:gap-1.5 flex-wrap">
+                <!-- 1. Play Single Ayah -->
+                <button onclick="playAyahAudio(${a.nomorAyat}, '${ayahAudioUrl}', this)" title="Putar Ayat (${qori.shortName})" class="p-1.5 sm:p-2 rounded-lg bg-brand-card hover:bg-brand-orange/15 hover:text-brand-orange text-brand-textMuted border border-transparent hover:border-brand-orange/30 transition-all">
+                  <i data-lucide="${isCurrentlyPlaying ? 'square' : 'volume-2'}" class="w-3.5 h-3.5 sm:w-4 sm:h-4 ${isCurrentlyPlaying ? 'text-brand-orange' : ''}"></i>
                 </button>
-                <button onclick="openNoteModal(${AppState.currentSurah.nomor}, ${a.nomorAyat})" title="Tambah Catatan" class="p-2 rounded-lg bg-brand-card hover:bg-brand-surfaceHover text-brand-textMuted hover:text-brand-orange transition-colors">
-                  <i data-lucide="file-text" class="w-4 h-4"></i>
+                <!-- 2. Repeat Single Ayah (Tahfidz Loop) -->
+                <button onclick="repeatSingleAyah(${a.nomorAyat}, '${ayahAudioUrl}')" title="Ulangi Ayat Ini Terus-Menerus (Tahfidz)" class="p-1.5 sm:p-2 rounded-lg bg-brand-card hover:bg-brand-orange/15 hover:text-brand-orange text-brand-textMuted border border-transparent hover:border-brand-orange/30 transition-all">
+                  <i data-lucide="repeat-1" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                 </button>
-                <button onclick="playAyahAudio(${a.nomorAyat}, '${ayahAudioUrl}', this)" title="Putar Ayat (${qori.shortName})" class="p-2 rounded-lg bg-brand-card hover:bg-brand-surfaceHover text-brand-orange transition-colors">
-                  <i data-lucide="${isCurrentlyPlaying ? 'square' : 'volume-2'}" class="w-4 h-4"></i>
+                <!-- 3. Bookmark Ayat -->
+                <button onclick="toggleBookmarkAyah(${AppState.currentSurah.nomor}, ${a.nomorAyat}, this)" title="Tandai Bookmark Ayat" class="p-1.5 sm:p-2 rounded-lg bg-brand-card hover:bg-brand-orange/15 hover:text-brand-orange text-brand-textMuted border border-transparent hover:border-brand-orange/30 transition-all">
+                  <i data-lucide="bookmark" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+                </button>
+                <!-- 4. Salin Ayat (Arabic + Terjemahan) -->
+                <button onclick="copyAyahText(${AppState.currentSurah.nomor}, ${a.nomorAyat})" title="Salin Teks Arab & Terjemahan" class="p-1.5 sm:p-2 rounded-lg bg-brand-card hover:bg-brand-orange/15 hover:text-brand-orange text-brand-textMuted border border-transparent hover:border-brand-orange/30 transition-all">
+                  <i data-lucide="copy" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+                </button>
+                <!-- 5. Bagikan Ayat -->
+                <button onclick="shareAyahText(${AppState.currentSurah.nomor}, ${a.nomorAyat})" title="Bagikan Ayat" class="p-1.5 sm:p-2 rounded-lg bg-brand-card hover:bg-brand-orange/15 hover:text-brand-orange text-brand-textMuted border border-transparent hover:border-brand-orange/30 transition-all">
+                  <i data-lucide="share-2" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+                </button>
+                <!-- 6. Tafsir & Catatan Pribadi -->
+                <button onclick="openNoteModal(${AppState.currentSurah.nomor}, ${a.nomorAyat})" title="Tafsir & Catatan Pribadi" class="p-1.5 sm:p-2 rounded-lg bg-brand-card hover:bg-brand-orange/15 hover:text-brand-orange text-brand-textMuted border border-transparent hover:border-brand-orange/30 transition-all">
+                  <i data-lucide="file-text" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                 </button>
               </div>
             </div>
@@ -5170,6 +5387,194 @@
       if (inp) {
         inp.focus();
       }
+    }
+
+    // ==================== AYAH ACTIONS: COPY, SHARE, REPEAT ====================
+    async function copyAyahText(surahNum, ayahNum) {
+      if (!AppState.currentSurah || !AppState.currentAyahs) return;
+      const ayah = AppState.currentAyahs.find(a => a.nomorAyat === ayahNum);
+      if (!ayah) return;
+
+      const textToCopy = `${ayah.teksArab}\n\n"${ayah.teksIndonesia}"\n(QS. ${AppState.currentSurah.namaLatin} [${surahNum}:${ayahNum}])`;
+
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(textToCopy);
+        } else {
+          const ta = document.createElement('textarea');
+          ta.value = textToCopy;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          ta.remove();
+        }
+        showToast(`✨ Ayat ${ayahNum} berhasil disalin ke clipboard!`, 'success');
+      } catch (err) {
+        console.warn('Gagal menyalin ayat:', err);
+        showToast(`Gagal menyalin: ${err.message || 'Izin ditolak'}`, 'warn');
+      }
+    }
+
+    async function shareAyahText(surahNum, ayahNum) {
+      if (!AppState.currentSurah || !AppState.currentAyahs) return;
+      const ayah = AppState.currentAyahs.find(a => a.nomorAyat === ayahNum);
+      if (!ayah) return;
+
+      const title = `QS. ${AppState.currentSurah.namaLatin} Ayat ${ayahNum}`;
+      const text = `${ayah.teksArab}\n\n"${ayah.teksIndonesia}"\n(QS. ${AppState.currentSurah.namaLatin} [${surahNum}:${ayahNum}])`;
+      const url = window.location.href;
+
+      if (navigator.share) {
+        try {
+          await navigator.share({ title, text, url });
+          showToast(`Berhasil membagikan Ayat ${ayahNum}`, 'success');
+        } catch (e) {
+          if (e.name !== 'AbortError') {
+            copyAyahText(surahNum, ayahNum);
+          }
+        }
+      } else {
+        copyAyahText(surahNum, ayahNum);
+      }
+    }
+
+    function repeatSingleAyah(ayahNum, audioUrl) {
+      if (!audioUrl) return showToast('Audio ayat belum tersedia', 'warn');
+      if (currentAyahAudioEl) {
+        currentAyahAudioEl.pause();
+      }
+      currentAyahAudioEl = new Audio(audioUrl);
+      currentAyahAudioEl.loop = true;
+      AppState.activePlayingAyah = ayahNum;
+      currentAyahAudioEl.play().catch(e => console.log('Repeat audio error:', e));
+      setAmbientMurottalBlur(true);
+      showToast(`🔁 Mode Ulang Ayat ${ayahNum} aktif (Tahfidz)`, 'success');
+      if (AppState.currentAyahs) {
+        renderAyahs(AppState.currentAyahs);
+      }
+    }
+
+    // ==================== ADVANCED CURSOR: MAGNETIC BUTTONS ====================
+    function initMagneticButtons() {
+      if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      const targets = document.querySelectorAll('.btn-magnetic, .btn-gradient-glow, #reading-streak-header-badge, #hero-prayer-widget button');
+      targets.forEach(el => {
+        if (el.dataset.magneticInit) return;
+        el.dataset.magneticInit = 'true';
+
+        el.addEventListener('mousemove', (e) => {
+          const rect = el.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          const moveX = Math.max(-5, Math.min(5, x * 0.15));
+          const moveY = Math.max(-5, Math.min(5, y * 0.15));
+          el.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
+        });
+
+        el.addEventListener('mouseleave', () => {
+          el.style.transform = '';
+        });
+      });
+    }
+
+    // ==================== ADVANCED CURSOR: CARD SPOTLIGHT ====================
+    function initCursorSpotlight() {
+      if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+      document.addEventListener('mousemove', (e) => {
+        const target = e.target.closest('.interactive-card, .spotlight-card, .ayah-card-item');
+        if (target) {
+          const rect = target.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          target.style.setProperty('--mouse-x', `${x}px`);
+          target.style.setProperty('--mouse-y', `${y}px`);
+        }
+      }, { passive: true });
+    }
+
+    // ==================== AMBIENT CUSTOM CURSOR FOLLOWER ====================
+    function initCustomCursorFollower() {
+      const follower = document.getElementById('custom-cursor-follower');
+      if (!follower) return;
+
+      if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        follower.remove();
+        return;
+      }
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        follower.remove();
+        return;
+      }
+
+      let mouseX = -100;
+      let mouseY = -100;
+      let posX = -100;
+      let posY = -100;
+      let isVisible = false;
+
+      window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        if (!isVisible) {
+          isVisible = true;
+          follower.classList.add('is-active');
+        }
+
+        const interactive = e.target.closest('button, a, input, select, textarea, [role="button"], .interactive-card, .nav-link, .cursor-pointer, .surah-card-row');
+        const isText = e.target.closest('.arabic-text, input[type="text"], input[type="password"], textarea');
+
+        if (isText) {
+          follower.classList.add('is-hidden');
+        } else {
+          follower.classList.remove('is-hidden');
+        }
+
+        if (interactive && !isText) {
+          follower.classList.add('is-hovering');
+        } else {
+          follower.classList.remove('is-hovering');
+        }
+      }, { passive: true });
+
+      document.addEventListener('mouseleave', () => {
+        follower.classList.remove('is-active');
+        isVisible = false;
+      });
+
+      function renderFollower() {
+        posX += (mouseX - posX) * 0.22;
+        posY += (mouseY - posY) * 0.22;
+        follower.style.transform = `translate3d(${posX}px, ${posY}px, 0) translate(-50%, -50%)`;
+        requestAnimationFrame(renderFollower);
+      }
+      requestAnimationFrame(renderFollower);
+    }
+
+    // ==================== MODAL OUTSIDE-CLICK TO CLOSE ====================
+    function initModalOutsideClicks() {
+      const modals = [
+        { id: 'settings-modal', close: closeReaderSettingsModal },
+        { id: 'note-modal', close: closeNoteModal },
+        { id: 'qori-modal', close: closeQoriModal },
+        { id: 'sleep-timer-modal', close: closeSleepTimerModal },
+        { id: 'auth-modal', close: () => showAuthModal(false) }
+      ];
+
+      modals.forEach(({ id, close }) => {
+        const modal = document.getElementById(id);
+        if (modal) {
+          modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+              close();
+            }
+          });
+        }
+      });
     }
   </script>
 </body>
