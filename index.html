@@ -1474,13 +1474,6 @@
         <div class="truncate">
           <div class="flex items-center gap-1.5">
             <h4 id="mini-player-surah" class="text-xs sm:text-sm font-black text-white truncate">Al-Fatihah</h4>
-            <!-- Equalizer Soundwave Bars -->
-            <div id="mini-equalizer-bars" class="flex items-end gap-0.5 h-3.5 shrink-0">
-              <span class="wave-bar"></span>
-              <span class="wave-bar"></span>
-              <span class="wave-bar"></span>
-              <span class="wave-bar"></span>
-            </div>
             <!-- Sleep Timer Badge -->
             <span id="mini-timer-indicator"
               class="hidden text-[9px] font-mono font-bold px-1.5 py-0.5 rounded-md bg-brand-orange/20 text-brand-orange border border-brand-orange/30">⏱️
@@ -3075,11 +3068,6 @@
 
       const btnMurottal = document.getElementById('murottal-big-play-btn');
       if (btnMurottal) btnMurottal.innerHTML = `<i data-lucide="${iconName}" class="w-7 h-7 fill-current"></i>`;
-
-      const miniBars = document.getElementById('mini-equalizer-bars');
-      if (miniBars) {
-        miniBars.style.opacity = isPlaying ? '1' : '0.4';
-      }
 
       // Aktifkan Efek Ambient Glowing Blur saat Murottal diputar
       setAmbientMurottalBlur(isPlaying);
