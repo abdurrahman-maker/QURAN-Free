@@ -10,11 +10,11 @@
   <link rel="icon" type="image/svg+xml" href="logo.svg">
   <link rel="apple-touch-icon" href="logo.svg">
 
-  <!-- Fonts: Plus Jakarta Sans & Amiri (Arabic) -->
+  <!-- Fonts: Plus Jakarta Sans, Inter (UI & Info), Amiri, Scheherazade New (Arabic) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Scheherazade+New:wght@400;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Scheherazade+New:wght@400;700&display=swap"
     rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
@@ -74,7 +74,8 @@
           },
           fontFamily: {
             sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-            arabic: ['"Amiri"', '"Scheherazade New"', 'serif']
+            inter: ['"Inter"', 'sans-serif'],
+            arabic: ['var(--quran-font-family, "KFGQPC Uthmanic Script HAFS")', '"Amiri"', '"Scheherazade New"', 'serif']
           }
         }
       }
@@ -98,9 +99,15 @@
       --color-accent-gold: #D4AF37;
       --color-accent-glow: rgba(255, 122, 26, 0.25);
       
-      /* Typography */
+      /* Typography Tokens */
       --font-sans: 'Plus Jakarta Sans', sans-serif;
-      --font-arabic: 'Amiri', 'Scheherazade New', serif;
+      --font-inter: 'Inter', sans-serif;
+      --quran-font-family: 'KFGQPC Uthmanic Script HAFS', 'Amiri', 'Scheherazade New', serif;
+      --quran-arabic-size: 32px;
+      --quran-arabic-line-height: 2.2;
+      --quran-translation-size: 16px;
+      --quran-translation-line-height: 1.7;
+      --quran-verse-spacing: 20px;
       
       /* Radii */
       --radius-sm: 0.5rem;
@@ -281,10 +288,123 @@
       will-change: transform, opacity;
     }
 
+    /* KFGQPC Uthmanic Script HAFS Font Face */
+    @font-face {
+      font-family: 'KFGQPC Uthmanic Script HAFS';
+      src: url('https://cdn.jsdelivr.net/gh/mustafa0x/quran-fonts/fonts/KFGQPC-Uthmanic-Script-HAFS-Regular.woff2') format('woff2'),
+           url('https://cdn.jsdelivr.net/gh/mustafa0x/quran-fonts/fonts/KFGQPC-Uthmanic-Script-HAFS-Regular.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
     .arabic-text {
-      font-family: 'Amiri', 'Scheherazade New', serif;
+      font-family: var(--quran-font-family, 'KFGQPC Uthmanic Script HAFS', 'Amiri', 'Scheherazade New', serif);
       direction: rtl;
-      line-height: 2.6;
+      unicode-bidi: isolate;
+      font-feature-settings: "cv01" on, "cv02" on, "liga" on, "calt" on;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-wrap: break-word;
+      word-break: normal;
+      font-weight: 400;
+    }
+
+    /* ==================== READING THEMES (QURAN READER) ==================== */
+    /* 1. Midnight Dark (Default) */
+    #page-surah-detail[data-reader-theme="midnight"] .ayah-card-item {
+      background-color: var(--color-surface, #0E1726);
+      border-color: var(--color-border, #1B293E);
+    }
+    #page-surah-detail[data-reader-theme="midnight"] .arabic-text {
+      color: #FFFFFF;
+    }
+    #page-surah-detail[data-reader-theme="midnight"] .translation-text {
+      color: #94A3B8;
+    }
+
+    /* 2. Warm Sepia (Mushaf Klasik Kertas Lembut) */
+    #page-surah-detail[data-reader-theme="sepia"] {
+      background-color: #191410 !important;
+    }
+    #page-surah-detail[data-reader-theme="sepia"] .reader-header-card {
+      background: linear-gradient(135deg, #2A211A, #1A1410) !important;
+      border-color: #523E2E !important;
+    }
+    #page-surah-detail[data-reader-theme="sepia"] .ayah-card-item {
+      background-color: #241C15 !important;
+      border-color: #4A3A2C !important;
+    }
+    #page-surah-detail[data-reader-theme="sepia"] .ayah-card-item:hover {
+      border-color: #785A3F !important;
+    }
+    #page-surah-detail[data-reader-theme="sepia"] .arabic-text {
+      color: #FFF9EE !important;
+    }
+    #page-surah-detail[data-reader-theme="sepia"] .translation-text {
+      color: #D3C3B1 !important;
+    }
+    #page-surah-detail[data-reader-theme="sepia"] .latin-text {
+      color: #FBBF24 !important;
+    }
+
+    /* 3. Deep Emerald (Hijau Khusyuk Islami) */
+    #page-surah-detail[data-reader-theme="emerald"] {
+      background-color: #071510 !important;
+    }
+    #page-surah-detail[data-reader-theme="emerald"] .reader-header-card {
+      background: linear-gradient(135deg, #0F2A1E, #071711) !important;
+      border-color: #1B543D !important;
+    }
+    #page-surah-detail[data-reader-theme="emerald"] .ayah-card-item {
+      background-color: #0C2118 !important;
+      border-color: #164332 !important;
+    }
+    #page-surah-detail[data-reader-theme="emerald"] .ayah-card-item:hover {
+      border-color: #246B50 !important;
+    }
+    #page-surah-detail[data-reader-theme="emerald"] .arabic-text {
+      color: #F0FDF4 !important;
+    }
+    #page-surah-detail[data-reader-theme="emerald"] .translation-text {
+      color: #A7F3D0 !important;
+    }
+    #page-surah-detail[data-reader-theme="emerald"] .latin-text {
+      color: #34D399 !important;
+    }
+
+    /* 4. Crisp Light (Mode Kertas Bersih) */
+    #page-surah-detail[data-reader-theme="light"] {
+      background-color: #F8FAFC !important;
+    }
+    #page-surah-detail[data-reader-theme="light"] .reader-header-card {
+      background: linear-gradient(135deg, #FFFFFF, #F1F5F9) !important;
+      border-color: #CBD5E1 !important;
+      color: #0F172A !important;
+    }
+    #page-surah-detail[data-reader-theme="light"] #detail-surah-name {
+      color: #EA580C !important;
+    }
+    #page-surah-detail[data-reader-theme="light"] #detail-surah-arabic {
+      color: #0F172A !important;
+    }
+    #page-surah-detail[data-reader-theme="light"] .ayah-card-item {
+      background-color: #FFFFFF !important;
+      border-color: #E2E8F0 !important;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
+    }
+    #page-surah-detail[data-reader-theme="light"] .ayah-card-item:hover {
+      border-color: #CBD5E1 !important;
+    }
+    #page-surah-detail[data-reader-theme="light"] .arabic-text {
+      color: #0F172A !important;
+    }
+    #page-surah-detail[data-reader-theme="light"] .translation-text {
+      color: #475569 !important;
+    }
+    #page-surah-detail[data-reader-theme="light"] .latin-text {
+      color: #D97706 !important;
     }
 
     /* Islamic Octagonal Badge - Warm Orange & Gold */
@@ -1370,17 +1490,17 @@
 
           <!-- Surah Header Card with Islamic Ornament -->
           <div
-            class="bg-gradient-to-b from-brand-card to-brand-surface rounded-3xl p-6 md:p-8 border border-brand-orange/25 text-center relative overflow-hidden shadow-lg">
+            class="reader-header-card bg-gradient-to-b from-brand-card to-brand-surface rounded-3xl p-6 md:p-8 border border-brand-orange/25 text-center relative overflow-hidden shadow-lg">
             <h2 id="detail-surah-name" class="text-3xl md:text-4xl font-black text-amber-500 tracking-wide">Al-Fatihah
             </h2>
-            <p id="detail-surah-arabic" class="arabic-text text-3xl md:text-4xl text-brand-text mt-2">الفاتحة</p>
+            <p id="detail-surah-arabic" class="arabic-text text-3xl md:text-4xl text-brand-text mt-2" dir="rtl">الفاتحة</p>
             <p id="detail-surah-info" class="text-xs md:text-sm text-brand-textMuted mt-3 font-medium">
               Surah ke-1 • 7 Ayat • Makkiyyah • Artinya: Pembukaan
             </p>
 
             <!-- Bismillah Decoration -->
             <div id="bismillah-container" class="mt-6 pt-6 border-t border-brand-border/60">
-              <p class="arabic-text text-2xl md:text-3xl text-amber-500">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+              <p class="arabic-text text-2xl md:text-3xl text-amber-500" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
             </div>
           </div>
 
@@ -2092,61 +2212,216 @@
     </div>
   </div>
 
-  <!-- ==================== READER SETTINGS MODAL ==================== -->
+  <!-- ==================== READER & TYPOGRAPHY SETTINGS MODAL ==================== -->
   <div id="settings-modal"
-    class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-brand-surface border border-brand-border rounded-3xl w-full max-w-md p-6 relative shadow-2xl">
-      <button onclick="document.getElementById('settings-modal').classList.add('hidden')"
-        class="absolute top-5 right-5 text-brand-textMuted hover:text-brand-orange">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-      <h3 class="text-base font-bold text-brand-text mb-4">Pengaturan Tampilan Baca</h3>
+    class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div
+      class="bg-brand-surface border border-brand-border rounded-3xl w-full max-w-lg p-5 sm:p-6 relative shadow-2xl my-auto overflow-hidden">
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between pb-3.5 border-b border-brand-border/70 mb-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-brand-orange/15 text-brand-orange flex items-center justify-center">
+            <i data-lucide="sliders" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 class="text-sm sm:text-base font-bold text-brand-text">Pengaturan Typography & Membaca</h3>
+            <p class="text-[11px] text-brand-textMuted">Atur ukuran font, spasi baris, mushaf, dan tema baca</p>
+          </div>
+        </div>
+        <button onclick="closeReaderSettingsModal()"
+          class="w-8 h-8 rounded-full bg-brand-card hover:bg-brand-surfaceHover border border-brand-border flex items-center justify-center text-brand-textMuted hover:text-brand-orange transition-colors">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
 
-      <div class="space-y-4 text-xs">
+      <!-- LIVE PREVIEW CARD (Real-time Visual Feedback) -->
+      <div class="mb-4 p-4 rounded-2xl border transition-all duration-300" id="reader-live-preview-box">
+        <div class="flex items-center justify-between pb-2 border-b border-brand-border/40 mb-2.5">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-brand-orange flex items-center gap-1">
+            <i data-lucide="eye" class="w-3 h-3"></i>
+            <span>Live Preview Tampilan</span>
+          </span>
+          <span class="text-[10px] font-mono text-brand-textMuted" id="preview-font-badge">KFGQPC • 32px</span>
+        </div>
+        <!-- Arabic Sample -->
+        <p class="arabic-text text-right mb-2 text-brand-text" id="preview-arabic-text" dir="rtl">
+          بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+          <span class="inline-flex items-center justify-center w-7 h-7 rounded-full border border-brand-orange/40 text-brand-orange text-[10px] mr-1.5 font-mono select-none" dir="ltr">1</span>
+        </p>
+        <!-- Latin Sample -->
+        <p class="text-[11px] text-amber-500/90 font-medium italic mb-1.5 font-sans" id="preview-latin-text">
+          Bismillāhir-raḥmānir-raḥīm
+        </p>
+        <!-- Translation Sample -->
+        <p class="text-xs text-brand-textMuted leading-relaxed pt-1.5 border-t border-brand-border/40 font-inter" id="preview-translation-text">
+          Dengan nama Allah Yang Maha Pengasih, Maha Penyayang.
+        </p>
+      </div>
+
+      <!-- Controls Container with Scroll -->
+      <div class="space-y-4 max-h-[50vh] overflow-y-auto pr-1 text-xs">
+        <!-- 1. Pilihan Font Kaligrafi Arab -->
         <div>
-          <label class="block text-brand-textMuted mb-2">Ukuran Huruf Arab</label>
-          <div class="flex items-center gap-3">
-            <span class="text-xs text-brand-textMuted">Kecil</span>
-            <input type="range" id="font-size-slider" min="22" max="44" value="30" onchange="applyReaderSettings()"
-              class="flex-1 accent-brand-orange">
-            <span class="text-xs text-brand-textMuted">Besar</span>
+          <label class="block text-brand-text font-semibold mb-2">Pilihan Font Kaligrafi Arab (Mushaf)</label>
+          <div class="grid grid-cols-3 gap-2">
+            <button type="button" onclick="selectArabicFont('kfgqpc')" id="font-btn-kfgqpc"
+              class="p-2.5 rounded-xl border text-center transition-all flex flex-col items-center justify-center">
+              <span class="text-base font-arabic block mb-1">الرَّحِيمِ</span>
+              <span class="text-[10px] font-bold block">KFGQPC</span>
+              <span class="text-[9px] text-brand-textMuted block">Mushaf Madinah</span>
+            </button>
+            <button type="button" onclick="selectArabicFont('amiri')" id="font-btn-amiri"
+              class="p-2.5 rounded-xl border text-center transition-all flex flex-col items-center justify-center">
+              <span class="text-base font-arabic block mb-1" style="font-family: 'Amiri', serif;">الرَّحِيمِ</span>
+              <span class="text-[10px] font-bold block">Amiri</span>
+              <span class="text-[9px] text-brand-textMuted block">Naskh Klasik</span>
+            </button>
+            <button type="button" onclick="selectArabicFont('scheherazade')" id="font-btn-scheherazade"
+              class="p-2.5 rounded-xl border text-center transition-all flex flex-col items-center justify-center">
+              <span class="text-base font-arabic block mb-1" style="font-family: 'Scheherazade New', serif;">الرَّحِيمِ</span>
+              <span class="text-[10px] font-bold block">Scheherazade</span>
+              <span class="text-[9px] text-brand-textMuted block">SIL Modern</span>
+            </button>
           </div>
         </div>
 
-        <div class="flex items-center justify-between py-2 border-t border-brand-border">
-          <span class="text-brand-text">Tampilkan Teks Latin</span>
-          <input type="checkbox" id="toggle-latin" checked onchange="applyReaderSettings()"
-            class="w-4 h-4 accent-brand-orange rounded">
+        <!-- 2. Ukuran Huruf Arab & Spasi Baris Arab -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2 border-t border-brand-border/60">
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="text-brand-text font-semibold">Ukuran Huruf Arab</label>
+              <span id="label-arabic-size" class="font-mono text-brand-orange font-bold text-[11px]">32px</span>
+            </div>
+            <input type="range" id="font-size-slider" min="24" max="48" step="1" value="32"
+              oninput="handleSettingChange()"
+              class="w-full accent-brand-orange h-1.5 bg-brand-border rounded-lg appearance-none cursor-pointer">
+            <div class="flex justify-between text-[10px] text-brand-textMuted mt-1 font-mono">
+              <span>24px</span>
+              <span>Default 32px</span>
+              <span>48px</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="text-brand-text font-semibold">Tinggi Baris Arab (Line Height)</label>
+              <span id="label-arabic-line-height" class="font-mono text-brand-orange font-bold text-[11px]">2.2x</span>
+            </div>
+            <input type="range" id="arabic-line-height-slider" min="2.0" max="2.8" step="0.1" value="2.2"
+              oninput="handleSettingChange()"
+              class="w-full accent-brand-orange h-1.5 bg-brand-border rounded-lg appearance-none cursor-pointer">
+            <div class="flex justify-between text-[10px] text-brand-textMuted mt-1 font-mono">
+              <span>2.0x</span>
+              <span>2.2x</span>
+              <span>2.8x</span>
+            </div>
+          </div>
         </div>
 
-        <div class="flex items-center justify-between py-2 border-t border-brand-border">
-          <span class="text-brand-text">Tampilkan Terjemahan Indonesia</span>
-          <input type="checkbox" id="toggle-translation" checked onchange="applyReaderSettings()"
-            class="w-4 h-4 accent-brand-orange rounded">
+        <!-- 3. Ukuran Terjemahan & Jarak Antar Ayat -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2 border-t border-brand-border/60">
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="text-brand-text font-semibold">Ukuran Teks Terjemahan</label>
+              <span id="label-trans-size" class="font-mono text-brand-orange font-bold text-[11px]">16px</span>
+            </div>
+            <input type="range" id="trans-size-slider" min="12" max="24" step="1" value="16"
+              oninput="handleSettingChange()"
+              class="w-full accent-brand-orange h-1.5 bg-brand-border rounded-lg appearance-none cursor-pointer">
+            <div class="flex justify-between text-[10px] text-brand-textMuted mt-1 font-mono">
+              <span>12px</span>
+              <span>Default 16px</span>
+              <span>24px</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="text-brand-text font-semibold">Jarak Antar Ayat</label>
+              <span id="label-verse-spacing" class="font-mono text-brand-orange font-bold text-[11px]">20px</span>
+            </div>
+            <input type="range" id="verse-spacing-slider" min="16" max="36" step="2" value="20"
+              oninput="handleSettingChange()"
+              class="w-full accent-brand-orange h-1.5 bg-brand-border rounded-lg appearance-none cursor-pointer">
+            <div class="flex justify-between text-[10px] text-brand-textMuted mt-1 font-mono">
+              <span>16px</span>
+              <span>20px</span>
+              <span>36px</span>
+            </div>
+          </div>
         </div>
 
-        <!-- Mode Tampilan (Dark / Light) -->
-        <div class="flex items-center justify-between py-2 border-t border-brand-border">
-          <span class="text-brand-text">Tema Warna Aplikasi</span>
-          <button onclick="toggleTheme()" class="px-3 py-1.5 rounded-xl bg-brand-surfaceHover border border-brand-border text-xs font-bold text-brand-orange flex items-center gap-1.5 shadow-sm">
-            <i data-lucide="sun" class="theme-toggle-icon w-3.5 h-3.5"></i>
-            <span class="theme-toggle-text">Mode Tampilan</span>
-          </button>
+        <!-- 4. Tema Khusus Membaca (Reading Themes) -->
+        <div class="pt-2 border-t border-brand-border/60">
+          <label class="block text-brand-text font-semibold mb-2">Tema Khusus Kenyamanan Membaca</label>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <button type="button" onclick="selectReadingTheme('midnight')" id="theme-btn-midnight"
+              class="p-2.5 rounded-xl border text-center transition-all flex flex-col items-center gap-1.5 bg-[#0A101D] text-white">
+              <div class="w-5 h-5 rounded-full bg-[#0A101D] border-2 border-brand-orange shadow-sm"></div>
+              <span class="text-[11px] font-bold">Midnight</span>
+              <span class="text-[9px] text-slate-400">Kontras Gelap</span>
+            </button>
+            <button type="button" onclick="selectReadingTheme('sepia')" id="theme-btn-sepia"
+              class="p-2.5 rounded-xl border text-center transition-all flex flex-col items-center gap-1.5 bg-[#231C16] text-[#FFF8EE]">
+              <div class="w-5 h-5 rounded-full bg-[#231C16] border-2 border-amber-600 shadow-sm"></div>
+              <span class="text-[11px] font-bold">Warm Sepia</span>
+              <span class="text-[9px] text-[#C7B9A5]">Kertas Lembut</span>
+            </button>
+            <button type="button" onclick="selectReadingTheme('emerald')" id="theme-btn-emerald"
+              class="p-2.5 rounded-xl border text-center transition-all flex flex-col items-center gap-1.5 bg-[#0B2017] text-[#F0FDF4]">
+              <div class="w-5 h-5 rounded-full bg-[#0B2017] border-2 border-emerald-500 shadow-sm"></div>
+              <span class="text-[11px] font-bold">Emerald</span>
+              <span class="text-[9px] text-[#A7F3D0]">Teduh Khusyuk</span>
+            </button>
+            <button type="button" onclick="selectReadingTheme('light')" id="theme-btn-light"
+              class="p-2.5 rounded-xl border text-center transition-all flex flex-col items-center gap-1.5 bg-white text-slate-900">
+              <div class="w-5 h-5 rounded-full bg-white border-2 border-slate-400 shadow-sm"></div>
+              <span class="text-[11px] font-bold">Pristine Light</span>
+              <span class="text-[9px] text-slate-500">Terang Bersih</span>
+            </button>
+          </div>
         </div>
 
-        <!-- Preferred Qori in Settings -->
-        <div class="py-2 border-t border-brand-border">
-          <label class="block text-brand-textMuted mb-2">Qori Utama Pilihan</label>
+        <!-- 5. Toggles: Latin & Terjemahan -->
+        <div class="pt-2 border-t border-brand-border/60 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-brand-text font-medium">Tampilkan Transliterasi Latin</span>
+            <input type="checkbox" id="toggle-latin" checked onchange="handleSettingChange()"
+              class="w-4 h-4 accent-brand-orange rounded cursor-pointer">
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-brand-text font-medium">Tampilkan Terjemahan Indonesia</span>
+            <input type="checkbox" id="toggle-translation" checked onchange="handleSettingChange()"
+              class="w-4 h-4 accent-brand-orange rounded cursor-pointer">
+          </div>
+        </div>
+
+        <!-- 6. Preferred Reciter Select -->
+        <div class="pt-2 border-t border-brand-border/60">
+          <label class="block text-brand-text font-semibold mb-1.5">Qori Utama Murottal</label>
           <select id="settings-qori-select" onchange="changeQoriFromSelect(this.value)"
             class="w-full bg-brand-card border border-brand-border rounded-xl px-3 py-2 text-xs text-brand-text focus:outline-none focus:border-brand-orange">
-            <option value="06">🎙️ Syekh Yasser Al-Dosari (Imam Masjidil Haram, Tartil Khusyuk)</option>
-            <option value="05">🎙️ Syekh Misyari Rasyid Al-Afasi (Tartil & Merdu)</option>
+            <option value="06">🎙️ Syekh Yasser Al-Dosari (Imam Masjidil Haram)</option>
+            <option value="05">🎙️ Syekh Misyari Rasyid Al-Afasi (Tartil Merdu)</option>
             <option value="01">🕋 Syekh Abdullah Al-Juhany (Imam Masjidil Haram)</option>
             <option value="02">🕌 Syekh Abdul Muhsin Al-Qasim (Imam Masjid Nabawi)</option>
-            <option value="03">✨ Syekh Abdurrahman As-Sudais (Imam Besar Masjidil Haram)</option>
-            <option value="04">📖 Syekh Ibrahim Al-Dossari (Ahli Qiraat Murattal)</option>
+            <option value="03">✨ Syekh Abdurrahman As-Sudais (Imam Besar)</option>
+            <option value="04">📖 Syekh Ibrahim Al-Dossari (Ahli Qiraat)</option>
           </select>
         </div>
+      </div>
+
+      <!-- Modal Footer with Reset & Done Actions -->
+      <div class="flex items-center justify-between pt-4 border-t border-brand-border/70 mt-4">
+        <button type="button" onclick="resetReaderSettingsToDefault()"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-card hover:bg-brand-surfaceHover border border-brand-border text-xs text-brand-textMuted hover:text-brand-orange transition-colors">
+          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+          <span>Reset ke Standar</span>
+        </button>
+        <button type="button" onclick="closeReaderSettingsModal()"
+          class="px-5 py-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-slate-950 font-black text-xs hover:brightness-110 active:scale-95 transition-all shadow-md">
+          Selesai & Terapkan
+        </button>
       </div>
     </div>
   </div>
@@ -2475,9 +2750,15 @@
       bookmarks: [],
       /** @type {any[]} */
       notes: [],
-      /** @type {{ fontSize: number, showLatin: boolean, showTranslation: boolean }} */
+      /** @type {{ fontSize: number, arabicFont: string, lineHeight: number, translationSize: number, translationLineHeight: number, verseSpacing: number, readingTheme: string, showLatin: boolean, showTranslation: boolean }} */
       settings: {
-        fontSize: 30,
+        fontSize: 32,
+        arabicFont: 'kfgqpc',
+        lineHeight: 2.2,
+        translationSize: 16,
+        translationLineHeight: 1.7,
+        verseSpacing: 20,
+        readingTheme: 'midnight',
         showLatin: true,
         showTranslation: true
       },
@@ -2490,6 +2771,7 @@
     // Inisialisasi Aplikasi Saat Memuat Halaman
     document.addEventListener('DOMContentLoaded', () => {
       initThemeSystem();
+      initReaderSettings();
       lucide.createIcons();
       initClock();
       initPrayerTimesByLocation();
@@ -3023,9 +3305,19 @@
           AppState.currentAyahs = json.data.ayat;
           AppState.readingStartTime = Date.now(); // Rekam waktu mulai tilawah
 
+          // Pastikan tema baca aktif di halaman reader
+          const readerPage = document.getElementById('page-surah-detail');
+          if (readerPage) {
+            readerPage.setAttribute('data-reader-theme', AppState.settings.readingTheme || 'midnight');
+          }
+
           // Update Info Surah
           document.getElementById('detail-surah-name').textContent = json.data.namaLatin;
-          document.getElementById('detail-surah-arabic').textContent = json.data.nama;
+          const arabicSurahNameEl = document.getElementById('detail-surah-arabic');
+          if (arabicSurahNameEl) {
+            arabicSurahNameEl.textContent = json.data.nama;
+            arabicSurahNameEl.style.fontFamily = getArabicFontCss(AppState.settings.arabicFont);
+          }
           document.getElementById('detail-surah-info').textContent =
             `Surah ke-${json.data.nomor} • ${json.data.jumlahAyat} Ayat • ${json.data.tempatTurun} • Artinya: ${json.data.arti}`;
 
@@ -3033,6 +3325,10 @@
           const bismillahEl = document.getElementById('bismillah-container');
           if (bismillahEl) {
             bismillahEl.style.display = (surahNumber === 9 || surahNumber === 1) ? 'none' : 'block';
+            const bismillahText = bismillahEl.querySelector('.arabic-text');
+            if (bismillahText) {
+              bismillahText.style.fontFamily = getArabicFontCss(AppState.settings.arabicFont);
+            }
           }
 
           // Setup audio player sesuai Qori aktif
@@ -3790,7 +4086,14 @@
     // ==================== RENDER AYAT DENGAN QORI AKTIF (READER PRIORITAS UTAMA) ====================
     function renderAyahs(ayahs) {
       const container = document.getElementById('ayah-list-container');
+      if (!container) return;
       const qori = getQoriById(AppState.selectedQori);
+      const fontCss = getArabicFontCss(AppState.settings.arabicFont);
+      const arabicSize = AppState.settings.fontSize || 32;
+      const arabicLineHeight = AppState.settings.lineHeight || 2.2;
+      const transSize = AppState.settings.translationSize || 16;
+      const transLineHeight = AppState.settings.translationLineHeight || 1.7;
+      const verseSpacing = AppState.settings.verseSpacing || 20;
 
       container.innerHTML = ayahs.map(a => {
         // Ambil audio ayat sesuai qori yang aktif
@@ -3798,8 +4101,9 @@
         const isCurrentlyPlaying = AppState.activePlayingAyah === a.nomorAyat;
 
         return `
-          <div class="verse-fade-in rounded-2xl p-5 md:p-6 border transition-all duration-300 space-y-4 shadow-sm ${isCurrentlyPlaying ? 'active-ayah-card ring-1 ring-brand-orange/60' : 'bg-brand-surface border-brand-border hover:border-brand-border/80'
-          }" id="ayah-${a.nomorAyat}">
+          <div class="ayah-card-item verse-fade-in rounded-2xl p-5 md:p-6 border transition-all duration-300 space-y-4 shadow-sm ${
+            isCurrentlyPlaying ? 'active-ayah-card ring-1 ring-brand-orange/60' : 'bg-brand-surface border-brand-border hover:border-brand-border/80'
+          }" id="ayah-${a.nomorAyat}" style="margin-bottom: ${verseSpacing}px;">
             <!-- Top Ayah Action Bar -->
             <div class="flex items-center justify-between pb-3 border-b border-brand-border/60">
               <div class="flex items-center gap-2">
@@ -3827,11 +4131,11 @@
               </div>
             </div>
 
-            <!-- Arabic Text (Amiri / Scheherazade New with Adjustable Size) -->
-            <div class="text-right py-2">
-              <p class="arabic-text text-brand-text leading-[2.6]" style="font-size: ${AppState.settings.fontSize}px;">
+            <!-- Arabic Text (KFGQPC / Amiri / Scheherazade New with Adjustable Size & Line Height) -->
+            <div class="text-right py-2" dir="rtl">
+              <p class="arabic-text text-brand-text" style="font-size: ${arabicSize}px; line-height: ${arabicLineHeight}; font-family: ${fontCss};">
                 ${a.teksArab}
-                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full border border-brand-orange/40 text-brand-orange text-xs mr-2 font-mono">
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full border border-brand-orange/40 text-brand-orange text-xs mr-2 font-mono select-none" dir="ltr">
                   ${a.nomorAyat}
                 </span>
               </p>
@@ -3839,14 +4143,14 @@
 
             <!-- Latin Transliteration -->
             ${AppState.settings.showLatin ? `
-              <p class="text-xs text-amber-500/90 font-medium italic leading-relaxed">
+              <p class="latin-text text-xs text-amber-500/90 font-medium italic leading-relaxed font-sans">
                 ${a.teksLatin}
               </p>
             ` : ''}
 
-            <!-- Indonesian Translation -->
+            <!-- Indonesian Translation (Inter Typography) -->
             ${AppState.settings.showTranslation ? `
-              <p class="text-xs md:text-sm text-brand-textMuted leading-relaxed pt-2 border-t border-brand-border/40">
+              <p class="translation-text text-brand-textMuted leading-relaxed pt-2 border-t border-brand-border/40 font-inter" style="font-size: ${transSize}px; line-height: ${transLineHeight};">
                 ${a.teksIndonesia}
               </p>
             ` : ''}
@@ -4503,21 +4807,274 @@
       navigateTo('home');
     }
 
-    // ==================== READER SETTINGS MODAL ====================
-    function openReaderSettingsModal() {
-      document.getElementById('settings-modal').classList.remove('hidden');
+    // ==================== TYPOGRAPHY & READER SETTINGS SYSTEM ====================
+    const DEFAULT_READER_SETTINGS = {
+      fontSize: 32,
+      arabicFont: 'kfgqpc',
+      lineHeight: 2.2,
+      translationSize: 16,
+      translationLineHeight: 1.7,
+      verseSpacing: 20,
+      readingTheme: 'midnight',
+      showLatin: true,
+      showTranslation: true
+    };
+
+    function getArabicFontCss(fontKey) {
+      if (fontKey === 'amiri') {
+        return "'Amiri', 'KFGQPC Uthmanic Script HAFS', 'Scheherazade New', serif";
+      }
+      if (fontKey === 'scheherazade') {
+        return "'Scheherazade New', 'Amiri', 'KFGQPC Uthmanic Script HAFS', serif";
+      }
+      return "'KFGQPC Uthmanic Script HAFS', 'Amiri', 'Scheherazade New', serif";
     }
 
-    function applyReaderSettings() {
-      const size = document.getElementById('font-size-slider').value;
-      const latin = document.getElementById('toggle-latin').checked;
-      const trans = document.getElementById('toggle-translation').checked;
+    function initReaderSettings() {
+      try {
+        const saved = localStorage.getItem('quran_reader_settings');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          AppState.settings = Object.assign({}, DEFAULT_READER_SETTINGS, parsed);
+        } else {
+          AppState.settings = Object.assign({}, DEFAULT_READER_SETTINGS);
+        }
+      } catch (e) {
+        console.warn('Gagal memuat setting pembaca:', e);
+        AppState.settings = Object.assign({}, DEFAULT_READER_SETTINGS);
+      }
+      applyReaderSettings(false);
+    }
 
-      AppState.settings.fontSize = size;
-      AppState.settings.showLatin = latin;
-      AppState.settings.showTranslation = trans;
+    function openReaderSettingsModal() {
+      const modal = document.getElementById('settings-modal');
+      if (!modal) return;
 
-      if (AppState.currentAyahs && AppState.currentAyahs.length > 0) {
+      const sizeSlider = document.getElementById('font-size-slider');
+      if (sizeSlider) sizeSlider.value = AppState.settings.fontSize || 32;
+
+      const lineSlider = document.getElementById('arabic-line-height-slider');
+      if (lineSlider) lineSlider.value = AppState.settings.lineHeight || 2.2;
+
+      const transSlider = document.getElementById('trans-size-slider');
+      if (transSlider) transSlider.value = AppState.settings.translationSize || 16;
+
+      const verseSlider = document.getElementById('verse-spacing-slider');
+      if (verseSlider) verseSlider.value = AppState.settings.verseSpacing || 20;
+
+      const latinCb = document.getElementById('toggle-latin');
+      if (latinCb) latinCb.checked = AppState.settings.showLatin !== false;
+
+      const transCb = document.getElementById('toggle-translation');
+      if (transCb) transCb.checked = AppState.settings.showTranslation !== false;
+
+      const qoriSelect = document.getElementById('settings-qori-select');
+      if (qoriSelect) qoriSelect.value = AppState.selectedQori;
+
+      updateSettingsDisplayLabels();
+      updateFontButtonHighlights();
+      updateThemeButtonHighlights();
+      updateReaderLivePreview();
+
+      modal.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeReaderSettingsModal() {
+      const modal = document.getElementById('settings-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function selectArabicFont(fontKey) {
+      AppState.settings.arabicFont = fontKey;
+      updateFontButtonHighlights();
+      handleSettingChange();
+    }
+
+    function selectReadingTheme(themeKey) {
+      AppState.settings.readingTheme = themeKey;
+      updateThemeButtonHighlights();
+      handleSettingChange();
+    }
+
+    function updateFontButtonHighlights() {
+      const current = AppState.settings.arabicFont || 'kfgqpc';
+      ['kfgqpc', 'amiri', 'scheherazade'].forEach(key => {
+        const btn = document.getElementById(`font-btn-${key}`);
+        if (!btn) return;
+        if (key === current) {
+          btn.className = 'p-2.5 rounded-xl border border-brand-orange bg-brand-orange/15 text-brand-orange text-center transition-all flex flex-col items-center justify-center ring-1 ring-brand-orange/50';
+        } else {
+          btn.className = 'p-2.5 rounded-xl border border-brand-border bg-brand-card hover:bg-brand-surfaceHover text-brand-text text-center transition-all flex flex-col items-center justify-center';
+        }
+      });
+    }
+
+    function updateThemeButtonHighlights() {
+      const current = AppState.settings.readingTheme || 'midnight';
+      ['midnight', 'sepia', 'emerald', 'light'].forEach(key => {
+        const btn = document.getElementById(`theme-btn-${key}`);
+        if (!btn) return;
+        if (key === current) {
+          btn.classList.add('ring-2', 'ring-brand-orange', 'border-brand-orange');
+        } else {
+          btn.classList.remove('ring-2', 'ring-brand-orange', 'border-brand-orange');
+        }
+      });
+    }
+
+    function updateSettingsDisplayLabels() {
+      const s = AppState.settings;
+      const lblArabic = document.getElementById('label-arabic-size');
+      if (lblArabic) lblArabic.textContent = `${s.fontSize}px`;
+
+      const lblLine = document.getElementById('label-arabic-line-height');
+      if (lblLine) lblLine.textContent = `${s.lineHeight}x`;
+
+      const lblTrans = document.getElementById('label-trans-size');
+      if (lblTrans) lblTrans.textContent = `${s.translationSize}px`;
+
+      const lblVerse = document.getElementById('label-verse-spacing');
+      if (lblVerse) lblVerse.textContent = `${s.verseSpacing}px`;
+    }
+
+    function handleSettingChange() {
+      const sizeEl = document.getElementById('font-size-slider');
+      const lineEl = document.getElementById('arabic-line-height-slider');
+      const transEl = document.getElementById('trans-size-slider');
+      const verseEl = document.getElementById('verse-spacing-slider');
+      const latinEl = document.getElementById('toggle-latin');
+      const transCbEl = document.getElementById('toggle-translation');
+
+      if (sizeEl) AppState.settings.fontSize = parseInt(sizeEl.value, 10);
+      if (lineEl) AppState.settings.lineHeight = parseFloat(lineEl.value);
+      if (transEl) AppState.settings.translationSize = parseInt(transEl.value, 10);
+      if (verseEl) AppState.settings.verseSpacing = parseInt(verseEl.value, 10);
+      if (latinEl) AppState.settings.showLatin = latinEl.checked;
+      if (transCbEl) AppState.settings.showTranslation = transCbEl.checked;
+
+      updateSettingsDisplayLabels();
+      updateReaderLivePreview();
+      applyReaderSettings(true);
+    }
+
+    function updateReaderLivePreview() {
+      const s = AppState.settings;
+      const fontCss = getArabicFontCss(s.arabicFont);
+      const previewBox = document.getElementById('reader-live-preview-box');
+      const arabicEl = document.getElementById('preview-arabic-text');
+      const latinEl = document.getElementById('preview-latin-text');
+      const transEl = document.getElementById('preview-translation-text');
+      const badge = document.getElementById('preview-font-badge');
+
+      if (badge) {
+        const fontLabels = { kfgqpc: 'KFGQPC Madinah', amiri: 'Amiri Naskh', scheherazade: 'Scheherazade' };
+        badge.textContent = `${fontLabels[s.arabicFont] || 'KFGQPC'} • ${s.fontSize}px • ${s.lineHeight}x`;
+      }
+
+      if (arabicEl) {
+        arabicEl.style.fontFamily = fontCss;
+        arabicEl.style.fontSize = `${s.fontSize}px`;
+        arabicEl.style.lineHeight = s.lineHeight;
+      }
+
+      if (latinEl) {
+        latinEl.style.display = s.showLatin ? 'block' : 'none';
+      }
+
+      if (transEl) {
+        transEl.style.display = s.showTranslation ? 'block' : 'none';
+        transEl.style.fontSize = `${s.translationSize}px`;
+        transEl.style.lineHeight = s.translationLineHeight || 1.7;
+      }
+
+      if (previewBox) {
+        if (s.readingTheme === 'sepia') {
+          previewBox.style.backgroundColor = '#231C16';
+          previewBox.style.borderColor = '#4A3A2C';
+          if (arabicEl) arabicEl.style.color = '#FFF9EE';
+          if (transEl) transEl.style.color = '#D3C3B1';
+        } else if (s.readingTheme === 'emerald') {
+          previewBox.style.backgroundColor = '#0B2017';
+          previewBox.style.borderColor = '#164332';
+          if (arabicEl) arabicEl.style.color = '#F0FDF4';
+          if (transEl) transEl.style.color = '#A7F3D0';
+        } else if (s.readingTheme === 'light') {
+          previewBox.style.backgroundColor = '#FFFFFF';
+          previewBox.style.borderColor = '#E2E8F0';
+          if (arabicEl) arabicEl.style.color = '#0F172A';
+          if (transEl) transEl.style.color = '#475569';
+        } else {
+          previewBox.style.backgroundColor = '#0E1726';
+          previewBox.style.borderColor = '#1B293E';
+          if (arabicEl) arabicEl.style.color = '#FFFFFF';
+          if (transEl) transEl.style.color = '#94A3B8';
+        }
+      }
+    }
+
+    function resetReaderSettingsToDefault() {
+      AppState.settings = Object.assign({}, DEFAULT_READER_SETTINGS);
+
+      const sizeSlider = document.getElementById('font-size-slider');
+      if (sizeSlider) sizeSlider.value = DEFAULT_READER_SETTINGS.fontSize;
+
+      const lineSlider = document.getElementById('arabic-line-height-slider');
+      if (lineSlider) lineSlider.value = DEFAULT_READER_SETTINGS.lineHeight;
+
+      const transSlider = document.getElementById('trans-size-slider');
+      if (transSlider) transSlider.value = DEFAULT_READER_SETTINGS.translationSize;
+
+      const verseSlider = document.getElementById('verse-spacing-slider');
+      if (verseSlider) verseSlider.value = DEFAULT_READER_SETTINGS.verseSpacing;
+
+      const latinCb = document.getElementById('toggle-latin');
+      if (latinCb) latinCb.checked = DEFAULT_READER_SETTINGS.showLatin;
+
+      const transCb = document.getElementById('toggle-translation');
+      if (transCb) transCb.checked = DEFAULT_READER_SETTINGS.showTranslation;
+
+      updateSettingsDisplayLabels();
+      updateFontButtonHighlights();
+      updateThemeButtonHighlights();
+      updateReaderLivePreview();
+      applyReaderSettings(true);
+      showToast('Pengaturan typography dikembalikan ke standar.', 'success');
+    }
+
+    function applyReaderSettings(reRender = true) {
+      const s = AppState.settings;
+      const fontCss = getArabicFontCss(s.arabicFont);
+
+      document.documentElement.style.setProperty('--quran-font-family', fontCss);
+      document.documentElement.style.setProperty('--quran-arabic-size', `${s.fontSize}px`);
+      document.documentElement.style.setProperty('--quran-arabic-line-height', s.lineHeight);
+      document.documentElement.style.setProperty('--quran-translation-size', `${s.translationSize}px`);
+      document.documentElement.style.setProperty('--quran-verse-spacing', `${s.verseSpacing}px`);
+
+      const readerPage = document.getElementById('page-surah-detail');
+      if (readerPage) {
+        readerPage.setAttribute('data-reader-theme', s.readingTheme || 'midnight');
+      }
+
+      // Update Surah Header Arabic Font
+      const arabicSurahNameEl = document.getElementById('detail-surah-arabic');
+      if (arabicSurahNameEl) {
+        arabicSurahNameEl.style.fontFamily = fontCss;
+      }
+      const bismillahEl = document.getElementById('bismillah-container');
+      if (bismillahEl) {
+        const bismillahText = bismillahEl.querySelector('.arabic-text');
+        if (bismillahText) bismillahText.style.fontFamily = fontCss;
+      }
+
+      try {
+        localStorage.setItem('quran_reader_settings', JSON.stringify(s));
+      } catch (e) {
+        console.warn('Gagal menyimpan reader settings:', e);
+      }
+
+      if (reRender && AppState.currentAyahs && AppState.currentAyahs.length > 0) {
         renderAyahs(AppState.currentAyahs);
       }
     }
