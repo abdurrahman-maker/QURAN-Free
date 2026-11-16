@@ -754,6 +754,66 @@
       cursor: pointer;
     }
 
+    /* Active Press / Touch State for Mobile (HP) & PC Click */
+    .surah-card-row:active, .interactive-card:active, .ayah-card-item:active {
+      transform: scale(0.97) !important;
+      border-color: #FF7A1A !important;
+      box-shadow: 0 4px 16px rgba(255, 122, 26, 0.3) !important;
+    }
+
+    /* Mobile Bottom Navigation Button Interactions */
+    .mobile-nav-btn {
+      position: relative;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease !important;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      cursor: pointer;
+    }
+    .mobile-nav-btn:active {
+      transform: scale(0.88) !important;
+    }
+    .mobile-nav-btn i {
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease, filter 0.2s ease;
+    }
+    .mobile-nav-btn.active i {
+      transform: scale(1.18) translateY(-2px);
+      filter: drop-shadow(0 2px 8px rgba(255, 122, 26, 0.55));
+    }
+    .mobile-nav-btn::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      width: 14px;
+      height: 3px;
+      background: linear-gradient(90deg, #FF7A1A, #F59E0B);
+      border-radius: 9999px;
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+      opacity: 0;
+    }
+    .mobile-nav-btn.active::after {
+      transform: translateX(-50%) scaleX(1);
+      opacity: 1;
+    }
+
+    /* Universal Interactive Ripple Effect (Animasi 23) */
+    .touch-ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 122, 26, 0.45) 0%, rgba(255, 122, 26, 0.15) 60%, transparent 100%);
+      transform: scale(0);
+      animation: rippleEffect 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      pointer-events: none;
+      z-index: 20;
+    }
+    @keyframes rippleEffect {
+      to {
+        transform: scale(3.5);
+        opacity: 0;
+      }
+    }
+
     /* Audio Range Scrubber Slider Hover Feedback */
     input[type=range] {
       transition: opacity 0.2s ease, filter 0.2s ease;
@@ -1091,24 +1151,27 @@
       text-shadow: none !important;
     }
 
-    /* Accessibility: Respect Reduced Motion Preferences */
+    /* Accessibility: Respect Reduced Motion Preferences (Safe & Gentle) */
     @media (prefers-reduced-motion: reduce) {
-      *, ::before, ::after {
-        animation-duration: 0.001ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.001ms !important;
-        scroll-behavior: auto !important;
-      }
       .ambient-blur-orb,
       .ambient-blur-orb-2,
       .hero-floating,
       .star-twinkle-1,
       .star-twinkle-2,
       .star-twinkle-3,
+      .pulse-ring,
+      .gradient-shimmer,
+      .rotate-artwork-playing {
+        animation: none !important;
+        transform: none !important;
+      }
       .reveal-on-scroll {
         animation: none !important;
         transform: none !important;
         opacity: 1 !important;
+      }
+      * {
+        scroll-behavior: auto !important;
       }
     }
   </style>
@@ -2984,6 +3047,7 @@
       initCursorSpotlight();
       initCustomCursorFollower();
       initModalOutsideClicks();
+      initInteractiveRipples();
     });
 
     // ==================== THEME SYSTEM (DARK & LIGHT MODE) ====================
@@ -5581,6 +5645,50 @@
           });
         }
       });
+    }
+
+    // ==================== UNIVERSAL INTERACTIVE RIPPLES (Animasi 23 - HP & PC) ====================
+    function initInteractiveRipples() {
+      // Enable iOS / WebKit touch feedback
+      document.body.addEventListener('touchstart', () => {}, { passive: true });
+
+      const handleRipple = (e) => {
+        const target = e.target.closest('button, .btn-interactive, .interactive-card, .surah-card-row, .nav-link, .mobile-nav-btn, .spotlight-card, [role="button"]');
+        if (!target || target.disabled) return;
+
+        const rect = target.getBoundingClientRect();
+        const clientX = e.clientX !== undefined && e.clientX !== null ? e.clientX : (e.touches && e.touches[0] ? e.touches[0].clientX : null);
+        const clientY = e.clientY !== undefined && e.clientY !== null ? e.clientY : (e.touches && e.touches[0] ? e.touches[0].clientY : null);
+        if (clientX === null || clientY === null) return;
+
+        const size = Math.max(rect.width, rect.height) * 1.6;
+        const ripple = document.createElement('span');
+        ripple.className = 'touch-ripple';
+        ripple.style.width = `${size}px`;
+        ripple.style.height = `${size}px`;
+        ripple.style.left = `${clientX - rect.left - size / 2}px`;
+        ripple.style.top = `${clientY - rect.top - size / 2}px`;
+
+        const style = window.getComputedStyle(target);
+        if (style.position === 'static') {
+          target.style.position = 'relative';
+        }
+        target.style.overflow = 'hidden';
+
+        target.appendChild(ripple);
+        setTimeout(() => {
+          if (ripple.parentNode) ripple.remove();
+        }, 550);
+      };
+
+      document.addEventListener('pointerdown', handleRipple, { passive: true });
+
+      // Handle Device / Window Resize (Mode HP <-> Mode PC)
+      window.addEventListener('resize', () => {
+        document.querySelectorAll('.reveal-on-scroll:not(.is-revealed)').forEach(el => {
+          el.classList.add('is-revealed');
+        });
+      }, { passive: true });
     }
   </script>
 </body>
